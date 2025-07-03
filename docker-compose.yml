@@ -1,0 +1,56 @@
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-innovacion
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: valdez98/224
+      POSTGRES_DB: innovacion_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin-innovacion
+    environment:
+      PGADMIN_DEFAULT_EMAIL: innovacioncomercialx@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin1234
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+      - ./pgadmin_config/servers.json:/pgadmin4/servers.json
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: .
+    container_name: backend-innovacion
+    environment:
+      - PORT=5002
+      - DB_HOST=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=valdez98/224
+      - DB_NAME=innovacion_db
+      - JWT_SECRET=supersecreto
+    ports:
+      - "5002:5002"
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: ["node", "app.js"]
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  pgadmin_data:

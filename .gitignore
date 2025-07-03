@@ -1,0 +1,11 @@
+# .gitignore recomendado
+.env
+*.env
+node_modules/
+pgadmin_config/.pgpass
+pgadmin_config/servers.json
+.vscode/
+*.log
+*.sqlite
+*.bak
+*.tmp
