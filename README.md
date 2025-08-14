@@ -1,34 +1,28 @@
-# Innovación Comercial X - Backend
+# 🚀 ComercialX Cockpit
 
-**Innovación Comercial X** es una aplicación multiplataforma diseñada para gestionar de manera integral las ventas, productos, flujo de caja, reportes y alertas en todo tipo de empresas, tanto grandes como pequeñas.
+Sistema CLI multiplataforma con validación real, trazabilidad y branding técnico.
 
-La plataforma busca ser flexible, escalable y fácil de usar, ayudando a las organizaciones a optimizar sus procesos comerciales con herramientas inteligentes y seguras.
-
----
-
-## Tecnologías principales
-
-- Backend con Node.js y Express
-- Base de datos PostgreSQL con Sequelize ORM
-- Autenticación segura con JWT y 2FA
-- Contenedores Docker para despliegue eficiente
-- Interfaz web frontend en React (en desarrollo)
-- Soporte para integración con CRM y reportes avanzados
+![Cockpitizado](https://img.shields.io/badge/status-cockpitizado-blue)
+![Multiplataforma](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-green)
+![Licencia MIT](https://img.shields.io/badge/license-MIT-lightgrey)
 
 ---
 
-## Características clave
+## 🧩 Características
 
-- Gestión completa de usuarios, productos y categorías
-- Control detallado del flujo de caja y transacciones
-- Reportes automáticos diarios, semanales y mensuales
-- Sistema de alertas para vencimientos y bajo stock
-- Autenticación robusta y segura con tokens y 2FA
+- ✅ Validación real por correo, nombre completo y rol
+- 🎛️ Menú jerárquico visual con `inquirer`
+- 🧾 Registro automático en CSV y logs cockpitizados
+- 🎨 Branding técnico con ASCII art y dashboard visual
+- 📁 Accesos directos `.desktop` y `.bat` para ejecución rápida
+- 📦 Empaquetado multiplataforma: `.deb`, `.AppImage`, `.msi` (opcional)
 
 ---
 
-## Contacto
+## 🛠️ Instalación
 
-Para más información, visita:  
-https://github.com/ACSERNE/innovacioncomercialx-backend  
-Correo: innovacioncomercialx@gmail.com
+### Linux
+
+```bash
+dpkg -i comercialx-cockpit_1.0_all.deb
+'EOF'
