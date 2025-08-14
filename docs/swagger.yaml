@@ -1,0 +1,88 @@
+openapi: 3.0.0
+info:
+  title: ComercialX Cockpit API
+  version: 1.0.0
+  description: API para autenticación, registro de acciones y sincronización de inventario desde el sistema CLI cockpitizado.
+
+servers:
+  - url: https://acserne-backend.com/api
+    description: Servidor principal
+
+paths:
+  /auth/login:
+    post:
+      summary: Autenticación de usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Token JWT generado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+
+  /acciones:
+    post:
+      summary: Registrar acción cockpitizada
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                rol:
+                  type: string
+                accion:
+                  type: string
+                timestamp:
+                  type: string
+      responses:
+        '201':
+          description: Acción registrada
+
+  /inventario:
+    get:
+      summary: Obtener inventario actualizado
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Lista de productos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    nombre:
+                      type: string
+                    stock:
+                      type: integer
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
