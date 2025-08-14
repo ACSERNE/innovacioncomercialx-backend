@@ -1,3 +1,10 @@
+╔════════════════════════════════════════════╗
+║ 🚀 ComercialX Cockpit CLI                 ║
+║ Versión: v1.0                         ║
+║ Autor: Valdez                            ║
+║ Fecha: 14-08-2025                              ║
+╚════════════════════════════════════════════╝
+
 # 🚀 ComercialX Cockpit
 
 Sistema CLI multiplataforma con validación real, trazabilidad y branding técnico.
