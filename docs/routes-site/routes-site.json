@@ -1,0 +1,43 @@
+{
+  "timestamp": "2025-08-15T04:30:00.000Z",
+  "estado_global": "validado",
+  "exportacion": "completa",
+  "modulos": [
+    {
+      "nombre": "backend",
+      "estado": "validado",
+      "timestamp": "2025-08-15T04:30:00.000Z",
+      "endpoints": 4,
+      "gaps": 0,
+      "ruta_html": "backend.html",
+      "ruta_json": "backend-extendido.json"
+    },
+    {
+      "nombre": "docker",
+      "estado": "validado",
+      "timestamp": "2025-08-15T04:30:00.000Z",
+      "contenedores": 1,
+      "imagenes": 2,
+      "ruta_html": "docker.html",
+      "ruta_json": "docker-extendido.json"
+    },
+    {
+      "nombre": "entorno",
+      "estado": "validado",
+      "timestamp": "2025-08-15T04:30:00.000Z",
+      "sistema": "Linux",
+      "node": "18.17.0",
+      "npm": "9.8.0",
+      "ruta_html": "entorno.html",
+      "ruta_json": "entorno-extendido.json"
+    },
+    {
+      "nombre": "docs",
+      "estado": "validado",
+      "timestamp": "2025-08-15T04:30:00.000Z",
+      "archivos": 3,
+      "ruta_html": "docs.html",
+      "ruta_json": "docs-extendido.json"
+    }
+  ]
+}

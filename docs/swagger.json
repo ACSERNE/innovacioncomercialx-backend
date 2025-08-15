@@ -1,0 +1,93 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ComercialX Cockpit API",
+    "version": "1.0.0",
+    "description": "API RESTful para tienda física, tienda en línea e integración total. Autenticación JWT, trazabilidad y documentación extendida."
+  },
+  "servers": [
+    {
+      "url": "https://api.comercialx.cl",
+      "description": "Servidor principal"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "summary": "Login de usuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token JWT generado"
+          }
+        }
+      }
+    },
+    "/productos": {
+      "get": {
+        "summary": "Listar productos",
+        "responses": {
+          "200": {
+            "description": "Lista de productos"
+          }
+        }
+      }
+    },
+    "/ventas": {
+      "post": {
+        "summary": "Registrar venta",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "clienteId": { "type": "string" },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "productoId": { "type": "string" },
+                        "cantidad": { "type": "integer" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Venta registrada"
+          }
+        }
+      }
+    },
+    "/clientes": {
+      "get": {
+        "summary": "Listar clientes",
+        "responses": {
+          "200": {
+            "description": "Lista de clientes"
+          }
+        }
+      }
+    }
+  }
+}

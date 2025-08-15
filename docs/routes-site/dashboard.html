@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>📊 ComercialX Cockpit - Dashboard Técnico</title>
+  <style>
+    body { font-family: sans-serif; background: #f9f9f9; padding: 2em; }
+    h1 { color: #333; }
+    .modulo { margin-bottom: 2em; background: #fff; padding: 1em; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .badge { float: right; }
+    .link { font-weight: bold; text-decoration: none; color: #2196f3; }
+    .timestamp { font-size: 0.9em; color: #666; }
+    button { margin-top: 0.5em; padding: 0.4em 1em; border: none; background: #2196f3; color: white; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #1976d2; }
+  </style>
+  <script>
+    async function enviarWebhook(modulo) {
+      const res = await fetch(`routes-site/${modulo}-extendido.json`);
+      const data = await res.json();
+      await fetch('https://webhook.site/tu-endpoint', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      alert(`✅ Webhook enviado para módulo ${modulo}`);
+    }
+  </script>
+</head>
+<body>
+  <h1>📊 ComercialX Cockpit - Dashboard Técnico</h1>
+  <div id="cockpit"></div>
+  <script src="routes-site.js"></script>
+
+  <hr>
+  <h2>📦 Exportación ZIP</h2>
+  <p><a href="comercialx-cockpit.zip" download>⬇️ Descargar comercialx-cockpit.zip</a></p>
+
+  <p><em>Este dashboard se genera dinámicamente desde <code>routes-site.json</code> y <code>routes-site.js</code>. Exportación visual, trazabilidad y simulación remota por módulo.</em></p>
+</body>
+</html>
