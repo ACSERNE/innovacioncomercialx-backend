@@ -1,0 +1,18 @@
+{
+  "info": {
+    "title": "ComercialX Backend",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/status": {
+      "get": {
+        "summary": "Estado del backend",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
