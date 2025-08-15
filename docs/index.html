@@ -1,14 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Redireccionando a Micrositio ComercialX</title>
-    <meta http-equiv="refresh" content="0; url=routes-index.html" />
-    <style>
-      body { font-family: monospace; text-align: center; margin-top: 20vh; }
-    </style>
-  </head>
-  <body>
-    <p>🔁 Redireccionando a <a href="routes-index.html">routes-index.html</a>...</p>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>ComercialX Cockpit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🎉 Bienvenido a ComercialX Cockpit</h1>
+  <p>Tu CLI visual para gestión, auditoría y exportación técnica.</p>
+  <input type="text" id="search" placeholder="🔍 Buscar opción..." onkeyup="filterMenu()">
+  <ul id="menu">
+    <li><a href="opciones/iniciarsesin.html">🔄 Iniciar sesión</a></li>
+    <li><a href="opciones/crearnuevousuario.html">🧑‍💼 Crear nuevo usuario</a></li>
+    <li><a href="opciones/crearnuevoproducto.html">🆕 Crear nuevo producto</a></li>
+    <li><a href="opciones/publicarproductoexistente.html">🛒 Publicar producto existente</a></li>
+    <li><a href="opciones/editarproductoexistente.html">✏️ Editar producto existente</a></li>
+    <li><a href="opciones/eliminarproducto.html">❌ Eliminar producto</a></li>
+    <li><a href="opciones/verinventario.html">📦 Ver inventario</a></li>
+    <li><a href="opciones/flujodecaja.html">💰 Flujo de caja</a></li>
+    <li><a href="opciones/verstockporproducto.html">📦 Ver stock por producto</a></li>
+    <li><a href="opciones/verestadsticasgenerales.html">📈 Ver estadísticas generales</a></li>
+    <li><a href="opciones/buscarproductopornombre.html">🔍 Buscar producto por nombre</a></li>
+    <li><a href="opciones/verreportesfiltrados.html">📊 Ver reportes filtrados</a></li>
+    <li><a href="opciones/exportarauditoraenmarkdown.html">📝 Exportar auditoría en Markdown</a></li>
+    <li><a href="opciones/filtrarhistorialdeauditora.html">🧾 Filtrar historial de auditoría</a></li>
+    <li><a href="opciones/verfirmalocaldesesin.html">🔐 Ver firma local de sesión</a></li>
+    <li><a href="opciones/activarmodosandbox.html">🧪 Activar modo sandbox</a></li>
+    <li><a href="opciones/copilotcliintegrado.html">🤖 Copilot CLI integrado</a></li>
+    <li><a href="opciones/ejecutarpluginanalytics.html">📈 Ejecutar plugin Analytics</a></li>
+    <li><a href="opciones/cerrarsesin.html">🚪 Cerrar sesión</a></li>
+    <li><a href="opciones/salirdelsistema.html">🚪 Salir del sistema</a></li>
+  </ul>
+  <script>
+    function filterMenu() {
+      const input = document.getElementById('search').value.toLowerCase();
+      const items = document.querySelectorAll('#menu li');
+      items.forEach(li => {
+        li.style.display = li.textContent.toLowerCase().includes(input) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
 </html>
+
+<h2>📊 Exportaciones cockpitizadas</h2>
+<table>
+  <thead><tr><th>ZIP</th><th>Fecha</th><th>Estado</th></tr></thead>
+  <tbody id="exportLog"></tbody>
+</table>
+
+<script>
+fetch('../exports/export-log.json')
+  .then(res => res.json())
+  .then(data => {
+    const tbody = document.getElementById('exportLog');
+    data.forEach(entry => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><a href="${entry.ruta}" download>${entry.archivo}</a></td>
+        <td>${entry.timestamp}</td>
+        <td>${entry.estado}</td>
+      `;
+      tbody.appendChild(row);
+    });
+  });
+</script>
