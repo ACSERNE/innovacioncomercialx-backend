@@ -1,0 +1,8 @@
+
+📊 Resumen de inserciones:
+👤 Usuarios insertados: 0
+🔁 Usuarios duplicados: 0
+📦 Productos insertados: 0
+🔁 Productos duplicados: 0
+⛔ Omitidos por stock: 0
+🗂️ Categorías creadas: 0

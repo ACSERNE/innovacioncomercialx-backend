@@ -1,0 +1,10 @@
+2025-07-16 17:36:35 - ⚠️ pg_isready no disponible. Usando espera fija de 10s...
+2025-07-16 17:36:35 - 🔍 Verificando migraciones...
+2025-07-16 17:36:35 - 📦 Migraciones ya aplicadas
+2025-07-16 17:36:35 - 🌱 Ejecutando seeds demo...
+
+[4mSequelize CLI [Node: 22.14.0, CLI: 6.6.3, ORM: 6.37.7][24m
+
+
+
+2025-07-16 17:36:35 - ✅ Setup completo

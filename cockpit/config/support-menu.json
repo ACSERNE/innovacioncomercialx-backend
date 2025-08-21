@@ -1,0 +1,5 @@
+[
+  { "label": "📞 Ver tickets abiertos", "action": "viewTickets" },
+  { "label": "📂 Exportar historial de soporte", "action": "exportSupportLog" },
+  { "label": "🚪 Salir", "action": "exit" }
+]

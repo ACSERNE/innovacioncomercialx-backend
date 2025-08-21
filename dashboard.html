@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Cockpit | ComercialX</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #f0f0f0; }
+    h2, h3 { color: #222; margin-top: 2rem; }
+    select, button { margin: 0.5rem; padding: 0.5rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; background: #fff; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
+    .section { margin-top: 3rem; }
+  </style>
+</head>
+<body>
+
+  <h2>🧭 Selector cockpitizado</h2>
+  <select id="tipoFiltro">
+    <option value="">Todos los tipos</option>
+    <option value="fisica">Física</option>
+    <option value="online">Online</option>
+    <option value="hibrida">Híbrida</option>
+    <option value="demo">Demo</option>
+  </select>
+
+  <select id="entornoFiltro">
+    <option value="">Todos los entornos</option>
+    <option value="dev">Dev</option>
+    <option value="prod">Prod</option>
+    <option value="test">Test</option>
+  </select>
+
+  <button onclick="filtrarLog()">🔍 Filtrar log</button>
+  <button onclick="exportarCSV()">📄 Exportar CSV</button>
+
+  <div class="section">
+    <h3>📊 Log técnico tabular</h3>
+    <table id="tablaLog">
+      <thead><tr><th>Fecha</th><th>Tipo</th><th>Entorno</th><th>Acción</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    let logData = [];
+
+    function cargarLog() {
+      fetch('exports/onboarding/onboarding.log')
+        .then(response => response.text())
+        .then(data => {
+          logData = data.trim().split('\\n').map(line => {
+            const [fecha, tipo, entorno, accion] = line.split('|');
+            return { fecha, tipo, entorno, accion };
+          });
+          renderizarTabla(logData);
+        });
+    }
+
+    function renderizarTabla(data) {
+      const tbody = document.querySelector('#tablaLog tbody');
+      tbody.innerHTML = '';
+      data.forEach(entry => {
+        const row = `<tr>
+          <td>${entry.fecha}</td>
+          <td>${entry.tipo}</td>
+          <td>${entry.entorno}</td>
+          <td>${entry.accion}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+
+    function filtrarLog() {
+      const tipo = document.getElementById('tipoFiltro').value;
+      const entorno = document.getElementById('entornoFiltro').value;
+      const filtrado = logData.filter(entry =>
+        (!tipo || entry.tipo === tipo) &&
+        (!entorno || entry.entorno === entorno)
+      );
+      renderizarTabla(filtrado);
+    }
+
+    function exportarCSV() {
+      const csv = logData.map(e => `${e.fecha},${e.tipo},${e.entorno},${e.accion}`).join('\\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'onboarding.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    window.onload = cargarLog;
+  </script>
+
+</body>
+</html>

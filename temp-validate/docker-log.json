@@ -1,0 +1,67 @@
+{
+  "modulo": "docker",
+  "estado": "validado",
+  "timestamp": "2025-08-15T03:54:02.384Z",
+  "contenedores": [
+    {
+      "Command": "\"docker-entrypoint.s…\"",
+      "CreatedAt": "2025-08-10 18:30:30 -0400 -04",
+      "ID": "eeaf8f7360b7",
+      "Image": "backend-backend",
+      "Labels": "com.docker.compose.config-hash=a6a06862f9206233a7635f0f6ef1b265fa93f5613138ec841e6d59d244a94f3c,com.docker.compose.container-number=1,com.docker.compose.depends_on=postgres:service_started:false,com.docker.compose.image=sha256:7488b5ca10466960f933dcd74aefa072180fc4d2c4a6dd9ee76729d3a9025e96,com.docker.compose.oneoff=False,com.docker.compose.project.config_files=C:\\Users\\usuario\\innovacioncomercialx\\backend\\docker-compose.yml,com.docker.compose.project.working_dir=C:\\Users\\usuario\\innovacioncomercialx\\backend,com.docker.compose.project=backend,com.docker.compose.replace=8e6d12f4d16ca4abfcc7d80fa1836cb90f96edab1731694c8f375a3ef14d1b06,com.docker.compose.service=backend,com.docker.compose.version=2.38.2,desktop.docker.io/binds/0/Source=C:\\Users\\usuario\\innovacioncomercialx\\backend,desktop.docker.io/binds/0/SourceKind=hostFile,desktop.docker.io/binds/0/Target=/app,desktop.docker.io/ports.scheme=v2,desktop.docker.io/ports/5002/tcp=:5002",
+      "LocalVolumes": "0",
+      "Mounts": "/run/desktop/m…",
+      "Names": "backend-innovacion",
+      "Networks": "backend_innovacion_net",
+      "Platform": {
+        "architecture": "amd64",
+        "os": "linux"
+      },
+      "Ports": "",
+      "RunningFor": "4 days ago",
+      "Size": "21.3MB (virtual 1.42GB)",
+      "State": "restarting",
+      "Status": "Restarting (1) 58 seconds ago"
+    },
+    {
+      "Command": "\"/entrypoint.sh\"",
+      "CreatedAt": "2025-08-10 18:13:00 -0400 -04",
+      "ID": "d31e3cb24ef9",
+      "Image": "dpage/pgadmin4",
+      "Labels": "com.docker.compose.config-hash=8c8da64b60ba786aba5c7b0e3205565fb65d552d83db45b48201d107a828d093,com.docker.compose.container-number=1,com.docker.compose.depends_on=postgres:service_started:false,com.docker.compose.image=sha256:2c7d73e13bd6c30b1d53e4c25d0d6d81adbd0799c4f4d6a09efc5d68fca5d16d,com.docker.compose.oneoff=False,com.docker.compose.project.config_files=C:\\Users\\usuario\\innovacioncomercialx\\backend\\docker-compose.yml,com.docker.compose.project.working_dir=C:\\Users\\usuario\\innovacioncomercialx\\backend,com.docker.compose.project=backend,com.docker.compose.service=pgadmin,com.docker.compose.version=2.38.2,desktop.docker.io/binds/0/Source=C:\\Users\\usuario\\innovacioncomercialx\\backend\\pgadmin_config\\servers.json,desktop.docker.io/binds/0/SourceKind=hostFile,desktop.docker.io/binds/0/Target=/pgadmin4/servers.json,desktop.docker.io/ports.scheme=v2,desktop.docker.io/ports/80/tcp=:8080",
+      "LocalVolumes": "1",
+      "Mounts": "backend_pgadmi…,/run/desktop/m…",
+      "Names": "pgadmin-innovacion",
+      "Networks": "backend_innovacion_net",
+      "Platform": {
+        "architecture": "amd64",
+        "os": "linux"
+      },
+      "Ports": "0.0.0.0:8080->80/tcp, [::]:8080->80/tcp",
+      "RunningFor": "4 days ago",
+      "Size": "77.8kB (virtual 604MB)",
+      "State": "running",
+      "Status": "Up 2 hours"
+    },
+    {
+      "Command": "\"docker-entrypoint.s…\"",
+      "CreatedAt": "2025-08-10 18:12:58 -0400 -04",
+      "ID": "1e41d30810f2",
+      "Image": "postgres:15",
+      "Labels": "com.docker.compose.config-hash=ca242eed359e48b5abc05c27c19be163ab9bc39cf2091ca4d057f0288cedf12b,com.docker.compose.container-number=1,com.docker.compose.depends_on=,com.docker.compose.image=sha256:5ab68e212eab9cd4a16ecbf40d9449c88e1073abdca3ecc3aa5514d4a1af2ed0,com.docker.compose.oneoff=False,com.docker.compose.project.config_files=C:\\Users\\usuario\\innovacioncomercialx\\backend\\docker-compose.yml,com.docker.compose.project.working_dir=C:\\Users\\usuario\\innovacioncomercialx\\backend,com.docker.compose.project=backend,com.docker.compose.service=postgres,com.docker.compose.version=2.38.2,desktop.docker.io/binds/1/Source=C:\\Users\\usuario\\innovacioncomercialx\\backend\\initdb,desktop.docker.io/binds/1/SourceKind=hostFile,desktop.docker.io/binds/1/Target=/docker-entrypoint-initdb.d,desktop.docker.io/ports.scheme=v2,desktop.docker.io/ports/5432/tcp=:5432",
+      "LocalVolumes": "1",
+      "Mounts": "/run/desktop/m…,backend_pgdata",
+      "Names": "backend-postgres-1",
+      "Networks": "backend_innovacion_net",
+      "Platform": {
+        "architecture": "amd64",
+        "os": "linux"
+      },
+      "Ports": "0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp",
+      "RunningFor": "4 days ago",
+      "Size": "20.5kB (virtual 455MB)",
+      "State": "running",
+      "Status": "Up 2 hours (healthy)"
+    }
+  ]
+}

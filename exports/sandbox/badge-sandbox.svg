@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="20">
+  <rect width="150" height="20" fill="#0078d7"/>
+  <text x="10" y="14" fill="#fff" font-family="Segoe UI" font-size="12">sandbox: 75%</text>
+</svg>

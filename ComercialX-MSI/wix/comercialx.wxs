@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="ComercialX Cockpit CLI" Language="1033" Version="1.0.0" Manufacturer="Valdez" UpgradeCode="12345678-1234-1234-1234-123456789012">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Media Id="1" Cabinet="ComercialX.cab" EmbedCab="yes" />
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="ComercialX">
+          <Component Id="MainExecutable" Guid="11111111-1111-1111-1111-111111111111">
+            <File Id="cockpitsh" Source="..\bin\cockpit.sh" KeyPath="yes" />
+            <File Id="iniciarbat" Source="..\bin\iniciar.bat" />
+            <File Id="icono" Source="..\assets\comercialx.ico" />
+            <File Id="readme" Source="..\docs\README.txt" />
+            <Shortcut Id="DesktopShortcut" Directory="DesktopFolder" Name="ComercialX Cockpit CLI" WorkingDirectory="INSTALLFOLDER" Icon="icono" Target="[INSTALLFOLDER]\\iniciar.bat" />
+            <Shortcut Id="StartMenuShortcut" Directory="ProgramMenuFolder" Name="ComercialX Cockpit CLI" WorkingDirectory="INSTALLFOLDER" Icon="icono" Target="[INSTALLFOLDER]\\iniciar.bat" />
+            <RemoveFolder Id="INSTALLFOLDER" On="uninstall"/>
+            <RegistryValue Root="HKCU" Key="Software\\ComercialX" Name="Installed" Type="integer" Value="1" KeyPath="yes"/>
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder" Name="ComercialX"/>
+      <Directory Id="DesktopFolder" Name="Desktop"/>
+    </Directory>
+    <Feature Id="DefaultFeature" Level="1">
+      <ComponentRef Id="MainExecutable" />
+    </Feature>
+    <Icon Id="icono" SourceFile="..\assets\comercialx.ico"/>
+  </Product>
+</Wix>

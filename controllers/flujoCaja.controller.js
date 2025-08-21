@@ -1,3 +1,4 @@
+async function main() {
 const { FlujoCaja } = require('../models');
 
 // Obtener todos los registros de flujo de caja
@@ -36,3 +37,5 @@ exports.deleteFlujo = async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar flujo' });
   }
 };
+}
+main()

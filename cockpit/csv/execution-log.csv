@@ -1,0 +1,30 @@
+2025-08-05T19-35-48-977Z,dbMigrate,ERROR,"Cannot find module 'C:\Users\usuario\innovacioncomercialx\backend\cockpit\commands\dbMigrate.js'
+Require stack:
+- C:\Users\usuario\innovacioncomercialx\backend\cockpit\router-cli.js"
+2025-08-05T19-35-48-977Z,seedAll,ERROR,"Cannot find module 'C:\Users\usuario\innovacioncomercialx\backend\cockpit\commands\seedAll.js'
+Require stack:
+- C:\Users\usuario\innovacioncomercialx\backend\cockpit\router-cli.js"
+2025-08-05T19-35-48-977Z,qaPaths,ERROR,"Cannot find module 'C:\Users\usuario\innovacioncomercialx\backend\cockpit\commands\qaPaths.js'
+Require stack:
+- C:\Users\usuario\innovacioncomercialx\backend\cockpit\router-cli.js"
+2025-08-05T19-35-48-977Z,envValidator,ERROR,"Cannot find module 'C:\Users\usuario\innovacioncomercialx\backend\cockpit\commands\envValidator.js'
+Require stack:
+- C:\Users\usuario\innovacioncomercialx\backend\cockpit\router-cli.js"
+2025-08-05T19-35-48-977Z,connectivityCheck,ERROR,"Cannot find module 'C:\Users\usuario\innovacioncomercialx\backend\cockpit\commands\connectivityCheck.js'
+Require stack:
+- C:\Users\usuario\innovacioncomercialx\backend\cockpit\router-cli.js"
+2025-08-05T19-41-17-491Z,dbMigrate,OK,""
+2025-08-05T19-41-17-491Z,seedAll,OK,""
+2025-08-05T19-41-17-491Z,qaPaths,OK,""
+2025-08-05T19-41-17-491Z,envValidator,OK,""
+2025-08-05T19-41-17-491Z,connectivityCheck,OK,""
+2025-08-05T19-45-23-331Z,qaPaths,OK,""
+2025-08-05T19-45-23-331Z,envValidator,OK,""
+2025-08-05T19-45-23-331Z,connectivityCheck,OK,""
+2025-08-05T19-45-24-335Z,dbMigrate,OK,""
+2025-08-05T19-45-24-335Z,seedAll,OK,""
+2025-08-05T19-45-25-332Z,dbMigrate,OK,""
+2025-08-05T19-45-25-332Z,seedAll,OK,""
+2025-08-05T19-45-25-332Z,qaPaths,OK,""
+2025-08-05T19-45-25-332Z,envValidator,OK,""
+2025-08-05T19-45-25-332Z,connectivityCheck,OK,""

@@ -1,0 +1,4 @@
+timestamp,pguser_ok,pgpassword_ok,host_ok,database_ok,connect_ok,status
+2025-07-25T01:29:54.731Z,false,false,false,false,false,false
+2025-07-25T01:33:44.224Z,false,false,false,false,false,false
+2025-07-25T01:36:25.300Z,true,true,true,true,false,false

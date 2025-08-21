@@ -1,0 +1,5 @@
+[
+  { "fecha": "2025-08-15", "tipo": "fisica", "entorno": "dev", "ingreso": 120000, "egreso": 45000 },
+  { "fecha": "2025-08-15", "tipo": "online", "entorno": "prod", "ingreso": 250000, "egreso": 80000 },
+  { "fecha": "2025-08-15", "tipo": "demo", "entorno": "test", "ingreso": 0, "egreso": 0 }
+]

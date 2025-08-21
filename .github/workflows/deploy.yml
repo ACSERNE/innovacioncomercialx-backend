@@ -1,0 +1,44 @@
+name: 🚀 ComercialX CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🧱 Checkout repositorio
+      uses: actions/checkout@v3
+
+    - name: 🛠️ Instalar dependencias
+      run: |
+        npm install
+        chmod +x build.sh
+
+    - name: 📦 Ejecutar build cockpitizado
+      run: ./build.sh
+
+    - name: 🌐 Deploy a GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./frontend
+
+    - name: 📝 Crear release por modalidad
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v1.0.0
+        name: ComercialX Cockpit v1.0.0
+        body_path: release-notes.md
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: 📤 Subir artefactos
+      uses: actions/upload-artifact@v3
+      with:
+        name: comercialx-packages
+        path: build/

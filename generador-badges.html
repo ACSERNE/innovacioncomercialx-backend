@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de Badges SVG</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1rem;
+      background: #fdfdfd;
+      color: #333;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 1rem;
+      display: block;
+    }
+    input, select {
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      width: 100%;
+      font-size: 1rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+      background-color: #0078d4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin-top: 1rem;
+      font-family: monospace;
+      font-size: 0.95rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+  </style>
+</head>
+<body>
+  <h1>🏷️ Generador de Badges SVG</h1>
+  <p>Genera badges dinámicos por operación, entorno o colaborador.</p>
+
+  <label for="texto">Texto del badge</label>
+  <input type="text" id="texto" placeholder="Ej: validación:ok" title="Texto que aparecerá en el badge">
+
+  <label for="color">Color del badge</label>
+  <select id="color" title="Color principal del badge">
+    <option value="green">🟢 Verde</option>
+    <option value="blue">🔵 Azul</option>
+    <option value="red">🔴 Rojo</option>
+    <option value="orange">🟠 Naranja</option>
+    <option value="gray">⚪ Gris</option>
+  </select>
+
+  <button onclick="generarBadge()">🎯 Generar Badge</button>
+
+  <label for="output">🔧 Código SVG generado</label>
+  <textarea id="output" readonly placeholder="Aquí aparecerá el código SVG..." title="Área de salida del badge SVG"></textarea>
+
+  <script>
+    function generarBadge() {
+      const texto = document.getElementById("texto").value || "badge";
+      const color = document.getElementById("color").value || "gray";
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="20">
+  <rect width="120" height="20" fill="${color}" />
+  <text x="60" y="14" fill="#fff" font-size="12" text-anchor="middle" font-family="sans-serif">${texto}</text>
+</svg>`;
+      document.getElementById("output").value = svg;
+    }
+  </script>
+</body>
+</html>

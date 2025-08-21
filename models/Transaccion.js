@@ -1,51 +1,54 @@
 'use strict';
-const { Model, DataTypes } = require('sequelize');
 
-module.exports = (sequelize) => {
-  class Transaccion extends Model {
-    static associate(models) {
-      Transaccion.belongsTo(models.Producto, {
-        foreignKey: 'productoId',
-        as: 'producto',
-      });
-    }
-  }
+const { DataTypes } = require('sequelize');
+const sequelize = require('../database'); // sin .js
 
-  Transaccion.init({
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
+const Transaccion = sequelize.define('Transaccion', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+    allowNull: false,
+  },
+  productoId: {
+    type: DataTypes.UUID,
+    allowNull: true,
+    references: {
+      model: 'productos',
+      key: 'id',
     },
-    productoId: {
-      type: DataTypes.UUID,
-      allowNull: false,
+  },
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'users',
+      key: 'id',
     },
-    tipo: {
-      type: DataTypes.ENUM('entrada', 'salida'),
-      allowNull: false,
-    },
-    cantidad: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    precio_unitario: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-    total: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-    fecha: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-  }, {
-    sequelize,
-    modelName: 'Transaccion',
-    tableName: 'transacciones',
-  });
+  },
+  cantidad: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  total: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
+  metodo_pago: {
+    type: DataTypes.ENUM('efectivo', 'tarjeta', 'transferencia', 'otro'),
+    allowNull: false,
+  },
+  tipo: {
+    type: DataTypes.ENUM('venta', 'compra'),
+    allowNull: false,
+  },
+  descripcion: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+}, {
+  tableName: 'transacciones',
+  timestamps: true,
+});
 
-  return Transaccion;
-};
+module.exports = Transaccion;

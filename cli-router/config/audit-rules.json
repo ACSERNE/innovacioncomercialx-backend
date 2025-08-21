@@ -1,0 +1,9 @@
+{
+  "requiredColumns": ["id", "createdAt", "updatedAt"],
+  "columnTypes": {
+    "id": "uuid",
+    "createdAt": "timestamp",
+    "updatedAt": "timestamp"
+  },
+  "autoFix": true
+}

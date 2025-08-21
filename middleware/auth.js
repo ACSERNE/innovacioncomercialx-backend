@@ -1,3 +1,4 @@
+async function main() {
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 
@@ -70,3 +71,5 @@ exports.refreshTokenIfNeeded = (req, res, next) => {
     next();
   }
 };
+}
+main()

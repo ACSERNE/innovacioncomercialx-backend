@@ -1,0 +1,27 @@
+const mostrarDashboard = require('./cockpit/dashboard');
+const mainMenu = require('./cockpit/main-menu');
+
+// Usuario actual cockpitizado
+const usuarioActual = {
+  nombre: 'Auditor Ejemplo',
+  email: 'auditor@example.com',
+  rol: 'auditor',
+  ultimaAccion: 'Exportar log en Markdown',
+  timestamp: '2025-08-13T01:34:00Z'
+};
+
+// Mostrar dashboard si el rol lo permite
+if (['admin', 'auditor'].includes(usuarioActual.rol)) {
+  mostrarDashboard();
+}
+
+// Mostrar bienvenida cockpitizada
+console.log(`\n╔════════════════════════════════╗`);
+console.log(`║   Usuario: ${usuarioActual.nombre.padEnd(25)}║`);
+console.log(`║   Rol: ${usuarioActual.rol.padEnd(28)}║`);
+console.log(`║   Última acción: ${usuarioActual.ultimaAccion.padEnd(20)}║`);
+console.log(`║   Timestamp: ${usuarioActual.timestamp} ║`);
+console.log(`╚════════════════════════════════╝\n`);
+
+// Lanzar menú principal con contexto de usuario
+mainMenu(usuarioActual);

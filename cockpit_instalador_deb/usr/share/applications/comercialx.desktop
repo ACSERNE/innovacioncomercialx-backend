@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=ComercialX Cockpit CLI
+Comment=Sistema cockpitizado con validación real
+Exec=/usr/bin/comercialx
+Icon=comercialx
+Terminal=true
+Type=Application
+Categories=Utility;Development;
+Version=1.0.0

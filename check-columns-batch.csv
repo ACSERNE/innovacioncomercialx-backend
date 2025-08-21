@@ -1,0 +1,4 @@
+tabla,columna,tipo
+transacciones,productoId,STRING
+transacciones,estado,BOOLEAN
+usuarios,uuid,UUID

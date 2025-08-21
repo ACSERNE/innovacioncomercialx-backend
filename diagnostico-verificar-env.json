@@ -1,0 +1,30 @@
+{
+  "hora": "2025-08-11T03:12:32.882Z",
+  "variables": [
+    {
+      "clave": "PGHOST",
+      "valor": "",
+      "estado": "❌ Ausente"
+    },
+    {
+      "clave": "PGPORT",
+      "valor": "",
+      "estado": "❌ Ausente"
+    },
+    {
+      "clave": "PGUSER",
+      "valor": "",
+      "estado": "❌ Ausente"
+    },
+    {
+      "clave": "PGPASSWORD",
+      "valor": "",
+      "estado": "❌ Ausente"
+    },
+    {
+      "clave": "PGDATABASE",
+      "valor": "",
+      "estado": "❌ Ausente"
+    }
+  ]
+}

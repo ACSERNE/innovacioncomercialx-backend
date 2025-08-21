@@ -1,0 +1,32 @@
+// scripts/qa/qaPaths.js
+const fs = require('fs');
+const path = require('path');
+
+const pathsToCheck = [
+  'scripts/qa/qaPaths.js',
+  '.env',
+  'config/database.js',
+  'router-cli.js'
+];
+
+const logPath = path.join(__dirname, '../../logs/qa-paths.csv');
+
+function checkPaths() {
+  const results = [];
+
+  pathsToCheck.forEach((p) => {
+    const exists = fs.existsSync(path.resolve(p));
+    results.push({ path: p, exists });
+    console.log(`${exists ? '✅' : '❌'} ${p}`);
+  });
+
+  // Guardar CSV
+  const csv = results
+    .map(({ path, exists }) => `${path};${exists ? 'OK' : 'Missing'}`)
+    .join('\n');
+
+  fs.writeFileSync(logPath, `Path;Status\n${csv}`);
+  console.log(`📄 Log generado en ${logPath}`);
+}
+
+module.exports = { qaPaths: checkPaths };

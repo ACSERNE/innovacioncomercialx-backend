@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=ComercialX Cockpit
+Exec=comercialx-cockpit
+Icon=comercialx
+Terminal=true
+Type=Application
+Categories=Utility;

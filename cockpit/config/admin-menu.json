@@ -1,0 +1,5 @@
+[
+  { "label": "👥 Ver usuarios registrados", "action": "listUsers" },
+  { "label": "🛠️ Configurar sistema", "action": "configureSystem" },
+  { "label": "🚪 Salir", "action": "exit" }
+]

@@ -1,0 +1,43 @@
+#!/bin/bash
+echo "
+██████╗ ██████╗ ██████╗ ██████╗ ██╗     ██╗  ██╗
+██╔══██╗██╔═══██╗██╔══██╗██╔══██╗██║     ██║ ██╔╝
+██████╔╝██║   ██║██████╔╝██████╔╝██║     █████╔╝ 
+██╔═══╝ ██║   ██║██╔═══╝ ██╔═══╝ ██║     ██╔═██╗ 
+██║     ╚██████╔╝██║     ██║     ███████╗██║  ██╗
+╚═╝      ╚═════╝ ╚═╝     ╚═╝     ╚══════╝╚═╝  ╚═╝
+"
+read -p "📧 Ingresa tu correo: " CORREO
+USUARIO_LINEA=$(grep "$CORREO" /usr/share/comercialx/usuarios.csv)
+if [ -z "$USUARIO_LINEA" ]; then echo "❌ Usuario no registrado."; exit 1; fi
+NOMBRE=$(echo $USUARIO_LINEA | cut -d',' -f1)
+ROL=$(echo $USUARIO_LINEA | cut -d',' -f3)
+echo "👋 Bienvenido, $NOMBRE ($ROL)"
+echo "🕓 Fecha: $(date +%F_%T)"
+echo ""
+
+if [ "$ROL" = "propietario" ]; then
+  echo "📋 Menú propietario:"
+  echo "  1️⃣ Auditoría"
+  echo "  2️⃣ Soporte"
+  echo "  3️⃣ Redes"
+  echo "  4️⃣ Limpieza"
+  echo "  5️⃣ Salir"
+else
+  echo "📋 Menú básico:"
+  echo "  1️⃣ Limpieza"
+  echo "  2️⃣ Salir"
+fi
+
+read -p "Opción: " opcion
+case "$ROL-$opcion" in
+  propietario-1) echo "🔍 Auditoría avanzada..." ;;
+  propietario-2) echo "🛠️ Soporte cockpitizado..." ;;
+  propietario-3) echo "📢 Publicando en redes..." ;;
+  propietario-4|auditor-1|soporte-1) echo "🧹 Limpieza inteligente..." ;;
+  propietario-5|auditor-2|soporte-2) echo "👋 Cerrando sesión..." ;;
+  *) echo "❌ Opción no válida." ;;
+esac
+
+mkdir -p ~/.comercialx
+echo "$NOMBRE,$CORREO,$ROL,$(date +%F_%T),opción-$opcion" >> ~/.comercialx/acciones.csv

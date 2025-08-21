@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>📊 Dashboard de Auditoría de Rutas</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 2em; background: #f9f9f9; }
+    h1 { color: #333; }
+    canvas { max-width: 600px; margin-top: 2em; }
+  </style>
+</head>
+<body>
+  <h1>📊 Dashboard de Auditoría de Rutas</h1>
+  <p>Visualización técnica de cobertura y estado de rutas backend.</p>
+  <canvas id="routesChart"></canvas>
+
+  <script>
+    fetch('./routes-map.json')
+      .then(res => res.json())
+      .then(data => {
+        const total = data.length;
+        const ok = data.filter(r => r.status === 'OK').length;
+        const err = data.filter(r => r.status === 'ERR').length;
+
+        new Chart(document.getElementById('routesChart'), {
+          type: 'doughnut',
+          data: {
+            labels: ['OK', 'ERR'],
+            datasets: [{
+              data: [ok, err],
+              backgroundColor: ['#4CAF50', '#F44336']
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: 'bottom' },
+              title: { display: true, text: `Cobertura: ${(ok / total * 100).toFixed(2)}%` }
+            }
+          }
+        });
+      });
+  </script>
+</body>
+</html>

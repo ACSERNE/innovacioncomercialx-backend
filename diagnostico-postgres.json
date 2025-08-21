@@ -1,0 +1,9 @@
+{
+  "estado": "fallido",
+  "hora": "2025-08-11T02:52:56.089Z",
+  "host": "",
+  "base_de_datos": "",
+  "usuario": "",
+  "mensaje": "connect ECONNREFUSED ::1:5432",
+  "stack": "Error: connect ECONNREFUSED ::1:5432\n    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1495:16)"
+}

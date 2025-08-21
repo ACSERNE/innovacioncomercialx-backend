@@ -1,0 +1,21 @@
+{
+  "modulo": "docker",
+  "estado": "validado",
+  "cobertura": "completa",
+  "timestamp": "2025-08-15T04:10:00.000Z",
+  "exportacion": "enviado",
+  "contenedores": [
+    { "Names": "comercialx-api", "Image": "node:18", "Status": "Up 2 hours" }
+  ],
+  "imagenes": [
+    "node:18",
+    "nginx:latest"
+  ],
+  "volumenes": [
+    "comercialx-data"
+  ],
+  "redes": [
+    "bridge",
+    "comercialx-net"
+  ]
+}

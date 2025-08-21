@@ -1,0 +1,40 @@
+timestamp: "2025-08-15T04:30:00.000Z"
+estado_global: validado
+exportacion: completa
+modulos:
+  - nombre: backend
+    estado: validado
+    timestamp: "2025-08-15T04:30:00.000Z"
+    endpoints:
+      - /api/login
+      - /api/logout
+      - /api/users
+      - /api/products
+    gaps: 0
+    exportacion: completa
+
+  - nombre: docker
+    estado: validado
+    timestamp: "2025-08-15T04:30:00.000Z"
+    contenedores: 1
+    imagenes:
+      - node:18
+      - nginx:latest
+    exportacion: completa
+
+  - nombre: entorno
+    estado: validado
+    timestamp: "2025-08-15T04:30:00.000Z"
+    sistema: Linux
+    node: "18.17.0"
+    npm: "9.8.0"
+    exportacion: completa
+
+  - nombre: docs
+    estado: validado
+    timestamp: "2025-08-15T04:30:00.000Z"
+    archivos:
+      - README.md
+      - routes.md
+      - exportacion.md
+    exportacion: completa

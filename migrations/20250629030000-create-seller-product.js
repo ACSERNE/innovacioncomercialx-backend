@@ -1,3 +1,4 @@
+async function main() {
 'use strict';
 
 module.exports = {
@@ -52,3 +53,5 @@ module.exports = {
     await queryInterface.dropTable('SellerProducts');
   }
 };
+}
+main()

@@ -1,0 +1,7 @@
+Package: comercialx-cockpit
+Version: 1.0.0
+Section: utils
+Priority: optional
+Architecture: all
+Maintainer: Valdez <valdez@comercialx.cl>
+Description: CLI cockpitizado con validación real y trazabilidad visual.

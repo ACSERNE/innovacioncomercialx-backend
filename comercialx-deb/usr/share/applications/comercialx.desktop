@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=ComercialX Cockpit
+Comment=Sistema cockpitizado multiplataforma
+Exec=comercialx-cockpit
+Icon=utilities-terminal
+Terminal=true
+Type=Application
+Categories=Utility;
+StartupNotify=true

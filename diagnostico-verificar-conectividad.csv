@@ -1,0 +1,4 @@
+servicio,estado,detalle
+"PostgreSQL","❌ Fallo","password authentication failed for user "postgres""
+"Redis","❌ Fallo","getaddrinfo EAI_AGAIN redis"
+"API HTTP","❌ Fallo","connect ECONNREFUSED ::1:3000"

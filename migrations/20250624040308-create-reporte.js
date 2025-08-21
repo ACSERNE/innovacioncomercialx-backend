@@ -1,3 +1,4 @@
+async function main() {
 'use strict';
 
 module.exports = {
@@ -38,3 +39,5 @@ module.exports = {
   }
 };
 
+}
+main()

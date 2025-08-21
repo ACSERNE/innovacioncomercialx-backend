@@ -1,0 +1,5 @@
+[
+  { "producto": "Zapatos", "categoria": "Calzado", "stock": 120, "entorno": "dev" },
+  { "producto": "Notebook", "categoria": "Electrónica", "stock": 35, "entorno": "prod" },
+  { "producto": "DemoPack", "categoria": "Demo", "stock": "∞", "entorno": "test" }
+]

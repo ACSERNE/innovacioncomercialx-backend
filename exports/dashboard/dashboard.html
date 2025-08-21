@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Dashboard visual | ComercialX Cockpit</title>
+    <style>
+      body { font-family: sans-serif; padding: 2rem; background: #f0f0f0; }
+      h1 { color: #333; }
+      table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+      th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: center; }
+      th { background: #0078D4; color: white; }
+      .badge svg { width: 150px; }
+      .export-buttons { margin-top: 1rem; }
+      .button { padding: 0.5rem 1rem; background: #0078D4; color: white; text-decoration: none; border-radius: 4px; margin-right: 1rem; display: inline-block; }
+    </style>
+  </head>
+  <body>
+    <h1>📊 Dashboard visual cockpitizado</h1>
+
+    <table>
+      <tr>
+        <th>Acción</th>
+        <th>Entorno</th>
+        <th>Módulo</th>
+        <th>Estado</th>
+      </tr>
+      <tr>
+        <td>crear</td>
+        <td>dev</td>
+        <td>API</td>
+        <td><img src="../badges/API-dev.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>crear</td>
+        <td>dev</td>
+        <td>Docker</td>
+        <td><img src="../badges/Docker-dev.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>crear</td>
+        <td>dev</td>
+        <td>Docs</td>
+        <td><img src="../badges/Docs-dev.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>crear</td>
+        <td>dev</td>
+        <td>CI_CD</td>
+        <td><img src="../badges/CI_CD-dev.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>crear</td>
+        <td>prod</td>
+        <td>API</td>
+        <td><img src="../badges/API-prod.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>crear</td>
+        <td>prod</td>
+        <td>Docker</td>
+        <td><img src="../badges/Docker-prod.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>crear</td>
+        <td>prod</td>
+        <td>Docs</td>
+        <td><img src="../badges/Docs-prod.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>crear</td>
+        <td>prod</td>
+        <td>CI_CD</td>
+        <td><img src="../badges/CI_CD-prod.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>crear</td>
+        <td>sandbox</td>
+        <td>API</td>
+        <td><img src="../badges/API-sandbox.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>crear</td>
+        <td>sandbox</td>
+        <td>Docker</td>
+        <td><img src="../badges/Docker-sandbox.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>crear</td>
+        <td>sandbox</td>
+        <td>Docs</td>
+        <td><img src="../badges/Docs-sandbox.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>crear</td>
+        <td>sandbox</td>
+        <td>CI_CD</td>
+        <td><img src="../badges/CI_CD-sandbox.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>exportar</td>
+        <td>dev</td>
+        <td>API</td>
+        <td><img src="../badges/API-dev.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>exportar</td>
+        <td>dev</td>
+        <td>Docker</td>
+        <td><img src="../badges/Docker-dev.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>exportar</td>
+        <td>dev</td>
+        <td>Docs</td>
+        <td><img src="../badges/Docs-dev.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>exportar</td>
+        <td>dev</td>
+        <td>CI_CD</td>
+        <td><img src="../badges/CI_CD-dev.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>exportar</td>
+        <td>prod</td>
+        <td>API</td>
+        <td><img src="../badges/API-prod.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>exportar</td>
+        <td>prod</td>
+        <td>Docker</td>
+        <td><img src="../badges/Docker-prod.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>exportar</td>
+        <td>prod</td>
+        <td>Docs</td>
+        <td><img src="../badges/Docs-prod.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>exportar</td>
+        <td>prod</td>
+        <td>CI_CD</td>
+        <td><img src="../badges/CI_CD-prod.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>exportar</td>
+        <td>sandbox</td>
+        <td>API</td>
+        <td><img src="../badges/API-sandbox.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>exportar</td>
+        <td>sandbox</td>
+        <td>Docker</td>
+        <td><img src="../badges/Docker-sandbox.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>exportar</td>
+        <td>sandbox</td>
+        <td>Docs</td>
+        <td><img src="../badges/Docs-sandbox.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>exportar</td>
+        <td>sandbox</td>
+        <td>CI_CD</td>
+        <td><img src="../badges/CI_CD-sandbox.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>auditar</td>
+        <td>dev</td>
+        <td>API</td>
+        <td><img src="../badges/API-dev.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>auditar</td>
+        <td>dev</td>
+        <td>Docker</td>
+        <td><img src="../badges/Docker-dev.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>auditar</td>
+        <td>dev</td>
+        <td>Docs</td>
+        <td><img src="../badges/Docs-dev.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>auditar</td>
+        <td>dev</td>
+        <td>CI_CD</td>
+        <td><img src="../badges/CI_CD-dev.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>auditar</td>
+        <td>prod</td>
+        <td>API</td>
+        <td><img src="../badges/API-prod.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>auditar</td>
+        <td>prod</td>
+        <td>Docker</td>
+        <td><img src="../badges/Docker-prod.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>auditar</td>
+        <td>prod</td>
+        <td>Docs</td>
+        <td><img src="../badges/Docs-prod.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>auditar</td>
+        <td>prod</td>
+        <td>CI_CD</td>
+        <td><img src="../badges/CI_CD-prod.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>auditar</td>
+        <td>sandbox</td>
+        <td>API</td>
+        <td><img src="../badges/API-sandbox.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>auditar</td>
+        <td>sandbox</td>
+        <td>Docker</td>
+        <td><img src="../badges/Docker-sandbox.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>auditar</td>
+        <td>sandbox</td>
+        <td>Docs</td>
+        <td><img src="../badges/Docs-sandbox.svg" alt="Estado no disponible"></td>
+      </tr>
+      <tr>
+        <td>auditar</td>
+        <td>sandbox</td>
+        <td>CI_CD</td>
+        <td><img src="../badges/CI_CD-sandbox.svg" alt="Estado no disponible"></td>
+      </tr>
+    </table>
+
+    <div class="export-buttons">
+      <a class="button" href="dashboard.csv" download>📦 Exportar CSV</a>
+      <a class="button" href="dashboard.json" download>📦 Exportar JSON</a>
+      <a class="button" href="dashboard.yaml" download>📦 Exportar YAML</a>
+    </div>
+  </body>
+</html>

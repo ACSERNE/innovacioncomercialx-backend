@@ -1,0 +1,17 @@
+timestamp,email,role,action
+2025-08-13T05:58:12.164Z,auditor@example.com,auditor,Ver inventario
+2025-08-13T08:09:23.344Z,innovacioncomercialx@gmail.com,admin,"Eliminación de carpeta residual: innovacioncomercialx-backend"
+2025-08-13T08:14:37.177Z,auditor@example.com,auditor,Ver inventario
+2025-08-13T08:15:57.819Z,innovacioncomercialx@gmail.com,admin,"Verificación de rutas:
+✅ Carpeta encontrada: controllers
+✅ Carpeta encontrada: models
+✅ Carpeta encontrada: routes
+✅ Carpeta encontrada: scripts
+✅ Carpeta encontrada: src
+✅ Carpeta encontrada: utils
+✅ Archivo encontrado: index.js
+✅ Archivo encontrado: package.json
+✅ Archivo encontrado: README.md
+✅ Archivo encontrado: server.js"
+2025-08-13T08:21:27.955Z,innovacioncomercialx@gmail.com,admin,"Actualización de README.md con verificación de rutas cockpitizada"
+2025-08-13T08:50:50.644Z,auditor@example.com,auditor,"4) Volver al menú principal"

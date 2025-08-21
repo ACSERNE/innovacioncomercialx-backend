@@ -1,0 +1,43 @@
+name: 🚦 Auditoría Cockpitizada de Rutas
+
+on:
+  push:
+    branches: [ desarrollo-v2 ]
+  pull_request:
+    branches: [ desarrollo-v2 ]
+
+jobs:
+  audit-routes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔄 Checkout repositorio
+        uses: actions/checkout@v3
+
+      - name: 🧰 Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.x'
+
+      - name: 📦 Instalar dependencias
+        run: npm install
+
+      - name: 🧪 Ejecutar auditoría cockpitizada
+        run: |
+          chmod +x ./backend/audit/routes/routes-audit.sh
+          ./backend/audit/routes/routes-audit.sh
+
+      - name: ✅ Validar auditoría en CI
+        run: node ./backend/audit/routes/routes-ci-check.js
+
+      - name: 🏷️ Generar badge SVG
+        run: node ./backend/audit/routes/routes-badge.js
+
+      - name: 📤 Publicar artefactos
+        uses: actions/upload-artifact@v3
+        with:
+          name: auditoria-rutas
+          path: |
+            backend/audit/routes/routes-map.*
+            backend/audit/routes/routes-dashboard.*
+            backend/audit/routes/routes-badge.svg
+            backend/audit/routes/routes-gaps.md

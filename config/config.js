@@ -1,31 +1,23 @@
-require('dotenv').config();
+require('dotenv').config({ path: '.env.docker' }); // Carga .env.docker para docker, ajusta según tu entorno
 
 module.exports = {
   development: {
     username: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || null,
+    password: process.env.DB_PASSWORD || 'admin123',
     database: process.env.DB_NAME || 'innovacion_db',
-    host: process.env.DB_HOST || '127.0.0.1',
+    host: process.env.DB_HOST || 'localhost',
     port: process.env.DB_PORT || 5432,
     dialect: 'postgres',
-    logging: false
+    logging: false,
   },
-  test: {
-    username: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || null,
-    database: process.env.DB_NAME || 'innovacion_db_test',
-    host: process.env.DB_HOST || '127.0.0.1',
+
+  docker: {
+    username: process.env.POSTGRES_USER || 'postgres',
+    password: process.env.POSTGRES_PASSWORD || 'admin123',
+    database: process.env.POSTGRES_DB || 'innovacion_db',
+    host: process.env.DB_HOST || 'postgres',
     port: process.env.DB_PORT || 5432,
     dialect: 'postgres',
-    logging: false
-  },
-  production: {
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    dialect: 'postgres',
-    logging: false
+    logging: false,
   }
 };

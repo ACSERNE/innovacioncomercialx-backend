@@ -1,3 +1,4 @@
+async function main() {
 'use strict';
 
 module.exports = {
@@ -23,13 +24,22 @@ module.exports = {
         allowNull: false,
       },
       role: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.ENUM('user', 'admin'), // ← Enum para alinearse con el modelo
         allowNull: false,
         defaultValue: 'user',
       },
       activo: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
+      },
+      intentosFallidos: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      bloqueadoHasta: {
+        type: Sequelize.DATE,
+        allowNull: true,
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -46,6 +56,7 @@ module.exports = {
 
   async down(queryInterface) {
     await queryInterface.dropTable('users');
+    await queryInterface.sequelize.query('DROP TYPE IF EXISTS "enum_users_role";'); // ← Limpia el ENUM en rollback
   },
-};
-// This migration creates a 'users' table with fields for id, name, email, password, role, active status, and timestamps for creation and updates.
+};}
+main()

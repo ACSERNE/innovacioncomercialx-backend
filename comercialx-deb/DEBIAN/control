@@ -1,0 +1,8 @@
+Package: comercialx-cockpit
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: all
+Depends: nodejs
+Maintainer: Valdez <valdez@comercialx.com>
+Description: Sistema cockpitizado multiplataforma con validación real, trazabilidad y branding técnico.

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="160">
+  <rect width="400" height="160" fill="#f9f9f9"/>
+  <text x="20" y="30" font-size="16" fill="#333">📡 ComercialX Cockpit - Mapa Técnico</text>
+
+  <rect x="20" y="50" width="120" height="30" fill="#4caf50"/>
+  <text x="30" y="70" fill="#fff" font-size="12">backend: validado</text>
+
+  <rect x="160" y="50" width="120" height="30" fill="#2196f3"/>
+  <text x="170" y="70" fill="#fff" font-size="12">docker: validado</text>
+
+  <rect x="20" y="100" width="120" height="30" fill="#ff9800"/>
+  <text x="30" y="120" fill="#fff" font-size="12">entorno: validado</text>
+
+  <rect x="160" y="100" width="120" height="30" fill="#9c27b0"/>
+  <text x="170" y="120" fill="#fff" font-size="12">docs: validado</text>
+</svg>

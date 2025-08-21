@@ -1,0 +1,9 @@
+# Configuración cockpit CLI
+instalado_en=2025-08-13 00:06:48
+usuario=valdez
+tienda=innovacioncomercialx
+rol_default=admin
+modo_entorno=prueba
+reportes=diagnosticos/
+logs=logs/
+idioma=es

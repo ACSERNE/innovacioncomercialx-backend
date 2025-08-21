@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>📡 ComercialX Cockpit - Monitor Técnico</title>
+  <style>
+    body { font-family: sans-serif; background: #f4f4f4; padding: 2em; }
+    h1 { color: #333; }
+    .modulo { margin-bottom: 2em; background: #fff; padding: 1em; border-radius: 8px; box-shadow: 0 0 5px #ccc; }
+    .badge { float: right; }
+    .estado { font-weight: bold; color: #4caf50; }
+    .log { font-family: monospace; background: #eee; padding: 0.5em; border-radius: 4px; margin-top: 0.5em; }
+    .timestamp { font-size: 0.9em; color: #666; }
+  </style>
+</head>
+<body>
+  <h1>📡 ComercialX Cockpit - Monitor Técnico</h1>
+
+  <div class="modulo">
+    <span class="badge"><img src="badge-backend.svg" alt="Backend badge"></span>
+    <h2>🔧 Backend</h2>
+    <div class="estado">Estado: validado</div>
+    <div class="timestamp">Última validación: 2025-08-15 04:30</div>
+    <div class="log">
+      Rutas auditadas: /api/login, /api/logout, /api/users, /api/products  
+      Gaps: ninguno  
+      Exportación: completa
+    </div>
+  </div>
+
+  <div class="modulo">
+    <span class="badge"><img src="badge-docker.svg" alt="Docker badge"></span>
+    <h2>🐳 Docker</h2>
+    <div class="estado">Estado: validado</div>
+    <div class="timestamp">Última validación: 2025-08-15 04:30</div>
+    <div class="log">
+      Contenedor: comercialx-api  
+      Imagen: node:18  
+      Volumen: comercialx-data  
+      Red: comercialx-net  
+      Exportación: completa
+    </div>
+  </div>
+
+  <div class="modulo">
+    <span class="badge"><img src="badge-entorno.svg" alt="Entorno badge"></span>
+    <h2>🧪 Entorno</h2>
+    <div class="estado">Estado: validado</div>
+    <div class="timestamp">Última validación: 2025-08-15 04:30</div>
+    <div class="log">
+      Sistema: Linux  
+      Node.js: 18.17.0  
+      npm: 9.8.0  
+      Exportación: completa
+    </div>
+  </div>
+
+  <div class="modulo">
+    <span class="badge"><img src="badge-docs.svg" alt="Docs badge"></span>
+    <h2>📚 Documentación</h2>
+    <div class="estado">Estado: validado</div>
+    <div class="timestamp">Última validación: 2025-08-15 04:30</div>
+    <div class="log">
+      Archivos: README.md, routes.md, exportacion.md  
+      Exportación: completa
+    </div>
+  </div>
+
+  <p><em>Este monitor se genera automáticamente desde scripts cockpitizados. Estado técnico, trazabilidad visual y cobertura extendida por módulo.</em></p>
+</body>
+</html>

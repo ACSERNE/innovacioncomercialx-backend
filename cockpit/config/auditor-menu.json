@@ -1,0 +1,7 @@
+[
+  { "label": "📦 Ver registros de onboarding", "action": "showOnboarding" },
+  { "label": "🔍 Auditar acciones recientes", "action": "showRecent" },
+  { "label": "📁 Exportar log en CSV", "action": "exportCSV" },
+  { "label": "📝 Exportar log en Markdown", "action": "exportMarkdown" },
+  { "label": "🚪 Salir", "action": "exit" }
+]

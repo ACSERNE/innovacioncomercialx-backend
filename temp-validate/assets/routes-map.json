@@ -1,0 +1,17 @@
+[
+  {
+    "method": "GET",
+    "endpoint": "/api/users",
+    "status": "ERR"
+  },
+  {
+    "method": "POST",
+    "endpoint": "/api/login",
+    "status": "ERR"
+  },
+  {
+    "method": "GET",
+    "endpoint": "/api/unknown",
+    "status": "ERR"
+  }
+]

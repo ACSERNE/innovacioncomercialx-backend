@@ -1,35 +1,30 @@
-╔════════════════════════════════════════════╗
-║ 🚀 ComercialX Cockpit CLI                 ║
-║ Versión: v1.0                         ║
-║ Autor: Valdez                            ║
-║ Fecha: 14-08-2025                              ║
-╚════════════════════════════════════════════╝
+╭────────────────────────────────────────────────────────────╮
+│ 🚀 ComercialX Cockpit Backend                              │
+╰────────────────────────────────────────────────────────────╯
 
-# 🚀 ComercialX Cockpit
-
-Sistema CLI multiplataforma con validación real, trazabilidad y branding técnico.
-
-![Cockpitizado](https://img.shields.io/badge/status-cockpitizado-blue)
-![Multiplataforma](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-green)
-![Licencia MIT](https://img.shields.io/badge/license-MIT-lightgrey)
+Sistema modular y multiplataforma para gestión de tienda, ventas, productos y auditoría. Totalmente cockpitizado con branding visual, scripts automatizados y documentación extendida.
 
 ---
 
-## 🧩 Características
+## 🧠 Compatibilidad técnica
 
-- ✅ Validación real por correo, nombre completo y rol
-- 🎛️ Menú jerárquico visual con `inquirer`
-- 🧾 Registro automático en CSV y logs cockpitizados
-- 🎨 Branding técnico con ASCII art y dashboard visual
-- 📁 Accesos directos `.desktop` y `.bat` para ejecución rápida
-- 📦 Empaquetado multiplataforma: `.deb`, `.AppImage`, `.msi` (opcional)
+- ✅ Node.js **v18 a v22+**
+- ✅ CommonJS puro (`require`, `module.exports`)
+- ❌ No se usa `"type": "module"` ni `.mjs`
+- 🔒 Todos los `await` encapsulados en funciones `main()`
 
 ---
 
-## 🛠️ Instalación
+## ⚠️ Prevención de errores ESM
 
-### Linux
+Node.js 22+ activa modo ESM si detecta:
+
+- `"type": "module"` en `package.json`
+- Archivos `.mjs`
+- `await` fuera de funciones
+
+Para evitarlo:
 
 ```bash
-dpkg -i comercialx-cockpit_1.0_all.deb
-'EOF'
+./validate-esm-risk-smart.sh   # Escaneo inteligente
+./fix-await-cat.sh             # Encapsula await automáticamente

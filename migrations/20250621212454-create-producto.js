@@ -1,3 +1,4 @@
+async function main() {
 'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
@@ -41,6 +42,16 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
+      userId: {
+        type: Sequelize.UUID,
+        allowNull: true,
+        references: {
+          model: 'users',
+          key: 'id'
+        },
+        onUpdate: 'SET NULL',
+        onDelete: 'SET NULL'
+      },
       fecha_vencimiento: {
         type: Sequelize.DATE,
         allowNull: true
@@ -61,4 +72,5 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('productos');
   }
-};
+};}
+main()

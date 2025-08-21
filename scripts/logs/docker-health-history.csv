@@ -1,0 +1,5 @@
+timestamp,container,status,active
+2025-07-25T01:21:34.301Z,pgadmin-innovacion,Up About an hour,true
+2025-07-25T01:21:34.301Z,backend-innovacion,Up About an hour,true
+2025-07-25T01:21:34.301Z,backend-postgres-1,Up About an hour,true
+2025-07-25T01:21:34.301Z,postgres-container,Up About an hour,true

@@ -1,61 +1,23 @@
 {
-  "name": "innovacioncomercialx-backend",
+  "name": "backend-innovacion",
   "version": "1.0.0",
-  "description": "Backend del proyecto innovacioncomercialx",
-  "main": "server.js",
+  "description": "Backend para ComercialX con Docker, PostgreSQL y pgAdmin",
+  "main": "server.cjs",
   "type": "commonjs",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
-    "dev:reset": "./reset-backend.sh",
-    "db:migrate": "sequelize-cli db:migrate",
-    "db:seed": "sequelize-cli db:seed:all",
-    "db:reset": "sequelize-cli db:migrate:undo:all && sequelize-cli db:migrate && sequelize-cli db:seed:all",
-    "check-casing": "node ../scripts/checkcasing.js",
-    "fix-casing": "node ../scripts/fixcasing.js",
-    "clean": "rmdir /s /q node_modules && del package-lock.json && npm install",
-    "fix-imports": "node fix-all-import-casing.js",
-    "check-imports": "node check-import-casing.js",
-    "lint-imports": "node lint-imports.js",
-    "generate-token": "node scripts/generate-token.js",
-    "test": "jest"
+    "start": "node server.cjs",
+    "dev": "nodemon server.cjs"
   },
-  "author": "acserne occesit",
-  "license": "MIT",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.821.0",
-    "aws-sdk": "^2.1692.0",
-    "bcrypt": "^6.0.0",
-    "bcryptjs": "^2.4.3",
-    "clipboardy": "^4.0.0",
-    "compression": "^1.7.4",
     "cors": "^2.8.5",
-    "dotenv": "^16.5.0",
-    "exceljs": "^4.4.0",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "express-validator": "^7.2.1",
-    "helmet": "^8.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "luxon": "^3.6.1",
-    "mongoose": "^8.15.1",
-    "morgan": "^1.10.0",
-    "pdfkit": "^0.17.1",
-    "pg": "^8.16.0",
-    "pg-hstore": "^2.3.4",
-    "qrcode": "^1.5.1",
-    "react-router-dom": "^7.6.2",
-    "readline-sync": "^1.4.10",
-    "sequelize": "^6.37.7",
-    "speakeasy": "^2.0.0"
+    "pg": "^8.16.3",
+    "sequelize": "^6.37.7"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
-    "nodemon": "^3.0.2",
-    "sequelize-cli": "^6.6.1",
-    "supertest": "^7.1.1"
+    "nodemon": "^3.0.2"
   },
-  "directories": {
-    "test": "test"
-  },
-  "keywords": []
+  "author": "ACSERNE",
+  "license": "MIT"
 }

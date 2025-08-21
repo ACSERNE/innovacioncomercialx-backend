@@ -1,3 +1,4 @@
+async function main() {
 'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
@@ -49,3 +50,5 @@ module.exports = {
     await queryInterface.dropTable('alertas');
   },
 };
+}
+main()

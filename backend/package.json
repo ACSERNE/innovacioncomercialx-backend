@@ -1,0 +1,39 @@
+{
+  "name": "comercialx-backend",
+  "version": "1.0.0",
+  "description": "Backend cockpitizado para ComercialX",
+  "main": "server.cjs",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.cjs",
+    "dev": "nodemon server.cjs",
+    "sequelize": "npx sequelize-cli",
+    "db:migrate": "npx sequelize-cli db:migrate",
+    "db:migrate:undo": "npx sequelize-cli db:migrate:undo",
+    "db:seed": "npx sequelize-cli db:seed:all",
+    "db:seed:undo": "npx sequelize-cli db:seed:undo:all"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "sequelize",
+    "postgres",
+    "backend"
+  ],
+  "author": "ACSERNE",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "pg": "^8.16.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.7",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "sequelize-cli": "^6.6.3"
+  }
+}

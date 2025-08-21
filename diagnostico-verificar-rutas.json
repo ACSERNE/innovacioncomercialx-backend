@@ -1,0 +1,21 @@
+{
+  "hora": "2025-08-11T03:12:37.374Z",
+  "rutas": [
+    {
+      "ruta": "/app/.env",
+      "estado": "✅ Existe"
+    },
+    {
+      "ruta": "/app/config.json",
+      "estado": "❌ No encontrada"
+    },
+    {
+      "ruta": "/app/diagnosticos",
+      "estado": "✅ Existe"
+    },
+    {
+      "ruta": "/app/logs",
+      "estado": "✅ Existe"
+    }
+  ]
+}

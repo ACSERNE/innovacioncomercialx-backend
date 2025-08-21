@@ -1,56 +1,39 @@
-
 services:
-  postgres:
-    image: postgres:15
+  postgres-innovacion:
+    image: postgres:latest
     container_name: postgres-innovacion
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: valdez98/224
-      POSTGRES_DB: innovacion_db
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: comercialx
     volumes:
       - pgdata:/var/lib/postgresql/data
-    restart: unless-stopped
+    ports:
+      - "5432:5432"
 
-  pgadmin:
-    image: dpage/pgadmin4
+  pgadmin-innovacion:
+    image: dpage/pgadmin4:latest
     container_name: pgadmin-innovacion
+    restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: innovacioncomercialx@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: admin1234
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+      PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "8080:80"
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
-      - ./pgadmin_config/servers.json:/pgadmin4/servers.json
     depends_on:
-      - postgres
-    restart: unless-stopped
+      - postgres-innovacion
 
-  backend:
-    build:
-      context: .
+  backend-innovacion:
+    build: .
     container_name: backend-innovacion
-    environment:
-      - PORT=5002
-      - DB_HOST=postgres
-      - DB_USER=postgres
-      - DB_PASSWORD=valdez98/224
-      - DB_NAME=innovacion_db
-      - JWT_SECRET=supersecreto
+    restart: unless-stopped
+    env_file:
+      - .env
     ports:
       - "5002:5002"
     depends_on:
-      - postgres
-    volumes:
-      - .:/app
-    working_dir: /app
-    command: ["node", "app.js"]
-    restart: unless-stopped
+      - postgres-innovacion
 
 volumes:
   pgdata:
-  pgadmin_data:

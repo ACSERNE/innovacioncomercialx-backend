@@ -1,3 +1,4 @@
+async function main() {
 const { CategoriaProducto } = require('../models');
 
 // Obtener todas las categorías
@@ -36,3 +37,5 @@ exports.deleteCategoria = async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar categoría' });
   }
 };
+}
+main()

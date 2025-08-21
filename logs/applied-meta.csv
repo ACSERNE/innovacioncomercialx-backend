@@ -1,0 +1,24 @@
+name
+20250101000000-enable-uuid-ossp.js
+20250621191711-create-user.js
+20250621212449-create-categoria-producto.js
+20250621212454-create-producto.js
+20250621212459-create-flujo-caja.js
+20250624040303-create-transaccion.js
+20250624040308-create-reporte.js
+20250624040312-create-alerta.js
+20250629021825-add-observacion-to-transacciones.js
+20250629030000-create-seller-product.js
+20250629041513-create-sale.js
+20250629120000-create-seller-product.js
+20250630212723-add-descripcion-to-categorias_producto.js
+20250709022346-enable-uuid-ossp.js
+20250709154526-add-descripcion-to-productos.js
+20250709154840-add-precio-to-productos.js
+20250709161348-add-userId-to-transacciones.js
+20250711152104-create-logactividad.js
+20250713183716-add-userId-to-productos.js
+20250714170319-create-seedlog.js
+20250714170639-create-seed-log.js
+20250714173849-add-ejecutadoPor-to-seedlog.js
+(22 rows)

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>📡 Monitor de Auditoría de Rutas</title>
+  <style>
+    body { font-family: sans-serif; background: #f0f0f0; padding: 2em; text-align: center; }
+    .status { font-size: 5em; margin: 1em 0; }
+    .green { color: #4CAF50; }
+    .yellow { color: #FFC107; }
+    .red { color: #F44336; }
+    .info { font-size: 1.2em; color: #333; }
+  </style>
+</head>
+<body>
+  <h1>📡 Monitor de Auditoría de Rutas</h1>
+  <div id="status" class="status">⏳</div>
+  <div id="info" class="info">Cargando estado...</div>
+
+  <script>
+    fetch('./routes-status.json')
+      .then(res => res.json())
+      .then(data => {
+        const statusMap = {
+          green: { icon: '🟢', class: 'green' },
+          yellow: { icon: '🟡', class: 'yellow' },
+          red: { icon: '🔴', class: 'red' }
+        };
+        const s = statusMap[data.status];
+        document.getElementById('status').textContent = s.icon;
+        document.getElementById('status').classList.add(s.class);
+        document.getElementById('info').innerHTML = `
+          <strong>Timestamp:</strong> ${data.timestamp}<br>
+          <strong>Rutas OK:</strong> ${data.ok}<br>
+          <strong>Rutas con error:</strong> ${data.err}<br>
+          <strong>Cobertura:</strong> ${data.coverage}%
+        `;
+      })
+      .catch(() => {
+        document.getElementById('status').textContent = '⚠️';
+        document.getElementById('info').textContent = 'Error al cargar el estado.';
+      });
+  </script>
+</body>
+</html>

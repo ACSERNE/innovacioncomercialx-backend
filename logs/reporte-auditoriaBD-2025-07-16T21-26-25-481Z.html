@@ -1,0 +1,117 @@
+
+    <html>
+      <head>
+        <title>Auditoría de Base de Datos</title>
+        <style>
+          body { font-family: Arial; margin: 2em; background: #f9f9f9; }
+          table { border-collapse: collapse; width: 100%; background: #fff; margin-top: 2em; }
+          th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+          th { background: #007acc; color: white; }
+          tr:nth-child(even) { background: #f2f2f2; }
+        </style>
+      </head>
+      <body>
+        <h2>📄 Informe Técnico: Auditoría de Tablas</h2>
+        <table>
+          <tr>
+            <th>Tabla</th>
+            <th>Registros</th>
+            <th>Tamaño estimado</th>
+            <th>Campos totalmente vacíos</th>
+          </tr>
+          
+        <tr>
+          <td>SequelizeMeta</td>
+          <td>22</td>
+          <td>40 kB</td>
+          <td>—</td>
+        </tr>
+      
+        <tr>
+          <td>productos</td>
+          <td>0</td>
+          <td>16 kB</td>
+          <td>id, nombre, precio_unitario, precio_total, descuento_aplicable, stock, categoriaId, userId, fecha_vencimiento, createdAt, updatedAt, descripcion, precio</td>
+        </tr>
+      
+        <tr>
+          <td>transacciones</td>
+          <td>0</td>
+          <td>16 kB</td>
+          <td>id, productoId, userId, tipo, cantidad, precio_unitario, total, metodo_pago, fecha, createdAt, updatedAt, observacion, productId</td>
+        </tr>
+      
+        <tr>
+          <td>users</td>
+          <td>0</td>
+          <td>24 kB</td>
+          <td>id, nombre, correo, password, role, activo, intentosFallidos, bloqueadoHasta, createdAt, updatedAt</td>
+        </tr>
+      
+        <tr>
+          <td>FlujoCajas</td>
+          <td>0</td>
+          <td>8192 bytes</td>
+          <td>id, tipo, monto, descripcion, fecha, createdAt, updatedAt</td>
+        </tr>
+      
+        <tr>
+          <td>reportes</td>
+          <td>0</td>
+          <td>16 kB</td>
+          <td>id, tipo, fecha, resumen, createdAt, updatedAt</td>
+        </tr>
+      
+        <tr>
+          <td>alertas</td>
+          <td>0</td>
+          <td>8192 bytes</td>
+          <td>id, tipo, mensaje, productoId, leida, createdAt, updatedAt</td>
+        </tr>
+      
+        <tr>
+          <td>SellerProducts</td>
+          <td>0</td>
+          <td>16 kB</td>
+          <td>id, nombre, descripcion, precio, stock, vendedorId, createdAt, updatedAt</td>
+        </tr>
+      
+        <tr>
+          <td>Sales</td>
+          <td>0</td>
+          <td>8192 bytes</td>
+          <td>id, sellerProductId, cantidad, precio_total, comision_valor, monto_vendedor, fecha_venta, createdAt, updatedAt</td>
+        </tr>
+      
+        <tr>
+          <td>seller_product</td>
+          <td>0</td>
+          <td>8192 bytes</td>
+          <td>id, sellerId, productId, createdAt, updatedAt</td>
+        </tr>
+      
+        <tr>
+          <td>categorias_producto</td>
+          <td>0</td>
+          <td>16 kB</td>
+          <td>id, nombre, createdAt, updatedAt, descripcion</td>
+        </tr>
+      
+        <tr>
+          <td>logactividad</td>
+          <td>0</td>
+          <td>16 kB</td>
+          <td>id, userId, tipo, descripcion, ip, fecha, createdAt, updatedAt</td>
+        </tr>
+      
+        <tr>
+          <td>SeedLogs</td>
+          <td>0</td>
+          <td>16 kB</td>
+          <td>id, tipo, resultado, comentario, creadoEn, ejecutadoPor</td>
+        </tr>
+      
+        </table>
+      </body>
+    </html>
+    

@@ -1,0 +1,3 @@
+#!/bin/bash
+HERE="/usr/bin"
+node "/index.js"

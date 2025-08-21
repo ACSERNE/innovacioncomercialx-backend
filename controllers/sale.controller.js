@@ -1,3 +1,4 @@
+async function main() {
 const { Sale, SellerProduct } = require('../models');
 const { Op } = require('sequelize');
 
@@ -97,3 +98,5 @@ exports.getSalesBySeller = async (req, res) => {
     res.status(500).json({ error: 'Error interno al obtener ventas' });
   }
 };
+}
+main()

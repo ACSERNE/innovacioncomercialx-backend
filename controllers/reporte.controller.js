@@ -1,3 +1,4 @@
+async function main() {
 const path = require('path');
 const fs = require('fs');
 const { exportarAPDF, exportarAExcel } = require('../utils/exportador');
@@ -59,3 +60,5 @@ exports.descargarArchivo = (req, res) => {
 
   res.download(filePath);
 };
+}
+main()

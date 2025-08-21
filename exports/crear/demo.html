@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Micrositio demo | ComercialX Cockpit</title>
+    <style>
+      body { font-family: sans-serif; padding: 2rem; background: #f9f9f9; }
+      h1, h2 { color: #333; }
+      pre { background: #fff; padding: 1rem; border: 1px solid #ccc; overflow-x: auto; }
+      .section { margin-bottom: 2rem; }
+      a.button, button { padding: 0.5rem 1rem; background: #0078D4; color: white; text-decoration: none; border-radius: 4px; margin-right: 1rem; display: inline-block; border: none; cursor: pointer; }
+    </style>
+  </head>
+  <body>
+    <h1>🚀 Micrositio ComercialX: demo</h1>
+
+    <div class="section">
+      <h2>📘 README técnico</h2>
+      <pre># 📘 Micrositio ComercialX (demo)
+
+Este micrositio corresponde a la opción **demo**:
+- 🏪 Tienda física
+- 🛒 Tienda en línea
+- 🔀 Física + en línea
+- 🎁 Prueba gratuita
+
+Incluye badges SVG, exportación ZIP y validación CI/CD visual.</pre>
+    </div>
+
+    <div class="section">
+      <h2>📦 ZIP cockpitizado</h2>
+      <p>ZIP no disponible</p>
+    </div>
+
+    <div class="section">
+      <h2>🏷️ Badge SVG</h2>
+      <p>Badge no disponible</p>
+    </div>
+
+    <div class="section">
+      <h2>📟 Validación CI/CD</h2>
+      <button onclick="validarPipeline()">Validar pipeline</button>
+      <pre id="logVisual">Esperando validación...</pre>
+    </div>
+
+    <script>
+    function validarPipeline() {
+      const log = document.getElementById('logVisual');
+      log.textContent = "🔄 Iniciando validación...\n";
+
+      const pasos = [
+        "🔍 Verificando entorno...",
+        "📦 Validando exportaciones...",
+        "🏷️ Verificando badges...",
+        "📘 Validando README...",
+        "🚀 Simulando despliegue CI/CD...",
+        "✅ Pipeline validado correctamente."
+      ];
+
+      let i = 0;
+      const intervalo = setInterval(() => {
+        if (i < pasos.length) {
+          log.textContent += pasos[i] + "\n";
+          i++;
+        } else {
+          clearInterval(intervalo);
+        }
+      }, 800);
+    }
+    </script>
+  </body>
+</html>

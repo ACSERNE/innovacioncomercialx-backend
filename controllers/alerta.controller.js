@@ -1,3 +1,4 @@
+async function main() {
 const { Producto } = require('../models');
 const { Op } = require('sequelize');
 const { exportarReportePDF, exportarReporteExcel } = require('../utils/exportador');
@@ -85,3 +86,5 @@ exports.exportarAlertas = async (req, res) => {
     res.status(500).json({ error: 'Error en servidor' });
   }
 };
+}
+main()

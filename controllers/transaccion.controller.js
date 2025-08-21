@@ -1,12 +1,44 @@
+async function main() {
 const { Transaccion } = require('../models');
+
+const isDev = process.env.NODE_ENV !== 'production';
 
 exports.createTransaccion = async (req, res) => {
   try {
-    const nuevaTransaccion = await Transaccion.create(req.body);
+    const {
+      productoId,     // debe venir con este nombre
+      userId,
+      tipo,
+      cantidad,
+      precio_unitario,
+      total,
+      metodo_pago,
+      fecha
+    } = req.body;
+
+    // Validaciones básicas
+    if (!productoId || !userId || !tipo || !cantidad || !precio_unitario || !total || !metodo_pago) {
+      return res.status(400).json({ error: 'Faltan datos obligatorios para crear la transacción' });
+    }
+
+    const nuevaTransaccion = await Transaccion.create({
+      productoId,
+      userId,
+      tipo,
+      cantidad,
+      precio_unitario,
+      total,
+      metodo_pago,
+      fecha: fecha || new Date() // si no se envía fecha, asigna la fecha actual
+    });
+
     res.status(201).json(nuevaTransaccion);
   } catch (error) {
     console.error('Error creando transacción:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.status(500).json({
+      error: 'Error interno del servidor',
+      detalles: isDev ? error.message : undefined
+    });
   }
 };
 
@@ -16,7 +48,10 @@ exports.listarTransacciones = async (req, res) => {
     res.json(transacciones);
   } catch (error) {
     console.error('Error listando transacciones:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.status(500).json({
+      error: 'Error interno del servidor',
+      detalles: isDev ? error.message : undefined
+    });
   }
 };
 
@@ -30,7 +65,10 @@ exports.obtenerTransaccionPorId = async (req, res) => {
     res.json(transaccion);
   } catch (error) {
     console.error('Error obteniendo transacción:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.status(500).json({
+      error: 'Error interno del servidor',
+      detalles: isDev ? error.message : undefined
+    });
   }
 };
 
@@ -45,7 +83,10 @@ exports.actualizarTransaccion = async (req, res) => {
     res.json(transaccionActualizada);
   } catch (error) {
     console.error('Error actualizando transacción:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.status(500).json({
+      error: 'Error interno del servidor',
+      detalles: isDev ? error.message : undefined
+    });
   }
 };
 
@@ -59,6 +100,11 @@ exports.eliminarTransaccion = async (req, res) => {
     res.status(204).send();
   } catch (error) {
     console.error('Error eliminando transacción:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.status(500).json({
+      error: 'Error interno del servidor',
+      detalles: isDev ? error.message : undefined
+    });
   }
 };
+}
+main()

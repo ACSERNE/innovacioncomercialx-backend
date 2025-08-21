@@ -1,0 +1,5 @@
+[
+  { "servicio": "API", "estado": "OK" },
+  { "servicio": "DB", "estado": "OK" },
+  { "servicio": "Cache", "estado": "OK" }
+]

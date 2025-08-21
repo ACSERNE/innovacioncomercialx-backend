@@ -1,3 +1,4 @@
+async function main() {
 'use strict';
 
 module.exports = {
@@ -28,3 +29,5 @@ module.exports = {
     await queryInterface.bulkDelete('productos', null, {});
   }
 };
+}
+main()

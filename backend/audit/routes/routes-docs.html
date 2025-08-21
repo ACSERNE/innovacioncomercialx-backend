@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>📚 Documentación de Rutas</title>
+  <style>
+    body { font-family: sans-serif; padding: 2em; background: #f9f9f9; }
+    h1 { color: #333; }
+    .route { border: 1px solid #ccc; padding: 1em; margin: 1em 0; background: #fff; }
+    .ok { border-left: 5px solid #4CAF50; }
+    .err { border-left: 5px solid #F44336; }
+    .badge { font-size: 1.5em; float: right; }
+  </style>
+</head>
+<body>
+  <h1>📚 Documentación Técnica de Rutas</h1>
+  <div id="routes"></div>
+
+  <script>
+    fetch('./routes-map.json')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('routes');
+        data.forEach(r => {
+          const div = document.createElement('div');
+          div.className = 'route ' + (r.status === 'OK' ? 'ok' : 'err');
+          div.innerHTML = `
+            <div class="badge">${r.status === 'OK' ? '🟢' : '🔴'}</div>
+            <h2>${r.method} ${r.endpoint}</h2>
+            <p><strong>Estado:</strong> ${r.status}</p>
+            <p><strong>Timestamp:</strong> ${r.timestamp || 'N/A'}</p>
+          `;
+          container.appendChild(div);
+        });
+      });
+  </script>
+</body>
+</html>

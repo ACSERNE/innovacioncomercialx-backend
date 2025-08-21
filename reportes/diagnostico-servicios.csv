@@ -1,0 +1,4 @@
+Servicio,Estado,Mensaje,Sugerencia
+"PostgreSQL","❌ Fallo","connect ECONNREFUSED ::1:5432","Verifica credenciales y si el host es accesible desde el contenedor"
+"Redis","❌ Fallo","connect ECONNREFUSED ::1:6379","Verifica si el host "redis" existe o usa IP directa"
+"API HTTP","❌ Fallo","connect ECONNREFUSED ::1:3000","Verifica si la API está corriendo y accesible desde el contenedor"

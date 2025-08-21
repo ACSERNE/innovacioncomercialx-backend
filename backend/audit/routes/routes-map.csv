@@ -1,0 +1,4 @@
+method,endpoint,status
+GET,/api/users,ERR
+POST,/api/login,ERR
+GET,/api/unknown,ERR

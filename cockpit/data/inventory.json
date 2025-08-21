@@ -1,0 +1,4 @@
+[
+  { "product": "Laptop X", "lot": "L001", "stock": 10, "lastUpdated": "2025-08-13" },
+  { "product": "Mouse Y", "lot": "L002", "stock": 25, "lastUpdated": "2025-08-12" }
+]

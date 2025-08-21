@@ -1,3 +1,4 @@
+async function main() {
 const { SellerProduct } = require('../models');
 
 // Crear producto de vendedor
@@ -40,3 +41,5 @@ exports.getSellerProducts = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener productos' });
   }
 };
+}
+main()

@@ -1,0 +1,10 @@
+🔍 Validando entorno: dev
+🔍 Validando entorno: dev
+✅ dev validado: 17 de 20 (85%)
+🔍 Validando entorno: prod
+✅ prod validado: 20 de 20 (100%)
+🔍 Validando entorno: sandbox
+✅ sandbox validado: 15 de 20 (75%)
+🎯 Validación CI/CD completada. Badges y artefactos listos.
+🔍 Validando entorno: dev
+✅ dev validado: 17 de 20 (85%)

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Buscador visual | ComercialX Cockpit</title>
+    <style>
+      body { font-family: sans-serif; padding: 2rem; background: #f0f0f0; }
+      h1 { color: #333; }
+      select, a.button { margin: 1rem 0; padding: 0.5rem; }
+      a.button { background: #0078D4; color: white; text-decoration: none; border-radius: 4px; display: inline-block; }
+    </style>
+    <script>
+      function navegar() {
+        const accion = document.getElementById('accion').value;
+        const entorno = document.getElementById('entorno').value;
+        window.location.href = '../' + accion + '/' + entorno + '.html';
+      }
+    </script>
+  </head>
+  <body>
+    <h1>🔍 Buscador visual cockpitizado</h1>
+    <label>Acción:</label>
+    <select id="accion">
+      <option value="crear">crear</option>
+      <option value="exportar">exportar</option>
+      <option value="auditar">auditar</option>
+    </select>
+
+    <label>Entorno:</label>
+    <select id="entorno">
+      <option value="dev">dev</option>
+      <option value="prod">prod</option>
+      <option value="sandbox">sandbox</option>
+    </select>
+
+    <br>
+    <a class="button" href="#" onclick="navegar()">🔎 Ver micrositio</a>
+  </body>
+</html>

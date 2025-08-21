@@ -1,0 +1,13 @@
+{
+  "modulo": "backend",
+  "estado": "validado",
+  "timestamp": "2025-08-15T04:30:00.000Z",
+  "rutas": [
+    "/api/login",
+    "/api/logout",
+    "/api/users",
+    "/api/products"
+  ],
+  "gaps": [],
+  "exportacion": "completa"
+}
