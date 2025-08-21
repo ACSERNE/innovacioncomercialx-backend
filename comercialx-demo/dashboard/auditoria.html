@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Auditoría Extendida ComercialX</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <h1>🕵️ Auditoría Extendida por Tienda</h1>
+
+  <label for="tienda">🏪 Selecciona tienda:</label>
+  <select id="tienda" onchange="cargarLogs()">
+    <option value="demo">Demo</option>
+    <option value="online">Online</option>
+    <option value="fisica">Física</option>
+    <option value="hibrida">Híbrida</option>
+  </select>
+
+  <div id="badge" style="margin: 1em 0;"></div>
+
+  <table id="tabla">
+    <thead>
+      <tr>
+        <th>Ruta</th>
+        <th>Estado</th>
+        <th>Detalles</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    function cargarLogs() {
+      const tienda = document.getElementById('tienda').value;
+      fetch(\`../logs/logs-\${tienda}.json\`)
+        .then(res => res.json())
+        .then(data => {
+          const tbody = document.querySelector('#tabla tbody');
+          tbody.innerHTML = '';
+          let errores = 0;
+
+          data.forEach(log => {
+            if (log.estado !== 200) errores++;
+            tbody.innerHTML += \`<tr>
+              <td>\${log.ruta}</td>
+              <td>\${log.estado}</td>
+              <td>\${log.detalles}</td>
+              <td>\${log.timestamp}</td>
+            </tr>\`;
+          });
+
+          const badge = document.getElementById('badge');
+          const estado = errores === 0 ? 'ok' : errores > 2 ? 'error' : 'warning';
+          badge.innerHTML = \`<img src="../badges/badge-\${tienda}-\${estado}.svg" alt="Estado \${tienda}" />\`;
+        })
+        .catch(() => {
+          document.querySelector('#tabla tbody').innerHTML = '<tr><td colspan="4">⚠️ No se pudo cargar el log</td></tr>';
+          document.getElementById('badge').innerHTML = \`<img src="../badges/badge-\${tienda}-error.svg" alt="Error \${tienda}" />\`;
+        });
+    }
+
+    cargarLogs(); // inicial
+  </script>
+</body>
+</html>

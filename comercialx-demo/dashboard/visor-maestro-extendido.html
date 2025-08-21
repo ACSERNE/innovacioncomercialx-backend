@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>📦 Visor Maestro Extendido</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <h1>📦 Visor Maestro Extendido</h1>
+
+  <label for="tienda">🏪 Tienda:</label>
+  <select id="tienda" onchange="cargar()">
+    <option value="demo">Demo</option>
+    <option value="online">Online</option>
+    <option value="fisica">Física</option>
+    <option value="hibrida">Híbrida</option>
+  </select>
+
+  <label for="entorno">🌐 Entorno:</label>
+  <select id="entorno" onchange="cargar()">
+    <option value="local">Local</option>
+    <option value="cloud">Cloud</option>
+    <option value="netlify">Netlify</option>
+    <option value="github">GitHub Pages</option>
+  </select>
+
+  <label for="tipo">🔧 Tipo:</label>
+  <select id="tipo" onchange="filtrar()">
+    <option value="todos">Todos</option>
+    <option value="onboarding">Onboarding</option>
+    <option value="inventario">Inventario</option>
+    <option value="flujo-caja">Flujo de Caja</option>
+  </select>
+
+  <label for="estado">📍 Estado:</label>
+  <select id="estado" onchange="filtrar()">
+    <option value="todos">Todos</option>
+    <option value="ok">✅ OK</option>
+    <option value="warning">⚠️ Warning</option>
+    <option value="error">❌ Error</option>
+  </select>
+
+  <label for="busqueda">🔎 Buscar ruta:</label>
+  <input type="text" id="busqueda" oninput="filtrar()" placeholder="ej: /api/inventario" />
+
+  <div id="badges" style="margin: 1em 0;"></div>
+  <div id="resumen" style="margin: 1em 0; font-weight: bold;"></div>
+
+  <table id="tabla">
+    <thead>
+      <tr>
+        <th>Ruta</th>
+        <th>Tipo</th>
+        <th>Estado</th>
+        <th>Detalles</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <button onclick="exportarCSV()">📤 Exportar CSV</button>
+  <button onclick="exportarJSON()">📁 Exportar JSON</button>
+
+  <script>
+    let datos = [], filtrados = [];
+
+    function cargar() {
+      const tienda = document.getElementById('tienda').value;
+      const entorno = document.getElementById('entorno').value;
+
+      Promise.all([
+        fetch(`../logs/logs-${tienda}.json`).then(r => r.json()).catch(() => []),
+        fetch(`../logs/logs-${entorno}.json`).then(r => r.json()).catch(() => [])
+      ]).then(([logsTienda, logsEntorno]) => {
+        datos = [...logsTienda, ...logsEntorno];
+        filtrar();
+      });
+    }
+
+    function filtrar() {
+      const tipo = document.getElementById('tipo').value;
+      const estado = document.getElementById('estado').value;
+      const busqueda = document.getElementById('busqueda').value.toLowerCase();
+      const tabla = document.querySelector('#tabla tbody');
+      tabla.innerHTML = '';
+
+      filtrados = datos.filter(log => {
+        const tipoMatch = tipo === 'todos' || log.tipo === tipo;
+        const estadoMatch = estado === 'todos' || log.estadoTxt === estado;
+        const rutaMatch = log.ruta.toLowerCase().includes(busqueda);
+        return tipoMatch && estadoMatch && rutaMatch;
+      });
+
+      filtrados.forEach(log => {
+        tabla.innerHTML += `<tr>
+          <td>${log.ruta}</td>
+          <td>${log.tipo}</td>
+          <td>${log.estadoTxt}</td>
+          <td>${log.detalles}</td>
+          <td>${log.timestamp}</td>
+        </tr>`;
+      });
+
+      const resumen = {};
+      filtrados.forEach(log => {
+        const key = `${log.tipo}-${log.estadoTxt}`;
+        resumen[key] = (resumen[key] || 0) + 1;
+      });
+
+      let resumenHTML = '🧮 Resumen visual:<br>';
+      let badgesHTML = '';
+      for (const key in resumen) {
+        resumenHTML += `${key}: ${resumen[key]}<br>`;
+        badgesHTML += `<img src="../badges/badge-${key}.svg" alt="${key}" style="margin-right:5px;" />`;
+      }
+
+      document.getElementById('resumen').innerHTML = resumenHTML;
+      document.getElementById('badges').innerHTML = badgesHTML;
+    }
+
+    function exportarCSV() {
+      const filas = ['Ruta,Tipo,Estado,Detalles,Timestamp'];
+      filtrados.forEach(log => {
+        filas.push(`"${log.ruta}","${log.tipo}","${log.estadoTxt}","${log.detalles}","${log.timestamp}"`);
+      });
+      const blob = new Blob([filas.join('\n')], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'auditoria-filtrada.csv';
+      a.click();
+    }
+
+    function exportarJSON() {
+      const blob = new Blob([JSON.stringify(filtrados, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'auditoria-filtrada.json';
+      a.click();
+    }
+
+    cargar();
+  </script>
+</body>
+</html>

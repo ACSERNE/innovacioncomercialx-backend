@@ -1,0 +1,41 @@
+{
+  "diagnostico_publicacion": {
+    "status": "OK",
+    "badge": "badges/publish.svg",
+    "csv": "../publish.csv",
+    "log": "../publish-log.json"
+  },
+  "validacion_remota": {
+    "Chile": {
+      "entorno": "produccion",
+      "status": "OK",
+      "badge": "badges/val-chile.svg",
+      "csv": "../val-chile.csv",
+      "log": "../val-chile-log.json"
+    },
+    "Mexico": {
+      "entorno": "staging",
+      "status": "FAIL",
+      "badge": "badges/val-mexico.svg",
+      "csv": "../val-mexico.csv",
+      "log": "../val-mexico-log.json"
+    },
+    "España": {
+      "entorno": "produccion",
+      "status": "OK",
+      "badge": "badges/val-espana.svg",
+      "csv": "../val-espana.csv",
+      "log": "../val-espana-log.json"
+    }
+  },
+  "artefactos": {
+    "dashboard_csv": "dashboard.csv",
+    "dashboard_json": "dashboard-maestro.json",
+    "badges_svg": [
+      "badges/publish.svg",
+      "badges/val-chile.svg",
+      "badges/val-mexico.svg",
+      "badges/val-espana.svg"
+    ]
+  }
+}

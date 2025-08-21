@@ -1,0 +1,8 @@
+{
+  "name": "comercialx-assets",
+  "type": "module",
+  "scripts": {
+    "start": "echo 'Assets running'"
+  },
+  "dependencies": {}
+}

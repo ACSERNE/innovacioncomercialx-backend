@@ -1,0 +1,8 @@
+{
+  "name": "comercialx-dashboard",
+  "type": "module",
+  "scripts": {
+    "start": "echo 'Dashboard running'"
+  },
+  "dependencies": {}
+}

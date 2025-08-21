@@ -1,0 +1,5 @@
+artefacto,pais,entorno,estado,commit,timestamp
+dashboard.csv,CL,Producción,validado,a8d5dbb,2025-08-18T23:34:00Z
+LICENSE.md,MX,Staging,federado,a8d5dbb,2025-08-18T23:34:00Z
+CONTRIBUTING.md,ES,QA,federado,a8d5dbb,2025-08-18T23:34:00Z
+visor-submodulo.html,Global,GitHub Pages,ok,d816fdc,2025-08-18T23:34:00Z

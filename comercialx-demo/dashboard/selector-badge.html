@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>📎 Selector de Badges SVG</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <h1>📎 Selector de Badges SVG</h1>
+
+  <label for="badge">🗂️ Selecciona un badge:</label><br>
+  <select id="badge" onchange="generar()">
+    <option value="">-- Selecciona --</option>
+    <!-- Opciones generadas dinámicamente -->
+  </select>
+
+  <div id="preview" style="margin-top:1em;"></div>
+  <div id="codigo" style="margin-top:1em;"></div>
+
+  <script>
+    const basePath = "../badges/";
+    const listaBadges = [
+      "badge-demo-ok.svg",
+      "badge-demo-error.svg",
+      "badge-validacion.svg",
+      "badge-auditoria.svg"
+    ]; // ← Puedes automatizar esto con un script backend si lo deseas
+
+    const selector = document.getElementById("badge");
+    listaBadges.forEach(b => {
+      const opt = document.createElement("option");
+      opt.value = basePath + b;
+      opt.textContent = b;
+      selector.appendChild(opt);
+    });
+
+    function generar() {
+      const url = selector.value;
+      if (!url) return;
+
+      document.getElementById('preview').innerHTML = `<h3>🔍 Vista previa:</h3><img src="${url}" alt="Badge" />`;
+
+      const html = `<img src="${url}" alt="Badge" />`;
+      const markdown = `![Badge](${url})`;
+      const iframe = `<iframe src="${url}" width="180" height="40" frameborder="0"></iframe>`;
+
+      document.getElementById('codigo').innerHTML = `
+        <h3>📋 Código embebible:</h3>
+        <b>HTML:</b><br><textarea rows="2" cols="80">${html}</textarea><br>
+        <b>Markdown:</b><br><textarea rows="2" cols="80">${markdown}</textarea><br>
+        <b>Iframe:</b><br><textarea rows="2" cols="80">${iframe}</textarea><br>
+      `;
+    }
+  </script>
+</body>
+</html>

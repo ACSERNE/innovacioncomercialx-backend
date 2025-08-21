@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Visor Global ComercialX</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <h1>🧭 Visor Global: Tienda + Entorno</h1>
+
+  <label for="tienda">🏪 Tienda:</label>
+  <select id="tienda" onchange="cargar()">
+    <option value="demo">Demo</option>
+    <option value="online">Online</option>
+    <option value="fisica">Física</option>
+    <option value="hibrida">Híbrida</option>
+  </select>
+
+  <label for="entorno">🌐 Entorno:</label>
+  <select id="entorno" onchange="cargar()">
+    <option value="local">Local</option>
+    <option value="cloud">Cloud</option>
+    <option value="netlify">Netlify</option>
+    <option value="github">GitHub Pages</option>
+  </select>
+
+  <div id="badges" style="margin: 1em 0;"></div>
+
+  <table id="tabla">
+    <thead>
+      <tr>
+        <th>Ruta</th>
+        <th>Estado</th>
+        <th>Detalles</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <button onclick="exportarCSV()">📤 Exportar CSV</button>
+  <button onclick="exportarJSON()">📁 Exportar JSON</button>
+
+  <script>
+    let datos = [];
+
+    function cargar() {
+      const tienda = document.getElementById('tienda').value;
+      const entorno = document.getElementById('entorno').value;
+      const tabla = document.querySelector('#tabla tbody');
+      tabla.innerHTML = '';
+      datos = [];
+
+      Promise.all([
+        fetch(`../logs/logs-${tienda}.json`).then(r => r.json()).catch(() => []),
+        fetch(`../logs/logs-${entorno}.json`).then(r => r.json()).catch(() => [])
+      ]).then(([logsTienda, logsEntorno]) => {
+        const combinados = [...logsTienda, ...logsEntorno];
+        let errores = 0;
+
+        combinados.forEach(log => {
+          if (log.estado !== 200) errores++;
+          datos.push(log);
+          tabla.innerHTML += `<tr>
+            <td>${log.ruta}</td>
+            <td>${log.estado}</td>
+            <td>${log.detalles}</td>
+            <td>${log.timestamp}</td>
+          </tr>`;
+        });
+
+        const estado = errores === 0 ? 'ok' : errores > 2 ? 'error' : 'warning';
+        document.getElementById('badges').innerHTML = `
+          <img src="../badges/badge-${tienda}-${estado}.svg" alt="Tienda ${tienda}" />
+          <img src="../badges/badge-${entorno}-${estado}.svg" alt="Entorno ${entorno}" />
+        `;
+      });
+    }
+
+    function exportarCSV() {
+      const filas = ['Ruta,Estado,Detalles,Timestamp'];
+      datos.forEach(log => {
+        filas.push(`"${log.ruta}",${log.estado},"${log.detalles}","${log.timestamp}"`);
+      });
+      const blob = new Blob([filas.join('\n')], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'auditoria-global.csv';
+      a.click();
+    }
+
+    function exportarJSON() {
+      const blob = new Blob([JSON.stringify(datos, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'auditoria-global.json';
+      a.click();
+    }
+
+    cargar(); // inicial
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>📡 Estado Cockpitizado ComercialX</title>
+  <style>
+    body { font-family: sans-serif; background: #f9f9f9; padding: 2em; }
+    h1 { color: #333; }
+    .badge { margin: 1em 0; }
+    .log { margin-bottom: 2em; }
+    img { vertical-align: middle; margin-right: 1em; }
+    a { color: #007acc; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <h1>📡 Estado Cockpitizado ComercialX</h1>
+
+  <section class="badge">
+    <h2>🧪 Validación de Publicación</h2>
+    <img src="badges/publish-debug.svg" alt="Badge publicación">
+    <a href="../publish-debug.json">Log técnico</a>
+  </section>
+
+  <section class="badge">
+    <h2>🔍 Sincronización Maestro vs Template</h2>
+    <img src="badges/maestro-sync.svg" alt="Badge sincronización">
+    <a href="maestro-sync-log.json">Log de diferencias</a>
+  </section>
+
+  <section class="badge">
+    <h2>🛡️ Restauración Automática</h2>
+    <img src="badges/maestro-reset.svg" alt="Badge restauración">
+    <a href="maestro-reset-log.json">Log de restauración</a>
+  </section>
+
+  <section class="badge">
+    <h2>📦 Verificación Federada por País</h2>
+    <img src="badges/publish-status.svg" alt="Badge publicación global">
+    <a href="../publish-status.json">Log de estado por país</a>
+  </section>
+</body>
+</html>

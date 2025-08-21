@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>📎 Generador de Embed para Badges SVG</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <h1>📎 Generador de Código Embed para Badges SVG</h1>
+
+  <input id="badge-url" type="text" size="80" placeholder="🔗 URL del badge SVG">
+  <button id="btn-generar">⚙️ Generar Embed</button>
+  <p id="log-estado">⏳ Esperando validación…</p>
+
+  <img id="preview-svg" style="max-width:300px; margin-top:1em;" alt="Vista previa del badge">
+
+  <h4>📎 Código Embed</h4>
+  <b>HTML:</b><br><textarea id="embed-html" rows="2" cols="80" readonly></textarea><br>
+  <b>Markdown:</b><br><textarea id="embed-md" rows="2" cols="80" readonly></textarea><br>
+  <b>JSX:</b><br><textarea id="embed-jsx" rows="2" cols="80" readonly></textarea><br>
+
+  <script src="embed-generator.js"></script>
+</body>
+</html>

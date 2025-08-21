@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Filtros Cockpit - ComercialX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #fefefe; }
+    h1 { color: #2c3e50; }
+    select, input, button { margin: 0.5rem; padding: 0.4rem; }
+    .modulo { border: 1px solid #ccc; padding: 1rem; margin: 1rem 0; }
+    .badge { float: right; }
+    .links a { margin-right: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>🎛️ Filtros Cockpit - ComercialX</h1>
+
+  <label for="tienda">Tienda:</label>
+  <select id="tienda"></select>
+
+  <label for="entorno">Entorno:</label>
+  <select id="entorno"></select>
+
+  <label for="severidad">Severidad:</label>
+  <select id="severidad">
+    <option value="">Todas</option>
+    <option value="green">Sin vulnerabilidades</option>
+    <option value="yellow">Media</option>
+    <option value="red">Alta</option>
+  </select>
+
+  <label for="operacion">Operación:</label>
+  <input type="text" id="operacion" placeholder="deploy, audit, build..." />
+
+  <button onclick="filtrar()">🔍 Aplicar filtros</button>
+  <button onclick="exportar('json')">⬇️ Exportar JSON</button>
+  <button onclick="exportar('csv')">⬇️ Exportar CSV</button>
+
+  <div id="resultados"></div>
+
+  <script type="module">
+    import { aplicarFiltros, exportarFiltrados } from './search.js';
+
+    let data = [];
+
+    fetch('dashboard-maestro.json')
+      .then(res => res.json())
+      .then(json => {
+        data = json.modulos;
+        poblarFiltros(data);
+        renderizar(data);
+      });
+
+    function poblarFiltros(modulos) {
+      const tiendas = [...new Set(modulos.map(m => m.tienda))];
+      const entornos = [...new Set(modulos.map(m => m.entorno))];
+
+      const tiendaSelect = document.getElementById('tienda');
+      tiendaSelect.innerHTML = '<option value="">Todas</option>';
+      tiendas.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t;
+        opt.textContent = t;
+        tiendaSelect.appendChild(opt);
+      });
+
+      const entornoSelect = document.getElementById('entorno');
+      entornoSelect.innerHTML = '<option value="">Todos</option>';
+      entornos.forEach(e => {
+        const opt = document.createElement('option');
+        opt.value = e;
+        opt.textContent = e;
+        entornoSelect.appendChild(opt);
+      });
+    }
+
+    function filtrar() {
+      const criterios = {
+        tienda: document.getElementById('tienda').value,
+        entorno: document.getElementById('entorno').value,
+        severidad: document.getElementById('severidad').value,
+        operacion: document.getElementById('operacion').value.toLowerCase()
+      };
+      const filtrados = aplicarFiltros(data, criterios);
+      renderizar(filtrados);
+    }
+
+    function renderizar(modulos) {
+      const contenedor = document.getElementById('resultados');
+      contenedor.innerHTML = "";
+      modulos.forEach(m => {
+        const div = document.createElement('div');
+        div.className = "modulo";
+        div.innerHTML = `
+          <h2>${m.nombre} <img class="badge" src="${m.badge}" alt="badge" /></h2>
+          <p><strong>Tienda:</strong> ${m.tienda} | <strong>Entorno:</strong> ${m.entorno}</p>
+          <div class="links">
+            <a href="${m.ruta}" target="_blank">🔍 Visor</a>
+            <a href="${m.log}" target="_blank">📘 Log</a>
+            <a href="${m.embed}" target="_blank">📎 Embed</a>
+          </div>
+        `;
+        contenedor.appendChild(div);
+      });
+    }
+
+    function exportar(formato) {
+      const criterios = {
+        tienda: document.getElementById('tienda').value,
+        entorno: document.getElementById('entorno').value,
+        severidad: document.getElementById('severidad').value,
+        operacion: document.getElementById('operacion').value.toLowerCase()
+      };
+      const filtrados = aplicarFiltros(data, criterios);
+      exportarFiltrados(filtrados, formato);
+    }
+  </script>
+</body>
+</html>

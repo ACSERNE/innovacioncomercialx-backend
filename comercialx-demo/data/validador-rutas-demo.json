@@ -1,0 +1,5 @@
+[
+  { "ruta": "index.html", "tipo": "html", "entorno": "demo", "tienda": "demo" },
+  { "ruta": "badge-deploy.svg", "tipo": "svg", "entorno": "demo", "tienda": "demo" },
+  { "ruta": "data/inventario.json", "tipo": "json", "entorno": "demo", "tienda": "demo" }
+]

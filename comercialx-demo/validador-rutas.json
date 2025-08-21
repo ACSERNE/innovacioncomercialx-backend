@@ -1,0 +1,11 @@
+[
+  "index.html",
+  "badge-deploy.svg",
+  "data/inventario.json",
+  "data/errores.json",
+  "dashboard-comunitario.html",
+  "generador-badges.html",
+  "exportador-csv.js",
+  "validador.html",
+  "visor-estado.html"
+]

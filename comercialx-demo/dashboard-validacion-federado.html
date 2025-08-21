@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Federado de Validación</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1rem;
+      background: #fdfdfd;
+      color: #333;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    select {
+      margin-top: 1rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      text-align: left;
+    }
+    th {
+      background-color: #0078d4;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    .ok {
+      color: green;
+      font-weight: bold;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌐 Dashboard Federado de Validación</h1>
+  <p>Estado técnico por tienda, entorno y operación. Exportable y cockpitizable.</p>
+
+  <label for="filtroTienda">🛍️ Filtrar por tienda</label>
+  <select id="filtroTienda" onchange="filtrar()">
+    <option value="todas">Todas</option>
+    <option value="tienda-norte">Tienda Norte</option>
+    <option value="tienda-sur">Tienda Sur</option>
+    <option value="tienda-online">Tienda Online</option>
+  </select>
+
+  <table id="tablaValidacion" aria-label="Tabla federada de validación">
+    <thead>
+      <tr>
+        <th>Tienda</th>
+        <th>Ruta</th>
+        <th>Estado</th>
+        <th>Badge</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr data-tienda="tienda-norte">
+        <td>Tienda Norte</td>
+        <td>index.html</td>
+        <td class="ok">✅ OK</td>
+        <td><img src="badges/norte-index-ok.svg" alt="index:ok" title="Validación OK en Tienda Norte"></td>
+      </tr>
+      <tr data-tienda="tienda-sur">
+        <td>Tienda Sur</td>
+        <td>validador.html</td>
+        <td class="error">❌ Error</td>
+        <td><img src="badges/sur-validador-error.svg" alt="validador:error" title="Error en Tienda Sur"></td>
+      </tr>
+      <tr data-tienda="tienda-online">
+        <td>Tienda Online</td>
+        <td>dashboard-comunitario.html</td>
+        <td class="ok">✅ OK</td>
+        <td><img src="badges/online-dashboard-ok.svg" alt="dashboard:ok" title="Validación OK en Tienda Online"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    function filtrar() {
+      const filtro = document.getElementById("filtroTienda").value;
+      const filas = document.querySelectorAll("#tablaValidacion tbody tr");
+      filas.forEach(fila => {
+        const tienda = fila.getAttribute("data-tienda");
+        fila.style.display = (filtro === "todas" || tienda === filtro) ? "" : "none";
+      });
+    }
+  </script>
+</body>
+</html>

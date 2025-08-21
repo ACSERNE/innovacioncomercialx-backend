@@ -1,0 +1,25 @@
+{
+  "dashboard": [
+    {
+      "pais": "Chile",
+      "entorno": "Producción",
+      "estado": "OK",
+      "version": "v1.2.3",
+      "url": "https://comercialx.cl"
+    },
+    {
+      "pais": "México",
+      "entorno": "Demo",
+      "estado": "OK",
+      "version": "v1.2.3",
+      "url": "https://comercialx.mx"
+    },
+    {
+      "pais": "España",
+      "entorno": "Validación",
+      "estado": "OK",
+      "version": "v1.2.3",
+      "url": "https://comercialx.es"
+    }
+  ]
+}

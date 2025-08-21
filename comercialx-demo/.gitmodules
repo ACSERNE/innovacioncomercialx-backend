@@ -1,0 +1,3 @@
+[submodule "comercialx-backend"]
+  path = comercialx-backend
+  url = https://github.com/ACSERNE/innovacioncomercialx-backend.git

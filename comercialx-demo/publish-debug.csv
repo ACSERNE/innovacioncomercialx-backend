@@ -1,0 +1,4 @@
+entorno,url,codigo_http,estado
+github-pages,https://acserne.github.io/comercialx-demo/,200,OK
+netlify,https://comercialx-demo.netlify.app/,404,Not Found
+railway,https://comercialx-demo.up.railway.app/,404,Not Found

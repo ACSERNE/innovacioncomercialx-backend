@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>🎯 Visor Externo ComercialX</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <h1>🎯 Visor Externo: Auditoría para Terceros</h1>
+
+  <label for="cliente">👤 Cliente:</label>
+  <select id="cliente" onchange="cargar()">
+    <option value="acserne">ACSERNE</option>
+    <option value="aliadox">AliadoX</option>
+    <option value="auditorz">AuditorZ</option>
+  </select>
+
+  <label for="operacion">🔧 Operación:</label>
+  <select id="operacion" onchange="filtrar()">
+    <option value="todos">Todas</option>
+    <option value="onboarding">Onboarding</option>
+    <option value="inventario">Inventario</option>
+    <option value="flujo-caja">Flujo de Caja</option>
+  </select>
+
+  <label for="busqueda">🔎 Buscar ruta:</label>
+  <input type="text" id="busqueda" oninput="filtrar()" placeholder="ej: /api/estado" />
+
+  <div id="badges" style="margin: 1em 0;"></div>
+  <div id="resumen" style="margin: 1em 0; font-weight: bold;"></div>
+
+  <table id="tabla">
+    <thead>
+      <tr>
+        <th>Ruta</th>
+        <th>Operación</th>
+        <th>Estado</th>
+        <th>Detalles</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <button onclick="exportarCSV()">📤 Exportar CSV</button>
+  <button onclick="exportarJSON()">📁 Exportar JSON</button>
+
+  <script>
+    const fuentes = {
+      acserne: 'https://acserne.github.io/comercialx-demo/logs/logs-demo.json',
+      aliadox: 'https://aliadox.netlify.app/logs/logs-aliadox.json',
+      auditorz: 'https://auditorz.cloud/logs/logs-auditorz.json'
+    };
+
+    let datos = [], filtrados = [];
+
+    function cargar() {
+      const cliente = document.getElementById('cliente').value;
+      fetch(fuentes[cliente])
+        .then(r => r.json())
+        .then(logs => {
+          datos = logs.map(log => ({ ...log, cliente }));
+          filtrar();
+        })
+        .catch(() => {
+          datos = [];
+          filtrar();
+        });
+    }
+
+    function filtrar() {
+      const operacion = document.getElementById('operacion').value;
+      const busqueda = document.getElementById('busqueda').value.toLowerCase();
+      const tabla = document.querySelector('#tabla tbody');
+      tabla.innerHTML = '';
+
+      filtrados = datos.filter(log => {
+        const tipoMatch = operacion === 'todos' || log.tipo === operacion;
+        const rutaMatch = log.ruta.toLowerCase().includes(busqueda);
+        return tipoMatch && rutaMatch;
+      });
+
+      filtrados.forEach(log => {
+        tabla.innerHTML += `<tr>
+          <td>${log.ruta}</td>
+          <td>${log.tipo}</td>
+          <td>${log.estadoTxt}</td>
+          <td>${log.detalles}</td>
+          <td>${log.timestamp}</td>
+        </tr>`;
+      });
+
+      const resumen = {};
+      filtrados.forEach(log => {
+        const key = `${log.cliente}-${log.tipo}-${log.estadoTxt}`;
+        resumen[key] = (resumen[key] || 0) + 1;
+      });
+
+      let resumenHTML = '📊 Resumen externo:<br>';
+      let badgesHTML = '';
+      for (const key in resumen) {
+        resumenHTML += `${key}: ${resumen[key]}<br>`;
+        badgesHTML += `<img src="../badges/badge-${key}.svg" alt="${key}" style="margin-right:5px;" />`;
+      }
+
+      document.getElementById('resumen').innerHTML = resumenHTML;
+      document.getElementById('badges').innerHTML = badgesHTML;
+    }
+
+    function exportarCSV() {
+      const filas = ['Ruta,Operación,Estado,Detalles,Timestamp'];
+      filtrados.forEach(log => {
+        filas.push(`"${log.ruta}","${log.tipo}","${log.estadoTxt}","${log.detalles}","${log.timestamp}"`);
+      });
+      const blob = new Blob([filas.join('\n')], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'auditoria-externa.csv';
+      a.click();
+    }
+
+    function exportarJSON() {
+      const blob = new Blob([JSON.stringify(filtrados, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'auditoria-externa.json';
+      a.click();
+    }
+
+    cargar();
+  </script>
+</body>
+</html>

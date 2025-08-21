@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visor de Estado por Operación</title>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; background: #f4f4f4; }
+    .estado { font-size: 1.2rem; margin: 0.5rem 0; }
+    .badge { margin: 0.3rem 0; }
+  </style>
+</head>
+<body>
+  <h1>📊 Visor de Estado por Operación</h1>
+  <div id="resumen"></div>
+
+  <script>
+    const rutas = [
+      { ruta: "index.html", tipo: "html", estado: "✅ OK" },
+      { ruta: "badge-deploy.svg", tipo: "svg", estado: "✅ OK" },
+      { ruta: "data/inventario.json", tipo: "json", estado: "✅ OK" },
+      { ruta: "data/errores.json", tipo: "json", estado: "❌ Error" }
+    ];
+
+    const resumen = document.getElementById("resumen");
+    const total = rutas.length;
+    const ok = rutas.filter(r => r.estado.includes("✅")).length;
+    const fail = rutas.filter(r => r.estado.includes("❌")).length;
+
+    resumen.innerHTML = `
+      <div class="estado">🔢 Total rutas: <strong>${total}</strong></div>
+      <div class="estado">✅ OK: <strong>${ok}</strong></div>
+      <div class="estado">❌ Error: <strong>${fail}</strong></div>
+    `;
+
+    rutas.forEach(r => {
+      const div = document.createElement("div");
+      div.className = "badge";
+      div.innerHTML = `
+        <img src="https://acserne.github.io/comercialx-demo/badge-${r.tipo}.svg" alt="${r.tipo}" height="20">
+        <span>${r.ruta} — ${r.estado}</span>
+      `;
+      resumen.appendChild(div);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+body {
+  font-family: sans-serif;
+  padding: 2rem;
+  background: #fff;
+}
+h1 {
+  color: #2c3e50;
+}
+.modulo {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+.badge {
+  float: right;
+}
+.links a {
+  margin-right: 1rem;
+}
+.enlaces-globales {
+  display: flex;
+  gap: 1rem;
+  font-size: 1.5rem;
+  margin-top: 2rem;
+}

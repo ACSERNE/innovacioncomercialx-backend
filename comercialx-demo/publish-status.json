@@ -1,0 +1,32 @@
+{
+  "status": "FAIL",
+  "resultados": [
+    {
+      "pais": "Chile",
+      "status": "FAIL",
+      "faltantes": [
+        "val-chile.csv",
+        "val-chile-log.json",
+        "badges/val-chile.svg"
+      ]
+    },
+    {
+      "pais": "Mexico",
+      "status": "FAIL",
+      "faltantes": [
+        "val-mexico.csv",
+        "val-mexico-log.json",
+        "badges/val-mexico.svg"
+      ]
+    },
+    {
+      "pais": "España",
+      "status": "FAIL",
+      "faltantes": [
+        "val-españa.csv",
+        "val-españa-log.json",
+        "badges/val-españa.svg"
+      ]
+    }
+  ]
+}

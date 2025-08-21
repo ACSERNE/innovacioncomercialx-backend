@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>📡 Estado de Despliegue</title>
+  <style>
+    body { font-family: sans-serif; background: #f9f9f9; padding: 1em; }
+    h3 { color: #333; }
+    .ok { color: green; }
+    .error { color: red; }
+    .warning { color: orange; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1em; }
+    th, td { border: 1px solid #ccc; padding: 0.5em; text-align: left; }
+  </style>
+</head>
+<body>
+  <h3>📡 Estado de Despliegue</h3>
+  <p><strong>Estado actual:</strong> <img src="badges/despliegue.svg" alt="Estado de despliegue"></p>
+  <p><strong>Log técnico:</strong> <a href="despliegue-status.json" target="_blank">despliegue-status.json</a></p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Artefacto</th>
+        <th>Estado HTTP</th>
+        <th>Resultado</th>
+      </tr>
+    </thead>
+    <tbody id="tabla-resultados">
+      <tr><td colspan="3">Cargando resultados...</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    fetch('despliegue-status.json')
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.getElementById('tabla-resultados');
+        tbody.innerHTML = '';
+        data.forEach(item => {
+          const estado = item.ok ? '✅ OK' : '❌ ERROR';
+          const clase = item.ok ? 'ok' : 'error';
+          tbody.innerHTML += `
+            <tr>
+              <td><a href="${item.url}" target="_blank">${item.url}</a></td>
+              <td>${item.status}</td>
+              <td class="${clase}">${estado}</td>
+            </tr>`;
+        });
+      })
+      .catch(err => {
+        document.getElementById('tabla-resultados').innerHTML = '<tr><td colspan="3" class="error">Error al cargar el log técnico</td></tr>';
+      });
+  </script>
+</body>
+</html>

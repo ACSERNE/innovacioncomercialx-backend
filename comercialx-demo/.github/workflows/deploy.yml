@@ -1,0 +1,40 @@
+name: Deploy Cockpit Visual
+
+on:
+  push:
+    branches:
+      - gh-pages
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Build cockpit visual
+        run: npm run build
+
+      - name: Subir artefactos federados
+        uses: actions/upload-artifact@v4
+        with:
+          name: visor-cockpitizado
+          path: |
+            dist/
+            dashboard/*.svg
+            logs/*.json
+
+      - name: Deploy a GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist

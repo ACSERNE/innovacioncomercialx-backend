@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="40">
+  <rect width="180" height="40" fill="#dc3545"/>
+  <text x="90" y="25" font-size="16" fill="#fff" text-anchor="middle" font-family="sans-serif">cloud: ❌ Error</text>
+</svg>

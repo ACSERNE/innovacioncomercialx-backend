@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>📊 Visor Maestro ComercialX</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <h1>📊 Visor Maestro: Auditoría Extendida</h1>
+
+  <label for="tienda">🏪 Tienda:</label>
+  <select id="tienda" onchange="cargar()">
+    <option value="demo">Demo</option>
+    <option value="online">Online</option>
+    <option value="fisica">Física</option>
+    <option value="hibrida">Híbrida</option>
+  </select>
+
+  <label for="entorno">🌐 Entorno:</label>
+  <select id="entorno" onchange="cargar()">
+    <option value="local">Local</option>
+    <option value="cloud">Cloud</option>
+    <option value="netlify">Netlify</option>
+    <option value="github">GitHub Pages</option>
+  </select>
+
+  <label for="tipo">🔧 Tipo:</label>
+  <select id="tipo" onchange="filtrar()">
+    <option value="todos">Todos</option>
+    <option value="onboarding">Onboarding</option>
+    <option value="inventario">Inventario</option>
+    <option value="flujo-caja">Flujo de Caja</option>
+  </select>
+
+  <label for="estado">📍 Estado:</label>
+  <select id="estado" onchange="filtrar()">
+    <option value="todos">Todos</option>
+    <option value="ok">✅ OK</option>
+    <option value="warning">⚠️ Warning</option>
+    <option value="error">❌ Error</option>
+  </select>
+
+  <div id="badges" style="margin: 1em 0;"></div>
+
+  <div id="resumen" style="margin: 1em 0; font-weight: bold;"></div>
+
+  <table id="tabla">
+    <thead>
+      <tr>
+        <th>Ruta</th>
+        <th>Tipo</th>
+        <th>Estado</th>
+        <th>Detalles</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <button onclick="exportarCSV()">📤 Exportar CSV</button>
+  <button onclick="exportarJSON()">📁 Exportar JSON</button>
+
+  <script>
+    let datos = [], filtrados = [];
+
+    function cargar() {
+      const tienda = document.getElementById('tienda').value;
+      const entorno = document.getElementById('entorno').value;
+      const tabla = document.querySelector('#tabla tbody');
+      tabla.innerHTML = '';
+      datos = [];
+
+      Promise.all([
+        fetch(`../logs/logs-${tienda}.json`).then(r => r.json()).catch(() => []),
+        fetch(`../logs/logs-${entorno}.json`).then(r => r.json()).catch(() => [])
+      ]).then(([logsTienda, logsEntorno]) => {
+        datos = [...logsTienda, ...logsEntorno];
+        filtrar();
+        const errores = datos.filter(d => d.estado !== 200).length;
+        const estado = errores === 0 ? 'ok' : errores > 2 ? 'error' : 'warning';
+        document.getElementById('badges').innerHTML = `
+          <img src="../badges/badge-${tienda}-${estado}.svg" alt="Tienda ${tienda}" />
+          <img src="../badges/badge-${entorno}-${estado}.svg" alt="Entorno ${entorno}" />
+        `;
+      });
+    }
+
+    function filtrar() {
+      const tipo = document.getElementById('tipo').value;
+      const estado = document.getElementById('estado').value;
+      const tabla = document.querySelector('#tabla tbody');
+      tabla.innerHTML = '';
+
+      filtrados = datos.filter(log => {
+        const tipoMatch = tipo === 'todos' || log.tipo === tipo;
+        const estadoMatch = estado === 'todos' || log.estadoTxt === estado;
+        return tipoMatch && estadoMatch;
+      });
+
+      filtrados.forEach(log => {
+        tabla.innerHTML += `<tr>
+          <td>${log.ruta}</td>
+          <td>${log.tipo}</td>
+          <td>${log.estadoTxt}</td>
+          <td>${log.detalles}</td>
+          <td>${log.timestamp}</td>
+        </tr>`;
+      });
+
+      const resumen = {
+        onboarding: 0,
+        inventario: 0,
+        'flujo-caja': 0,
+        ok: 0,
+        warning: 0,
+        error: 0
+      };
+
+      filtrados.forEach(log => {
+        resumen[log.tipo] = (resumen[log.tipo] || 0) + 1;
+        resumen[log.estadoTxt] = (resumen[log.estadoTxt] || 0) + 1;
+      });
+
+      document.getElementById('resumen').innerText =
+        `🧮 Resumen: Onboarding=${resumen.onboarding}, Inventario=${resumen.inventario}, Flujo-Caja=${resumen['flujo-caja']} | ✅=${resumen.ok}, ⚠️=${resumen.warning}, ❌=${resumen.error}`;
+    }
+
+    function exportarCSV() {
+      const filas = ['Ruta,Tipo,Estado,Detalles,Timestamp'];
+      filtrados.forEach(log => {
+        filas.push(`"${log.ruta}","${log.tipo}","${log.estadoTxt}","${log.detalles}","${log.timestamp}"`);
+      });
+      const blob = new Blob([filas.join('\n')], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'auditoria-maestra.csv';
+      a.click();
+    }
+
+    function exportarJSON() {
+      const blob = new Blob([JSON.stringify(filtrados, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'auditoria-maestra.json';
+      a.click();
+    }
+
+    cargar();
+  </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Validación</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1rem;
+      background: #fdfdfd;
+      color: #333;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      text-align: left;
+    }
+    th {
+      background-color: #0078d4;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    .ok {
+      color: green;
+      font-weight: bold;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Dashboard de Validación</h1>
+  <p>Estado técnico por ruta auditada. Exportable y federable.</p>
+
+  <table aria-label="Tabla de validación por ruta">
+    <thead>
+      <tr>
+        <th>Ruta</th>
+        <th>Estado</th>
+        <th>Badge</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>index.html</td>
+        <td class="ok">✅ OK</td>
+        <td><img src="badges/index-ok.svg" alt="index:ok" title="Validación OK para index.html"></td>
+      </tr>
+      <tr>
+        <td>validador.html</td>
+        <td class="error">❌ Error</td>
+        <td><img src="badges/validador-error.svg" alt="validador:error" title="Error de validación en validador.html"></td>
+      </tr>
+      <tr>
+        <td>dashboard-comunitario.html</td>
+        <td class="ok">✅ OK</td>
+        <td><img src="badges/dashboard-ok.svg" alt="dashboard:ok" title="Validación OK para dashboard-comunitario.html"></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

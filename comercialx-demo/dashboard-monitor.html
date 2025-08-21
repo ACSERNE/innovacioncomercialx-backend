@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Técnico – ComercialX</title>
+  <style>
+    body { font-family: sans-serif; background: #f4f4f4; padding: 2em; }
+    h1, h2 { color: #333; }
+    .fail { color: red; font-weight: bold; }
+    .ok { color: green; font-weight: bold; }
+    .warn { color: orange; font-weight: bold; }
+    .visor-link { margin: 0.5em 0; display: block; }
+    pre { background: #fff; padding: 1em; border: 1px solid #ccc; overflow-x: auto; }
+    .badge { height: 24px; vertical-align: middle; margin-right: 0.5em; }
+  </style>
+</head>
+<body>
+  <h1>📊 Dashboard Técnico – ComercialX Cockpit</h1>
+
+  <h2>🛠️ Monitor de Deploy</h2>
+  <ul>
+    <li class="fail">❌ <strong>#34</strong> – Fallido</li>
+    <li class="fail">❌ <strong>#33</strong> – Fallido</li>
+    <li class="fail">❌ <strong>#32</strong> – Fallido</li>
+    <li class="fail">❌ <strong>#28</strong> – Fallido</li>
+  </ul>
+  <p>🔗 <a href="https://github.com/ACSERNE/comercialx-demo/actions">Ver historial completo en GitHub Actions</a></p>
+
+  <h2>🔍 Estado del Submódulo</h2>
+  <img src="badges/badge-submodule.svg" alt="Estado del submódulo" class="badge">
+  <pre>
+[2025-08-18 13:04:46] Estado: ERROR – Submódulo roto: comercialx-backend
+[2025-08-18 13:13:13] Estado: ERROR – Submódulo roto: comercialx-backend
+  </pre>
+
+  <h2>🌐 Visores Federados</h2>
+  <a class="visor-link" href="visor-chile.html">🇨🇱 Visor Chile</a>
+  <a class="visor-link" href="visor-mexico.html">🇲🇽 Visor México</a>
+  <a class="visor-link" href="visor-espana.html">🇪🇸 Visor España</a>
+
+  <h2>📦 Artefactos Técnicos</h2>
+  <ul>
+    <li><a href="dashboard.csv">📄 dashboard.csv</a></li>
+    <li><a href="dashboard-maestro-normalizado.json">🧠 dashboard-maestro-normalizado.json</a></li>
+    <li><a href="badges/badge-chile.svg">🇨🇱 badge-chile.svg</a></li>
+    <li><a href="badges/badge-mexico.svg">🇲🇽 badge-mexico.svg</a></li>
+    <li><a href="badges/badge-españa.svg">🇪🇸 badge-españa.svg</a></li>
+  </ul>
+
+  <hr>
+  <p>Federado por ComercialX Cockpit – Validación remota y auditoría extendida</p>
+</body>
+</html>

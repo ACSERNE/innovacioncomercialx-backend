@@ -1,0 +1,7 @@
+{
+  "status": "FAIL",
+  "diferencias": [
+    "❌ Falta clave: validacion_remota",
+    "❌ Falta clave: artefactos"
+  ]
+}

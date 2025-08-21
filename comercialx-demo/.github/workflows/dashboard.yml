@@ -1,0 +1,41 @@
+name: 🛠️ Validación y Federación Cockpitizada
+
+on:
+  push:
+    branches:
+      - gh-pages
+
+jobs:
+  validar-dashboard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔄 Checkout repositorio
+        uses: actions/checkout@v4
+
+      - name: 🧰 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: 📦 Instalar dependencias (si aplica)
+        run: |
+          npm install || true
+
+      - name: 🧪 Validar dashboard-maestro.json
+        run: node scripts/dashboard-render.js
+
+      - name: 🔍 Sincronizar con template
+        run: node scripts/maestro-sync.js
+
+      - name: 📤 Publicar artefactos federados
+        uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-artifacts
+          path: |
+            dashboard/maestro-sync-log.json
+            dashboard/badges/maestro-sync.svg
+            dashboard/dashboard-maestro.json
+            dashboard/index.html
+            dashboard/*.csv
+            dashboard/*.json
+            dashboard/badges/*.svg

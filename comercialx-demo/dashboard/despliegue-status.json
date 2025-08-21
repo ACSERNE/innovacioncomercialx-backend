@@ -1,0 +1,17 @@
+[
+  {
+    "url": "https://acserne.github.io/comercialx-demo/dashboard/dashboard-summary.json",
+    "status": 200,
+    "ok": true
+  },
+  {
+    "url": "https://acserne.github.io/comercialx-demo/index.html",
+    "status": 200,
+    "ok": true
+  },
+  {
+    "url": "https://acserne.github.io/comercialx-demo/badge-deploy.svg",
+    "status": 200,
+    "ok": true
+  }
+]

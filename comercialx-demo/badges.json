@@ -1,0 +1,32 @@
+{
+  "badges": [
+    {
+      "pais": "Chile",
+      "entorno": "Producción",
+      "color": "#0033A0",
+      "texto": "Chile ✅",
+      "archivo": "badges/chile.svg"
+    },
+    {
+      "pais": "México",
+      "entorno": "Staging",
+      "color": "#006847",
+      "texto": "México ✅",
+      "archivo": "badges/mexico.svg"
+    },
+    {
+      "pais": "España",
+      "entorno": "QA",
+      "color": "#AA151B",
+      "texto": "España ✅",
+      "archivo": "badges/espana.svg"
+    },
+    {
+      "pais": "Docker",
+      "entorno": "Embed",
+      "color": "#0db7ed",
+      "texto": "Docker ✅",
+      "archivo": "badges/docker.svg"
+    }
+  ]
+}

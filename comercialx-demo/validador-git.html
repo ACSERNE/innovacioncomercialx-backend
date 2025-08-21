@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validador Git - ComercialX Cockpit</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1rem;
+      background: #fdfdfd;
+      color: #333;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      text-align: left;
+    }
+    th {
+      background-color: #0078d4;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    .badge {
+      font-weight: bold;
+      color: green;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      margin-top: 1rem;
+      font-family: monospace;
+      font-size: 0.95rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧩 Validador Git</h1>
+  <p>Auditoría técnica por commit, release y archivo modificado.</p>
+
+  <table aria-label="Tabla de commits recientes">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Autor</th>
+        <th>Mensaje</th>
+        <th>Badge</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2025-08-16</td>
+        <td>Valdez</td>
+        <td>🔒 Blindaje técnico: meta-viewport, charset UTF-8, title accesible y mitigación Docker CVEs</td>
+        <td class="badge">✅ v2.1.1</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>📤 Exportación JSON por archivo modificado</h2>
+  <textarea readonly title="Exportación técnica en formato JSON">
+{
+  "commit": "v2.1.1",
+  "autor": "Valdez",
+  "fecha": "2025-08-16",
+  "archivos": [
+    "backend/generador-json.html",
+    "backend/generador-badges.html",
+    "backend/dashboard-validacion.html",
+    "backend/dashboard-validacion-federado.html",
+    "backend/dashboard-comunitario.html",
+    "backend/release-v2.1.0.html",
+    "backend/Dockerfile"
+  ],
+  "mejoras": [
+    "meta-viewport",
+    "meta-charset-utf-8",
+    "title accesible",
+    "validación responsive",
+    "mitigación de vulnerabilidades Docker"
+  ]
+}
+  </textarea>
+</body>
+</html>

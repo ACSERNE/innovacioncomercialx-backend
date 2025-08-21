@@ -1,0 +1,38 @@
+{
+  "timestamp": "2025-08-19T16:34:28.177Z",
+  "render": {
+    "timestamp": "2025-08-19T11:56:36-04:00",
+    "resultados": [
+      {
+        "entorno": "github-pages",
+        "url": "https://acserne.github.io/comercialx-demo/",
+        "codigo_http": "200",
+        "estado": "OK"
+      },
+      {
+        "entorno": "netlify",
+        "url": "https://comercialx-demo.netlify.app/",
+        "codigo_http": "404",
+        "estado": "Not Found"
+      },
+      {
+        "entorno": "railway",
+        "url": "https://comercialx-demo.up.railway.app/",
+        "codigo_http": "404",
+        "estado": "Not Found"
+      }
+    ]
+  },
+  "sync": {
+    "status": "ERROR",
+    "motivo": "No se pudo cargar C:\\Users\\usuario\\innovacioncomercialx\\backend\\comercialx-demo\\comercialx-demo\\dashboard\\maestro-sync-log.json"
+  },
+  "reset": {
+    "status": "ERROR",
+    "motivo": "No se pudo cargar C:\\Users\\usuario\\innovacioncomercialx\\backend\\comercialx-demo\\comercialx-demo\\dashboard\\maestro-reset-log.json"
+  },
+  "publish": {
+    "status": "ERROR",
+    "motivo": "No se pudo cargar C:\\Users\\usuario\\innovacioncomercialx\\backend\\comercialx-demo\\comercialx-demo\\publish-status.json"
+  }
+}

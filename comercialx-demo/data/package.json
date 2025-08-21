@@ -1,0 +1,8 @@
+{
+  "name": "comercialx-data",
+  "type": "module",
+  "scripts": {
+    "start": "echo 'Data running'"
+  },
+  "dependencies": {}
+}

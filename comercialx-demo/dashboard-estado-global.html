@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Estado Global de Despliegue</title>
+  <style>
+    body { font-family: sans-serif; background: #f9f9f9; margin: 2em; }
+    h1, h2 { color: #333; }
+    .badge { margin: 0.5em; }
+    .log { background: #fff; border: 1px solid #ccc; padding: 1em; margin-top: 1em; white-space: pre-wrap; font-family: monospace; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1em; }
+  </style>
+</head>
+<body>
+  <h1>🌐 Estado Global de Despliegue</h1>
+
+  <h2>🔖 Badges por país y entorno</h2>
+  <div class="grid">
+    <div><strong>Chile</strong><br><img class="badge" src="badges/chile-validacion.svg" alt="CL Validación" /></div>
+    <div><strong>México</strong><br><img class="badge" src="badges/mexico-validacion.svg" alt="MX Validación" /></div>
+    <div><strong>España</strong><br><img class="badge" src="badges/espana-validacion.svg" alt="ES Validación" /></div>
+    <div><strong>Global</strong><br><img class="badge" src="badges/despliegue-global.svg" alt="Despliegue Global" /></div>
+  </div>
+
+  <h2>📦 Artefactos federados</h2>
+  <ul>
+    <li><a href="dashboard/index.html">Dashboard visual</a></li>
+    <li><a href="logs/despliegue-status.json">Log técnico</a></li>
+    <li><a href="artifacts/dashboard.csv">CSV federado</a></li>
+    <li><a href="artifacts/dashboard-maestro.json">JSON maestro</a></li>
+  </ul>
+
+  <h2>📋 Log técnico #5</h2>
+  <div class="log">
+    Push: feb2b6d → gh-pages  
+    Usuario: @ACSERNE  
+    Estado: ✅ Success  
+    Duración: 25s  
+    Artefactos: 1  
+    Timestamp: 2025-08-19 13:13 HSP
+  </div>
+</body>
+</html>

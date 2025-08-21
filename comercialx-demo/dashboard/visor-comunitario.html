@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>🌐 Visor Comunitario ComercialX</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <h1>🌐 Visor Comunitario: Auditoría Federada</h1>
+
+  <label for="busqueda">🔎 Buscar ruta:</label>
+  <input type="text" id="busqueda" oninput="filtrar()" placeholder="ej: /api/caja" />
+
+  <div id="badges" style="margin: 1em 0;"></div>
+  <div id="resumen" style="margin: 1em 0; font-weight: bold;"></div>
+
+  <table id="tabla">
+    <thead>
+      <tr>
+        <th>Tienda</th>
+        <th>Entorno</th>
+        <th>Ruta</th>
+        <th>Tipo</th>
+        <th>Estado</th>
+        <th>Detalles</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <button onclick="exportarCSV()">📤 Exportar CSV</button>
+  <button onclick="exportarJSON()">📁 Exportar JSON</button>
+
+  <script>
+    const fuentes = [
+      { tienda: 'demo', entorno: 'github', url: 'https://acserne.github.io/comercialx-demo/logs/logs-demo.json' },
+      { tienda: 'online', entorno: 'netlify', url: 'https://comercialx.netlify.app/logs/logs-online.json' },
+      { tienda: 'fisica', entorno: 'local', url: 'https://comercialx.local/logs/logs-fisica.json' }
+    ];
+
+    let datos = [], filtrados = [];
+
+    function cargar() {
+      const promesas = fuentes.map(f =>
+        fetch(f.url).then(r => r.json()).then(logs =>
+          logs.map(log => ({ ...log, tienda: f.tienda, entorno: f.entorno }))
+        ).catch(() => [])
+      );
+
+      Promise.all(promesas).then(resultados => {
+        datos = resultados.flat();
+        filtrar();
+      });
+    }
+
+    function filtrar() {
+      const busqueda = document.getElementById('busqueda').value.toLowerCase();
+      const tabla = document.querySelector('#tabla tbody');
+      tabla.innerHTML = '';
+
+      filtrados = datos.filter(log =>
+        log.ruta.toLowerCase().includes(busqueda)
+      );
+
+      filtrados.forEach(log => {
+        tabla.innerHTML += `<tr>
+          <td>${log.tienda}</td>
+          <td>${log.entorno}</td>
+          <td>${log.ruta}</td>
+          <td>${log.tipo}</td>
+          <td>${log.estadoTxt}</td>
+          <td>${log.detalles}</td>
+          <td>${log.timestamp}</td>
+        </tr>`;
+      });
+
+      const resumen = {};
+      filtrados.forEach(log => {
+        const key = `${log.tienda}-${log.entorno}-${log.tipo}-${log.estadoTxt}`;
+        resumen[key] = (resumen[key] || 0) + 1;
+      });
+
+      let resumenHTML = '📊 Resumen federado:<br>';
+      let badgesHTML = '';
+      for (const key in resumen) {
+        resumenHTML += `${key}: ${resumen[key]}<br>`;
+        badgesHTML += `<img src="../badges/badge-${key}.svg" alt="${key}" style="margin-right:5px;" />`;
+      }
+
+      document.getElementById('resumen').innerHTML = resumenHTML;
+      document.getElementById('badges').innerHTML = badgesHTML;
+    }
+
+    function exportarCSV() {
+      const filas = ['Tienda,Entorno,Ruta,Tipo,Estado,Detalles,Timestamp'];
+      filtrados.forEach(log => {
+        filas.push(`"${log.tienda}","${log.entorno}","${log.ruta}","${log.tipo}","${log.estadoTxt}","${log.detalles}","${log.timestamp}"`);
+      });
+      const blob = new Blob([filas.join('\n')], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'auditoria-comunitaria.csv';
+      a.click();
+    }
+
+    function exportarJSON() {
+      const blob = new Blob([JSON.stringify(filtrados, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'auditoria-comunitaria.json';
+      a.click();
+    }
+
+    cargar();
+  </script>
+</body>
+</html>

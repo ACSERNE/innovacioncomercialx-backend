@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>🏷️ Generador de Badges SVG</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <h1>🏷️ Generador de Badges SVG desde JSON técnico</h1>
+
+  <label for="jsonInput">📥 Pega JSON técnico:</label><br>
+  <textarea id="jsonInput" rows="10" cols="80" placeholder='[{"cliente":"acserne","tipo":"onboarding","estadoTxt":"ok"}]'></textarea><br>
+  <button onclick="generar()">⚙️ Generar Badges</button>
+
+  <div id="badges" style="margin-top: 1em;"></div>
+
+  <script>
+    function generar() {
+      const input = document.getElementById('jsonInput').value;
+      let logs;
+      try {
+        logs = JSON.parse(input);
+      } catch (e) {
+        alert("❌ JSON inválido");
+        return;
+      }
+
+      const contenedor = document.getElementById('badges');
+      contenedor.innerHTML = '';
+      const resumen = {};
+
+      logs.forEach(log => {
+        const key = `${log.cliente}-${log.tipo}-${log.estadoTxt}`;
+        resumen[key] = (resumen[key] || 0) + 1;
+      });
+
+      for (const key in resumen) {
+        const color = key.includes('ok') ? 'green' : key.includes('warning') ? 'orange' : 'red';
+        const svg = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="180" height="30">
+            <rect width="180" height="30" fill="${color}" rx="5" />
+            <text x="90" y="20" font-size="14" fill="white" text-anchor="middle" font-family="Arial">${key}</text>
+          </svg>
+        `;
+        const blob = new Blob([svg], { type: 'image/svg+xml' });
+        const url = URL.createObjectURL(blob);
+        contenedor.innerHTML += `
+          <div style="margin-bottom:10px;">
+            <img src="${url}" alt="${key}" />
+            <a href="${url}" download="badge-${key}.svg">⬇️ Descargar</a>
+          </div>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

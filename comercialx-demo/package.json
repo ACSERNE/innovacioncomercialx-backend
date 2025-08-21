@@ -1,0 +1,8 @@
+{
+  "name": "comercialx-root",
+  "type": "module",
+  "scripts": {
+    "start": "echo 'Root package'"
+  },
+  "dependencies": {}
+}
