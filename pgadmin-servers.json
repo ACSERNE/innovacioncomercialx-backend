@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "Innovacion PostgreSQL",
+      "Group": "PostgreSQL",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "innovacion_db",
+      "Username": "postgres",
+      "Password": "admin123",
+      "SSLMode": "prefer"
+    }
+  }
+}

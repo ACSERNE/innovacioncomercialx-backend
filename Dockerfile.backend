@@ -1,0 +1,19 @@
+FROM node:20-alpine
+
+# Directorio de trabajo
+WORKDIR /app
+
+# Copia package.json y package-lock.json
+COPY package*.json ./
+
+# Instala dependencias
+RUN npm install
+
+# Copia todo el código
+COPY . .
+
+# Expone el puerto del backend
+EXPOSE 5001
+
+# Comando para iniciar
+CMD ["node", "server.js"]

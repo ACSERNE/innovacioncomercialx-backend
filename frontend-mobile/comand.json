@@ -1,0 +1,19 @@
+{
+  "name": "frontend-mobile",
+  "private": true,
+  "author": "innovacioncomercialx@gmail.com",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "expo": "^48.0.0",
+    "react-native": "^0.72.0",
+    "react-native-web": "^0.19.0"
+  },
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "build": "expo build"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "timestamp": "2025-08-31T06:49:00-04:00",
+  "entornos": {
+    "Chile": {
+      "web": "http://10.77.223.32:3000",
+      "mobile": "exp://10.77.223.32:8082",
+      "api": "http://10.77.223.32:5002",
+      "estado": "✅ Validado"
+    },
+    "México": {
+      "web": "https://comercialx-mx.netlify.app",
+      "mobile": "exp://mx.expo.dev",
+      "api": "https://api-mx.comercialx.com",
+      "estado": "🟡 En preparación"
+    },
+    "España": {
+      "web": "https://comercialx-es.netlify.app",
+      "mobile": "exp://es.expo.dev",
+      "api": "https://api-es.comercialx.com",
+      "estado": "🟡 En preparación"
+    }
+  },
+  "logs": {
+    "expo": "Metro activo en 8082, QR disponible",
+    "docker": "Frontend web en 3000, backend en 5002",
+    "warnings": ["shadow* deprecado, corregido con boxShadow"]
+  },
+  "badges": {
+    "Chile": {
+      "web": "✅",
+      "mobile": "✅",
+      "api": "✅"
+    },
+    "México": {
+      "web": "🟡",
+      "mobile": "🟡",
+      "api": "🟡"
+    },
+    "España": {
+      "web": "🟡",
+      "mobile": "🟡",
+      "api": "🟡"
+    }
+  }
+}

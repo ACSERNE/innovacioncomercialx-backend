@@ -1,22 +1,16 @@
-import express from 'express'
-import healthRoute from './routes/health.js'
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
-const app = express()
+const usersRouter = require('./routes/users.routes');
+const productosRouter = require('./routes/productos.routes');
 
-// 🌐 Middleware cockpitizado
-app.use(express.json())
-app.use((req, res, next) => {
-  console.log(`🛰️  [${new Date().toISOString()}] ${req.method} ${req.url}`)
-  next()
-})
+const app = express();
 
-// 🧩 Rutas cockpitizadas
-healthRoute(app)
+app.use(cors());
+app.use(bodyParser.json());
 
-// 🎯 Log de arranque visual
-const ENV = process.env.NODE_ENV || 'development'
-console.log("╭────────────────────────────────────────────╮")
-console.log(`│ 🚀 ComercialX Backend iniciado en modo: ${ENV.padEnd(14)} │`)
-console.log("╰────────────────────────────────────────────╯")
+app.use('/api/users', usersRouter);
+app.use('/api/productos', productosRouter);
 
-export default app
+module.exports = app;

@@ -1,0 +1,77 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-innovacion
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin-innovacion
+    env_file:
+      - .env
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    restart: always
+
+  comercialx-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: comercialx-backend
+    env_file:
+      - .env
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      PORT: 5001
+    ports:
+      - "5002:5001"
+    depends_on:
+      - postgres
+    restart: always
+
+  frontend-web:
+    build:
+      context: ../frontend-web
+      dockerfile: Dockerfile
+    container_name: frontend-web
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_BACKEND_URL: "http://localhost:5002/api"
+    restart: always
+
+  frontend-mobile:
+    build:
+      context: ../frontend-mobile
+      dockerfile: Dockerfile
+    container_name: frontend-mobile
+    ports:
+      - "19000:19000"
+      - "19001:19001"
+      - "19002:19002"
+      - "19006:19006"
+    environment:
+      BACKEND_URL: "http://localhost:5002/api"
+    restart: always
+
+volumes:
+  pgdata:

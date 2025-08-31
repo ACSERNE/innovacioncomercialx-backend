@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "private": true,
+  "author": "innovacioncomercialx@gmail.com",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "pg": "^8.11.0",
+    "sequelize": "^6.37.7",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "compression": "^1.7.4"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  }
+}

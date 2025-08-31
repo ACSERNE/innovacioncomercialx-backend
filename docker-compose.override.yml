@@ -1,0 +1,77 @@
+services:
+  # Frontend Web
+  frontend-web-dev:
+    build:
+      context: ./frontend-web
+      dockerfile: Dockerfile
+    container_name: frontend-web-dev
+    # Puerto dinámico: usa la variable FRONTEND_WEB_PORT o 3000 por defecto
+    ports:
+      - "${FRONTEND_WEB_PORT:-3000}:3000"
+    restart: always
+
+  # Frontend Mobile
+  frontend-mobile-dev:
+    build:
+      context: ./frontend-mobile
+      dockerfile: Dockerfile
+    container_name: frontend-mobile-dev
+    # Puerto dinámico: usa la variable FRONTEND_MOBILE_PORT o 19000 por defecto
+    ports:
+      - "${FRONTEND_MOBILE_PORT:-19000}:19000"
+    restart: always
+
+  # Backend
+  comercialx-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: comercialx-backend
+    env_file:
+      - .env
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      PORT: 5001
+    ports:
+      - "5002:5001"
+    depends_on:
+      - postgres
+    restart: always
+
+  # PostgreSQL
+  postgres:
+    image: postgres
+    container_name: postgres-innovacion
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+
+  # PgAdmin
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin-innovacion
+    env_file:
+      - .env
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    restart: always
+
+volumes:
+  pgdata:

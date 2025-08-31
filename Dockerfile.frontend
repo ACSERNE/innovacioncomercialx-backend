@@ -1,0 +1,22 @@
+FROM node:20-alpine AS build
+
+WORKDIR /app
+
+# Copia package.json y package-lock.json
+COPY package*.json ./
+
+# Instala TODAS las dependencias (incluye devDependencies)
+RUN npm install
+
+# Copia el resto del código fuente
+COPY . .
+
+# Exporta el build web con Expo
+RUN npm run web
+
+# Etapa final: servir con Nginx
+FROM nginx:alpine
+COPY --from=build /app/web-build /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

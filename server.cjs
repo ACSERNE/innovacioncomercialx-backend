@@ -1,50 +1,52 @@
 'use strict';
-
+const { Sequelize } = require('sequelize');
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const compression = require('compression');
-const { Sequelize } = require('sequelize');
-
-// Inicializar Sequelize con variables de entorno
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    dialect: 'postgres',
-    logging: false,
-  }
-);
-
-// Probar la conexión a la base de datos
-sequelize.authenticate()
-  .then(() => {
-    console.log('✅ Conexión a la base de datos exitosa');
-  })
-  .catch(err => {
-    console.error('❌ Error al conectar a la base de datos:', err);
-  });
 
 const app = express();
-
-// Middlewares
 app.use(cors());
+app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(compression());
+
+// Variables de entorno
+const DB_HOST = process.env.DB_HOST || 'postgres';
+const DB_PORT = process.env.DB_PORT || 5432;
+const DB_USER = process.env.DB_USER || 'postgres';
+const DB_PASSWORD = process.env.DB_PASSWORD || 'admin123';
+const DB_NAME = process.env.DB_NAME || 'innovacion_db';
+const PORT = process.env.PORT || 5001;
+
+// Conexión Sequelize con retry
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+  host: DB_HOST,
+  port: DB_PORT,
+  dialect: 'postgres',
+  logging: false,
+  retry: { max: 10 }
+});
+
+async function connectWithRetry(retries = 10, delay = 5000) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      await sequelize.authenticate();
+      console.log('✅ Conexión a la base de datos exitosa');
+      return;
+    } catch (err) {
+      console.log(`⚠️  Falló conexión a DB, reintentando en ${delay/1000}s... (${i+1}/${retries})`);
+      await new Promise(res => setTimeout(res, delay));
+    }
+  }
+  console.error('❌ No se pudo conectar a la base de datos después de varios intentos');
+  process.exit(1);
+}
 
 // Ruta de prueba
-app.get('/api', (req, res) => {
-  res.json({ message: 'Backend funcionando correctamente' });
-});
+app.get('/', (req, res) => res.send('Backend corriendo 🚀'));
 
-// Levantar servidor
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
-});
-
-module.exports = app;
+(async () => {
+  await connectWithRetry();
+  app.listen(PORT, () => console.log(`🚀 Servidor corriendo en puerto ${PORT}`));
+})();

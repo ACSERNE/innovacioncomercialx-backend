@@ -1,39 +1,61 @@
 services:
-  postgres-innovacion:
-    image: postgres:latest
+  postgres:
+    image: postgres:15
     container_name: postgres-innovacion
-    restart: unless-stopped
+    env_file:
+      - .env
     environment:
-      POSTGRES_USER: usuario
-      POSTGRES_PASSWORD: password123
-      POSTGRES_DB: comercialx
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
 
-  pgadmin-innovacion:
-    image: dpage/pgadmin4:latest
+  pgadmin:
+    image: dpage/pgadmin4
     container_name: pgadmin-innovacion
-    restart: unless-stopped
+    env_file:
+      - .env
     environment:
-      PGADMIN_DEFAULT_EMAIL: innovacioncomercialx@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports:
       - "8080:80"
     depends_on:
-      - postgres-innovacion
+      - postgres
+    restart: always
 
-  backend-innovacion:
-    build: .
-    container_name: backend-innovacion
-    restart: unless-stopped
+  comercialx-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: comercialx-backend
     env_file:
       - .env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      PORT: 5001
     ports:
-      - "5002:5002"
+      - "5002:5001"
     depends_on:
-      - postgres-innovacion
+      - postgres
+    restart: always
+
+  frontend-web-dev:
+    build:
+      context: ./frontend-web
+      dockerfile: Dockerfile.frontend
+    container_name: frontend-web-dev
+    ports:
+      - "3000:80"
+    restart: always
 
 volumes:
   pgdata:

@@ -1,28 +1,27 @@
-# Imagen base Node.js (última disponible)
-FROM node:latest
+# Stage 1: Instala dependencias y genera build web
+FROM node:20-alpine AS builder
 
-# Establece directorio de trabajo
 WORKDIR /app
 
-# Copia package.json y package-lock.json primero (para cache de dependencias)
+# Copia archivos del proyecto
 COPY package*.json ./
-
-# Instala dependencias
-RUN npm install
-
-# Copia todo el proyecto
 COPY . .
 
-# Descarga wait-for-it.sh y le da permisos
-RUN curl -o wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && \
-    chmod +x wait-for-it.sh
+# Instala todas las dependencias (incluye devDependencies)
+RUN npm install
 
-# Crea script start.sh
-RUN echo '#!/bin/bash\n./wait-for-it.sh postgres-innovacion:5432 --timeout=30 --strict -- echo "✅ Postgres está disponible, arrancando backend..."\nnode server.cjs' > start.sh && \
-    chmod +x start.sh
+# Genera el build web con Expo
+RUN npm run build || npm run export:web
 
-# Expone el puerto del backend
-EXPOSE 5002
+# Stage 2: Servir con Nginx
+FROM nginx:alpine
 
-# Comando por defecto
-CMD ["./start.sh"]
+# Copia el build generado al directorio público de Nginx
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Copia configuración personalizada de Nginx si existe
+# COPY nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,34 +1,42 @@
+#!/usr/bin/env node
+
 const inquirer = require('inquirer');
-const chalk = require('chalk');
-const fs = require('fs');
-const path = require('path');
 
-const config = Object.fromEntries(
-  fs.readFileSync('.cockpitrc', 'utf-8')
-    .split('\n')
-    .filter(line => line && !line.startsWith('#'))
-    .map(line => line.split('=').map(v => v.trim()))
-);
+async function main() {
+  console.log("🚀 Bienvenido al asistente de Innovación ComercialX");
 
-const modo = process.argv[2] || config.rol_default;
+  const respuestas = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'accion',
+      message: '¿Qué deseas hacer?',
+      choices: [
+        { name: '📦 Gestionar productos', value: 'productos' },
+        { name: '👤 Gestionar usuarios', value: 'usuarios' },
+        { name: '💰 Revisar flujo de caja', value: 'caja' },
+        { name: '📊 Generar reportes', value: 'reportes' },
+        { name: '❌ Salir', value: 'salir' }
+      ]
+    }
+  ]);
 
-const rutas = {
-  admin: './acciones/admin.js',
-  vendedor: './acciones/vendedor.js',
-  comprador: './acciones/comprador.js'
-};
-
-if (!rutas[modo]) {
-  console.log(chalk.red('\n❌ Modo inválido. Usa: admin | vendedor | comprador\n'));
-  process.exit(1);
+  switch (respuestas.accion) {
+    case 'productos':
+      console.log("🔹 Módulo de productos en construcción...");
+      break;
+    case 'usuarios':
+      console.log("🔹 Módulo de usuarios en construcción...");
+      break;
+    case 'caja':
+      console.log("🔹 Mostrando flujo de caja...");
+      break;
+    case 'reportes':
+      console.log("🔹 Generando reportes...");
+      break;
+    case 'salir':
+      console.log("👋 Saliendo del asistente...");
+      process.exit(0);
+  }
 }
 
-const archivarAccion = (modo, accion) => {
-  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-  const archivo = path.join(config.reportes, `${modo}-${timestamp}.md`);
-  const contenido = `# Acción ejecutada\n\n- Usuario: ${config.usuario}\n- Tienda: ${config.tienda}\n- Modo: ${modo}\n- Opción: ${accion}\n- Timestamp: ${timestamp}\n`;
-  fs.writeFileSync(archivo, contenido);
-  console.log(chalk.yellow(`📄 Acción archivada en ${archivo}`));
-};
-
-require(rutas[modo])(archivarAccion);
+main();
