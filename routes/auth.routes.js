@@ -1,11 +1,10 @@
-// routes/auth.routes.js
 const express = require('express');
 const router = express.Router();
 const { User } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// Registro de usuario
+// Registro
 router.post('/register', async (req, res) => {
   const { nombre, correo, password, rol } = req.body;
 
@@ -13,7 +12,7 @@ router.post('/register', async (req, res) => {
     const user = await User.create({
       nombre,
       correo,
-      password,   // SIN HASH — el hook del modelo lo hace
+      password, // SIN HASH
       role: rol || 'admin',
       activo: true
     });
@@ -25,7 +24,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Login de usuario
+// Login
 router.post('/login', async (req, res) => {
   const { correo, password } = req.body;
 
