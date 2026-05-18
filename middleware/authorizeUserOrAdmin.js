@@ -1,4 +1,3 @@
-// middlewares/authorizeUserOrAdmin.js
 module.exports = function (req, res, next) {
   const userId = req.params.id;
   const requester = req.user;

@@ -1,12 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const controller = require('../controllers/reporte.controller');
+const authenticate = require('../middleware/auth');
 
-const reporteController = require('../controllers/reporte.controller');
-
-// Generar reportes PDF y Excel para productos
-router.get('/productos', reporteController.reporteProductos);
-
-// Descargar archivo PDF o Excel
-router.get('/descargar/:tipo', reporteController.descargarArchivo);
+router.get('/ventas', authenticate, controller.reporteVentas);
+router.get('/productos', authenticate, controller.reporteProductos);
 
 module.exports = router;

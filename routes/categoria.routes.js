@@ -1,17 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const categoriaController = require('../controllers/categoria.controller');
+const controller = require('../controllers/categoria.controller');
+const authenticate = require('../middleware/auth');
 
-// Obtener todas las categorías
-router.get('/', categoriaController.getAllCategorias);
-
-// Crear nueva categoría
-router.post('/', categoriaController.createCategoria);
-
-// Actualizar categoría por ID
-router.put('/:id', categoriaController.updateCategoria);
-
-// Eliminar categoría por ID
-router.delete('/:id', categoriaController.deleteCategoria);
+router.get('/', authenticate, controller.getAll);
+router.post('/', authenticate, controller.create);
+router.put('/:id', authenticate, controller.update);
+router.delete('/:id', authenticate, controller.remove);
 
 module.exports = router;
