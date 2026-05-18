@@ -9,3 +9,4 @@ pgadmin_config/servers.json
 *.sqlite
 *.bak
 *.tmp
+.env
