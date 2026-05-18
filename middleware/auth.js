@@ -8,7 +8,7 @@ exports.authenticate = async (req, res, next) => {
       return res.status(401).json({ error: 'Token no proporcionado' });
 
     const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'supersecreto123');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     const user = await User.findByPk(decoded.id);
     if (!user) return res.status(401).json({ error: 'Usuario no encontrado' });
@@ -59,7 +59,7 @@ exports.refreshTokenIfNeeded = (req, res, next) => {
     if (exp - now < 600) {
       const newToken = jwt.sign(
         { id: decoded.payload.id, correo: decoded.payload.correo, role: decoded.payload.role },
-        process.env.JWT_SECRET || 'supersecreto123',
+        process.env.JWT_SECRET,
         { expiresIn: '2h' }
       );
       res.setHeader('x-refresh-token', newToken);
