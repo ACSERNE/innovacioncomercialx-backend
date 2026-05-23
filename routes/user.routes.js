@@ -1,14 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/user.controller');
-const authenticate = require('../middleware/auth');
 
+const { authenticate } = require('../middleware/auth');
+const userController = require('../controllers/user.controller');
+
+// Rutas CRUD de usuarios
 router.get('/', authenticate, userController.getAllUsers);
 router.get('/:id', authenticate, userController.getUserById);
 router.post('/', authenticate, userController.createUser);
 router.put('/:id', authenticate, userController.updateUser);
 router.delete('/:id', authenticate, userController.deleteUser);
 
+// Ruta adicional: información del usuario autenticado
 router.get('/me/info', authenticate, async (req, res) => {
   try {
     const { PrismaClient } = require('@prisma/client');
@@ -27,3 +30,4 @@ router.get('/me/info', authenticate, async (req, res) => {
 });
 
 module.exports = router;
+
