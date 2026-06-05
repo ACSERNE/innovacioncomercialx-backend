@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { authenticate } = require('../middleware/auth');
+const { authenticate } = require('../middleware/authMiddleware');
 const controller = require('../controllers/sale.controller');
 
 // Rutas CRUD de ventas

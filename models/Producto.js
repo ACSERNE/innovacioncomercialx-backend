@@ -4,7 +4,7 @@ const { Model, DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   class Producto extends Model {
     static associate(models) {
-      Producto.belongsTo(models.CategoriaProducto, {
+      Producto.belongsTo(models.Categoria, {
         foreignKey: 'categoriaId',
         as: 'categoria',
       });
@@ -17,35 +17,48 @@ module.exports = (sequelize) => {
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
+
     nombre: {
       type: DataTypes.STRING,
       allowNull: false,
     },
+
+    descripcion: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
     precio_unitario: {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
+
     precio_total: {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
+
     descuento_aplicable: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+
     stock: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
     },
+
     categoriaId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
+
     fecha_vencimiento: {
       type: DataTypes.DATE,
       allowNull: true,
     }
+
   }, {
     sequelize,
     modelName: 'Producto',
@@ -54,3 +67,4 @@ module.exports = (sequelize) => {
 
   return Producto;
 };
+

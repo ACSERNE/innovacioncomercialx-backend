@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/flujoCaja.controller');
-const authenticate = require('../middleware/auth');
 
-router.get('/', authenticate, controller.getAll);
-router.post('/', authenticate, controller.create);
+const { authenticate } = require('../middleware/authMiddleware');
+const flujoCajaController = require('../controllers/flujoCaja.controller');
+
+router.get('/diario', authenticate, flujoCajaController.flujoCajaDiario);
 
 module.exports = router;
+

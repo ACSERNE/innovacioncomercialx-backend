@@ -40,7 +40,7 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=valdez98/224
       - DB_NAME=innovacion_db
-      - JWT_SECRET=supersecreto
+      - JWT_SECRET=${JWT_SECRET}
     ports:
       - "5002:5002"
     depends_on:

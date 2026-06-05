@@ -1,33 +1,59 @@
+// server.js
 const express = require("express");
 const cors = require("cors");
-const morgan = require("morgan");
-const compression = require("compression");
-const helmet = require("helmet");
-require("dotenv").config();
 
 const app = express();
 
-// Middlewares globales
+// Middlewares
 app.use(cors());
 app.use(express.json());
-app.use(morgan("dev"));
-app.use(compression());
-app.use(helmet());
 
-// Rutas principales del backend
-app.use("/api/users", require("./routes/user.routes"));
-app.use("/api/products", require("./routes/producto.routes"));
-app.use("/api/sales", require("./routes/sale.routes"));
-
-// Manejo de errores global
-app.use((err, req, res, next) => {
-  console.error("🔥 Error global:", err);
-  res.status(500).json({ error: "Error interno del servidor" });
+// -------------------------
+// RUTA DE SALUD (ping)
+// -------------------------
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok", message: "Backend vivo sin BD" });
 });
 
-// Puerto
-const PORT = process.env.PORT || 3000;
+// -------------------------
+// LOGIN SIMPLE (sin BD)
+// -------------------------
+app.post("/api/login", (req, res) => {
+  const { email, password } = req.body;
 
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor backend corriendo en puerto ${PORT}`);
+  // Credenciales de prueba
+  if (email === "admin@x.com" && password === "1234") {
+    return res.json({
+      token: "TOKEN-DE-PRUEBA",
+      user: {
+        id: 1,
+        name: "Administrador X",
+        email: "admin@x.com",
+      },
+    });
+  }
+
+  return res.status(401).json({ error: "Credenciales incorrectas" });
 });
+
+// -------------------------
+// DASHBOARD SIMPLE (KPIs)
+// -------------------------
+app.get("/api/dashboard", (req, res) => {
+  res.json({
+    ventasHoy: 12,
+    productosActivos: 48,
+    transacciones: 103,
+    ingresosHoy: 245000,
+  });
+});
+
+// -------------------------
+// PUERTO
+// -------------------------
+const PORT = 5002;
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Backend simple corriendo en puerto ${PORT}`);
+});
+

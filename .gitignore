@@ -10,3 +10,4 @@ pgadmin_config/servers.json
 *.bak
 *.tmp
 .env
+.env

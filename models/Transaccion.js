@@ -1,51 +1,34 @@
-'use strict';
-const { Model, DataTypes } = require('sequelize');
-
-module.exports = (sequelize) => {
-  class Transaccion extends Model {
-    static associate(models) {
-      Transaccion.belongsTo(models.Producto, {
-        foreignKey: 'productoId',
-        as: 'producto',
-      });
-    }
-  }
-
-  Transaccion.init({
+module.exports = (sequelize, DataTypes) => {
+  const Transaccion = sequelize.define('Transaccion', {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
-    },
-    productoId: {
-      type: DataTypes.UUID,
-      allowNull: false,
+      primaryKey: true
     },
     tipo: {
-      type: DataTypes.ENUM('entrada', 'salida'),
-      allowNull: false,
-    },
-    cantidad: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    precio_unitario: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
+      type: DataTypes.ENUM('venta', 'compra'),
+      allowNull: false
     },
     total: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
-    fecha: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
+    observaciones: {
+      type: DataTypes.STRING,
+      allowNull: true
+    }
   }, {
-    sequelize,
-    modelName: 'Transaccion',
-    tableName: 'transacciones',
+    tableName: 'Transacciones'
   });
+
+  Transaccion.associate = (models) => {
+    Transaccion.hasMany(models.TransaccionDetalle, {
+      as: 'detalles',
+      foreignKey: 'transaccionId',
+      onDelete: 'CASCADE'
+    });
+  };
 
   return Transaccion;
 };
+

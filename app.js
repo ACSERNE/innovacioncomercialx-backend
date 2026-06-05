@@ -16,12 +16,12 @@ const alertaRoutes = require('./routes/alerta.routes');
 const reporteRoutes = require('./routes/reporte.routes');
 const transaccionRoutes = require('./routes/transaccion.routes');
 const authRoutes = require('./routes/auth.routes');
+const dashboardRoutes = require('./routes/dashboard.routes');
 
-// Importar middleware específico
-const { authenticate } = require('./middleware/auth');
+// Middleware de autenticación
+const { authenticate } = require('./middleware/authMiddleware');
 
 const app = express();
-
 const PORT_START = process.env.PORT ? Number(process.env.PORT) : 5002;
 
 app.use(cors());
@@ -29,7 +29,14 @@ app.use(express.json());
 app.use(compression());
 app.use(morgan('dev'));
 
-// Rutas públicas
+// =====================================
+// ✔ SERVIR ARCHIVOS ESTÁTICOS PRIMERO
+// =====================================
+app.use(express.static('public'));
+
+// =====================================
+// ✔ RUTAS PÚBLICAS
+// =====================================
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/productos', productoRoutes);
@@ -37,19 +44,28 @@ app.use('/api/categorias', categoriaRoutes);
 app.use('/api/flujo-caja', flujoCajaRoutes);
 app.use('/api/alertas', alertaRoutes);
 app.use('/api/reportes', reporteRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
-// Rutas protegidas con JWT - usando solo la función authenticate
+// =====================================
+// ✔ RUTAS PROTEGIDAS
+// =====================================
 app.use('/api/transacciones', authenticate, transaccionRoutes);
 
+// =====================================
+// ✔ RUTA RAÍZ
+// =====================================
 app.get('/', (req, res) => {
   res.send('Servidor funcionando ✅');
 });
 
+// =====================================
+// ✔ INICIO DEL SERVIDOR (CODESPACES READY)
+// =====================================
 function startServer(port) {
   db.sequelize.sync()
     .then(() => {
-      const server = app.listen(port, () => {
-        console.log(`🚀 Servidor backend corriendo en http://localhost:${port}`);
+      const server = app.listen(port, "0.0.0.0", () => {
+        console.log(`🚀 Servidor backend corriendo en http://0.0.0.0:${port}`);
       });
 
       server.on('error', (err) => {
@@ -68,11 +84,5 @@ function startServer(port) {
 
 startServer(PORT_START);
 
-console.log('userRoutes:', typeof userRoutes);
-console.log('productoRoutes:', typeof productoRoutes);
-console.log('categoriaRoutes:', typeof categoriaRoutes);
-console.log('flujoCajaRoutes:', typeof flujoCajaRoutes);
-console.log('alertaRoutes:', typeof alertaRoutes);
-console.log('reporteRoutes:', typeof reporteRoutes);
-console.log('transaccionRoutes:', typeof transaccionRoutes);
-console.log('authRoutes:', typeof authRoutes);
+module.exports = app;
+

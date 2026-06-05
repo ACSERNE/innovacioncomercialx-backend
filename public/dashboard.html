@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard ComercialX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0d1117;
+      color: #e6edf3;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      padding: 20px;
+      background: #161b22;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      border-bottom: 1px solid #30363d;
+    }
+
+    .container {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #161b22;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #30363d;
+    }
+
+    .kpi-value {
+      font-size: 32px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid #30363d;
+    }
+
+    th {
+      text-align: left;
+      color: #58a6ff;
+    }
+
+    .alerta {
+      padding: 10px;
+      background: #da3633;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>📊 Dashboard ComercialX</header>
+
+<div class="container">
+
+  <!-- KPIs -->
+  <div class="card">
+    <h3>Ventas del Día</h3>
+    <div id="kpiVentas" class="kpi-value">--</div>
+  </div>
+
+  <div class="card">
+    <h3>Compras del Día</h3>
+    <div id="kpiCompras" class="kpi-value">--</div>
+  </div>
+
+  <div class="card">
+    <h3>Balance</h3>
+    <div id="kpiBalance" class="kpi-value">--</div>
+  </div>
+
+  <div class="card">
+    <h3>Ticket Promedio</h3>
+    <div id="kpiTicket" class="kpi-value">--</div>
+  </div>
+
+  <!-- Gráfico ventas por hora -->
+  <div class="card" style="grid-column: span 2;">
+    <h3>Ventas por Hora</h3>
+    <canvas id="chartHoras"></canvas>
+  </div>
+
+  <!-- Gráfico ventas últimos 7 días -->
+  <div class="card" style="grid-column: span 2;">
+    <h3>Ventas Últimos 7 Días</h3>
+    <canvas id="chart7dias"></canvas>
+  </div>
+
+  <!-- Ranking productos -->
+  <div class="card">
+    <h3>Ranking de Productos</h3>
+    <table id="tablaProductos"></table>
+  </div>
+
+  <!-- Inventario crítico -->
+  <div class="card">
+    <h3>Inventario Crítico</h3>
+    <table id="tablaStock"></table>
+  </div>
+
+  <!-- Alertas -->
+  <div class="card" style="grid-column: span 2;">
+    <h3>Alertas</h3>
+    <div id="alertas"></div>
+  </div>
+
+</div>
+
+<script src="dashboard.js"></script>
+
+</body>
+</html>

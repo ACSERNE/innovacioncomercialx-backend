@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { authenticate, hasRole, refreshTokenIfNeeded } = require('../middleware/auth');
+const { authenticate, hasRole, refreshTokenIfNeeded } = require('../middleware/authMiddleware');
 
 router.use(refreshTokenIfNeeded);
 

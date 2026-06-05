@@ -1,21 +1,49 @@
-const { FlujoCaja } = require('../models');
+const { Transaccion } = require('../models');
+const { Op } = require('sequelize');
 
-exports.getAll = async (req, res) => {
+// ===============================
+// FLUJO DE CAJA DIARIO
+// ===============================
+exports.flujoCajaDiario = async (req, res) => {
   try {
-    const registros = await FlujoCaja.findAll();
-    res.json(registros);
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+
+    const mañana = new Date(hoy);
+    mañana.setDate(mañana.getDate() + 1);
+
+    // Obtener todas las transacciones del día
+    const transacciones = await Transaccion.findAll({
+      where: {
+        createdAt: {
+          [Op.gte]: hoy,
+          [Op.lt]: mañana
+        }
+      }
+    });
+
+    let totalVentas = 0;
+    let totalCompras = 0;
+
+    for (const t of transacciones) {
+      if (t.tipo === 'venta') totalVentas += t.total;
+      if (t.tipo === 'compra') totalCompras += t.total;
+    }
+
+    const balance = totalVentas - totalCompras;
+
+    res.json({
+      fecha: hoy.toISOString().split('T')[0],
+      totalVentas,
+      totalCompras,
+      balance,
+      cantidadTransacciones: transacciones.length,
+      transacciones
+    });
+
   } catch (error) {
-    console.error("Error getAll flujoCaja:", error);
+    console.error("Error en flujo de caja diario:", error);
     res.status(500).json({ error: "Error interno" });
   }
 };
 
-exports.create = async (req, res) => {
-  try {
-    const registro = await FlujoCaja.create(req.body);
-    res.json(registro);
-  } catch (error) {
-    console.error("Error create flujoCaja:", error);
-    res.status(500).json({ error: "Error interno" });
-  }
-};
