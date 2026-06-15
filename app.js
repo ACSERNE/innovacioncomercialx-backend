@@ -24,13 +24,14 @@ const { authenticate } = require('./middleware/authMiddleware');
 const app = express();
 const PORT_START = process.env.PORT ? Number(process.env.PORT) : 5002;
 
+// Middlewares globales
 app.use(cors());
 app.use(express.json());
 app.use(compression());
 app.use(morgan('dev'));
 
 // =====================================
-// ✔ SERVIR ARCHIVOS ESTÁTICOS PRIMERO
+// ✔ SERVIR ARCHIVOS ESTÁTICOS
 // =====================================
 app.use(express.static('public'));
 
@@ -38,18 +39,22 @@ app.use(express.static('public'));
 // ✔ RUTAS PÚBLICAS
 // =====================================
 app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/productos', productoRoutes);
-app.use('/api/categorias', categoriaRoutes);
-app.use('/api/flujo-caja', flujoCajaRoutes);
-app.use('/api/alertas', alertaRoutes);
-app.use('/api/reportes', reporteRoutes);
-app.use('/api/dashboard', dashboardRoutes);
 
 // =====================================
-// ✔ RUTAS PROTEGIDAS
+// ✔ RUTAS PRIVADAS (con nombres correctos)
 // =====================================
-app.use('/api/transacciones', authenticate, transaccionRoutes);
+app.use('/api/user', authenticate, userRoutes);
+app.use('/api/producto', authenticate, productoRoutes);
+app.use('/api/categoria', authenticate, categoriaRoutes);
+app.use('/api/flujo-caja', authenticate, flujoCajaRoutes);
+app.use('/api/alerta', authenticate, alertaRoutes);
+app.use('/api/reporte', authenticate, reporteRoutes);
+app.use('/api/dashboard', authenticate, dashboardRoutes);
+
+// =====================================
+// ✔ RUTAS PROTEGIDAS ESPECIALES
+// =====================================
+app.use('/api/transaccion', authenticate, transaccionRoutes);
 
 // =====================================
 // ✔ RUTA RAÍZ

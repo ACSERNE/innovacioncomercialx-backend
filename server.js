@@ -51,8 +51,7 @@ app.get("/api/dashboard", (req, res) => {
 // -------------------------
 // PUERTO
 // -------------------------
-const PORT = 5002;
-
+const PORT = 5003;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Backend simple corriendo en puerto ${PORT}`);
 });
