@@ -32,27 +32,24 @@ app.use(morgan('dev'));
 
 // =====================================
 // 🚨 RUTA TEMPORAL PARA CREAR ADMIN (BORRAR DESPUÉS)
-// =====================================
-const bcrypt = require('bcryptjs');
 const { User } = require('./models');
 
 app.post('/crear-admin', async (req, res) => {
   try {
-    const hash = bcrypt.hashSync('admin1234', 10);
-
     const user = await User.create({
       nombre: 'Admin',
       correo: 'admin@admin.com',
-      password: hash,
+      password: 'admin1234',   // SIN HASH
       role: 'admin'
     });
 
-    res.json({ msg: 'Admin creado', user });
+    res.json({ msg: 'Admin creado correctamente', user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
+app.post('
 // =====================================
 // ✔ SERVIR ARCHIVOS ESTÁTICOS
 // =====================================
