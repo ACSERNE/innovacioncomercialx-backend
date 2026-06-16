@@ -31,19 +31,22 @@ app.use(compression());
 app.use(morgan('dev'));
 
 // =====================================
-// 🚨 RUTA TEMPORAL PARA CREAR ADMIN (BORRAR DESPUÉS)
-const { User } = require('./models');
+// 🚨 RUTA TEMPORAL PARA RESETEAR CONTRASEÑA DEL ADMIN (BORRAR DESPUÉS)
+const bcrypt = require('bcryptjs');
 
-app.post('/crear-admin', async (req, res) => {
+app.post('/reset-pass-admin', async (req, res) => {
   try {
-    const user = await User.create({
-      nombre: 'Admin',
-      correo: 'admin@admin.com',
-      password: 'admin1234',   // SIN HASH
-      role: 'admin'
-    });
+    const user = await User.findOne({ where: { correo: 'admin@admin.com' } });
 
-    res.json({ msg: 'Admin creado correctamente', user });
+    if (!user) {
+      return res.status(404).json({ error: 'Admin no encontrado' });
+    }
+
+    // Nueva contraseña SIN hash manual
+    user.password = 'admin1234';
+    await user.save();
+
+    res.json({ msg: 'Contraseña del admin reseteada correctamente' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
