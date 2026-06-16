@@ -3,10 +3,12 @@ const express = require('express');
 const cors = require('cors');
 const compression = require('compression');
 const morgan = require('morgan');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
 const db = require('./models');
-const { User } = require('./models'); // Importación del modelo User
+const { User } = require('./models');
 
 // Importación de rutas
 const userRoutes = require('./routes/user.routes');
@@ -25,8 +27,33 @@ const { authenticate } = require('./middleware/authMiddleware');
 const app = express();
 const PORT_START = process.env.PORT ? Number(process.env.PORT) : 5002;
 
+// =====================================
+// ✔ SEGURIDAD (Helmet)
+// =====================================
+app.use(helmet());
+
+// =====================================
+// ✔ RATE LIMITING (Anti fuerza bruta)
+// =====================================
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 200, // Máximo 200 requests por IP
+});
+app.use(limiter);
+
+// =====================================
+// ✔ CORS CONFIGURADO
+// =====================================
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://innovacioncomercialx-frontend.onrender.com'
+  ],
+  methods: 'GET,POST,PUT,DELETE',
+  credentials: true
+}));
+
 // Middlewares globales
-app.use(cors());
 app.use(express.json());
 app.use(compression());
 app.use(morgan('dev'));
@@ -42,7 +69,7 @@ app.use(express.static('public'));
 app.use('/api/auth', authRoutes);
 
 // =====================================
-// ✔ RUTAS PRIVADAS (con nombres correctos)
+// ✔ RUTAS PRIVADAS
 // =====================================
 app.use('/api/user', authenticate, userRoutes);
 app.use('/api/producto', authenticate, productoRoutes);
