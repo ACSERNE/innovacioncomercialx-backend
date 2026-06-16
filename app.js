@@ -52,7 +52,6 @@ app.post('/reset-pass-admin', async (req, res) => {
   }
 });
 
-app.post('
 // =====================================
 // ✔ SERVIR ARCHIVOS ESTÁTICOS
 // =====================================
