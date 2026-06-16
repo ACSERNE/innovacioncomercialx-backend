@@ -6,6 +6,7 @@ const morgan = require('morgan');
 require('dotenv').config();
 
 const db = require('./models');
+const { User } = require('./models'); // ← IMPORTANTE
 
 // Importación de rutas
 const userRoutes = require('./routes/user.routes');
@@ -32,8 +33,7 @@ app.use(morgan('dev'));
 
 // =====================================
 // 🚨 RUTA TEMPORAL PARA RESETEAR CONTRASEÑA DEL ADMIN (BORRAR DESPUÉS)
-const bcrypt = require('bcryptjs');
-
+// =====================================
 app.post('/reset-pass-admin', async (req, res) => {
   try {
     const user = await User.findOne({ where: { correo: 'admin@admin.com' } });
