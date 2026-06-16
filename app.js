@@ -6,7 +6,7 @@ const morgan = require('morgan');
 require('dotenv').config();
 
 const db = require('./models');
-const { User } = require('./models'); // ← IMPORTANTE
+const { User } = require('./models'); // Importación del modelo User
 
 // Importación de rutas
 const userRoutes = require('./routes/user.routes');
@@ -30,27 +30,6 @@ app.use(cors());
 app.use(express.json());
 app.use(compression());
 app.use(morgan('dev'));
-
-// =====================================
-// 🚨 RUTA TEMPORAL PARA RESETEAR CONTRASEÑA DEL ADMIN (BORRAR DESPUÉS)
-// =====================================
-app.post('/reset-pass-admin', async (req, res) => {
-  try {
-    const user = await User.findOne({ where: { correo: 'admin@admin.com' } });
-
-    if (!user) {
-      return res.status(404).json({ error: 'Admin no encontrado' });
-    }
-
-    // Nueva contraseña SIN hash manual
-    user.password = 'admin1234';
-    await user.save();
-
-    res.json({ msg: 'Contraseña del admin reseteada correctamente' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
 
 // =====================================
 // ✔ SERVIR ARCHIVOS ESTÁTICOS
@@ -86,7 +65,7 @@ app.get('/', (req, res) => {
 });
 
 // =====================================
-// ✔ INICIO DEL SERVIDOR (CODESPACES READY)
+// ✔ INICIO DEL SERVIDOR (CODESPACES & RENDER READY)
 // =====================================
 function startServer(port) {
   db.sequelize.sync()
