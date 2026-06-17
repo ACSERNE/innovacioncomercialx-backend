@@ -64,3 +64,15 @@ button {
   color: var(--accent);
   transform: scale(1.08);
 }
+
+/* Fade-in para gráficos */
+canvas {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+canvas.show {
+  opacity: 1;
+  transform: translateY(0);
+}

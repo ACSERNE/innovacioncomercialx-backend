@@ -1,3 +1,4 @@
+Chart.defaults.animation = { duration: 800, easing: "easeOutQuart" };
 function dibujarBarras(ctx, labels, valores, color = "#00eaff") {
   const max = Math.max(...valores);
   const ancho = ctx.canvas.width;
@@ -38,4 +39,11 @@ function dibujarLinea(ctx, valores, color = "#00eaff") {
   });
 
   ctx.stroke();
+}
+
+// Activar fade-in en gráficos
+function animarCanvas(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  setTimeout(() => el.classList.add("show"), 50);
 }
