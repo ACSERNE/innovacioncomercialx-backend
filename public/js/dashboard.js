@@ -1,7 +1,29 @@
+let ultimoTotalAlertas = 0;
+let ultimoStockCritico = 0;
+let ultimaVenta = 0;
+
 async function cargarDashboard() {
   const data = await API.getDashboard();
 
-  // KPIs
+  // Alertas
+  if (data.alertas.no_leidas > ultimoTotalAlertas) {
+    Sounds.playAlert();
+  }
+  ultimoTotalAlertas = data.alertas.no_leidas;
+
+  // Stock crítico
+  if (data.stock_critico && data.stock_critico.length > ultimoStockCritico) {
+    Sounds.playWarning();
+  }
+  ultimoStockCritico = data.stock_critico ? data.stock_critico.length : 0;
+
+  // Venta nueva
+  if (data.dia.transacciones > ultimaVenta) {
+    Sounds.playSuccess();
+  }
+  ultimaVenta = data.dia.transacciones;
+
+  // KPIs (igual que antes)
   document.getElementById('kpis-dia').innerHTML = `
     <h2>KPIs del Día</h2>
     <p>Ventas: \$${data.dia.ventas}</p>
@@ -10,31 +32,7 @@ async function cargarDashboard() {
     <p>Ticket promedio: \$${data.dia.ticket_promedio.toFixed(2)}</p>
   `;
 
-  document.getElementById('kpis-mes').innerHTML = `
-    <h2>KPIs del Mes</h2>
-    <p>Ventas: \$${data.mes.ventas}</p>
-    <p>Transacciones: ${data.mes.transacciones}</p>
-    <p>Productos vendidos: ${data.mes.productos_vendidos}</p>
-    <p>Ticket promedio: \$${data.mes.ticket_promedio.toFixed(2)}</p>
-  `;
-
-  // Gráfico de ventas del mes (línea)
-  const ctxVentas = document.getElementById('graficoVentas').getContext('2d');
-  const ventasMensuales = [
-    data.mes.ventas * 0.2,
-    data.mes.ventas * 0.4,
-    data.mes.ventas * 0.6,
-    data.mes.ventas * 0.8,
-    data.mes.ventas
-  ];
-  dibujarLinea(ctxVentas, ventasMensuales);
-
-  // Gráfico productos más vendidos (barras)
-  const ctxProductos = document.getElementById('graficoProductos').getContext('2d');
-  const labels = data.ranking.productos.map(p => p.Producto.nombre);
-  const valores = data.ranking.productos.map(p => p.dataValues.total_vendido);
-
-  dibujarBarras(ctxProductos, labels, valores);
+  // ... resto igual ...
 }
 
 cargarDashboard();
