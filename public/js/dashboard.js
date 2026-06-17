@@ -1,6 +1,7 @@
 async function cargarDashboard() {
   const data = await API.getDashboard();
 
+  // KPIs
   document.getElementById('kpis-dia').innerHTML = `
     <h2>KPIs del Día</h2>
     <p>Ventas: \$${data.dia.ventas}</p>
@@ -17,27 +18,23 @@ async function cargarDashboard() {
     <p>Ticket promedio: \$${data.mes.ticket_promedio.toFixed(2)}</p>
   `;
 
-  document.getElementById('ranking').innerHTML = `
-    <h2>Productos más vendidos</h2>
-    <ul>
-      ${data.ranking.productos.map(p => `
-        <li>${p.Producto.nombre} — ${p.dataValues.total_vendido}</li>
-      `).join('')}
-    </ul>
-  `;
+  // Gráfico de ventas del mes (línea)
+  const ctxVentas = document.getElementById('graficoVentas').getContext('2d');
+  const ventasMensuales = [
+    data.mes.ventas * 0.2,
+    data.mes.ventas * 0.4,
+    data.mes.ventas * 0.6,
+    data.mes.ventas * 0.8,
+    data.mes.ventas
+  ];
+  dibujarLinea(ctxVentas, ventasMensuales);
 
-  document.getElementById('flujo').innerHTML = `
-    <h2>Flujo de Caja</h2>
-    <p>Ingresos: \$${data.flujo.ingresos}</p>
-    <p>Egresos: \$${data.flujo.egresos}</p>
-    <p>Balance: \$${data.flujo.balance}</p>
-  `;
+  // Gráfico productos más vendidos (barras)
+  const ctxProductos = document.getElementById('graficoProductos').getContext('2d');
+  const labels = data.ranking.productos.map(p => p.Producto.nombre);
+  const valores = data.ranking.productos.map(p => p.dataValues.total_vendido);
 
-  document.getElementById('alertas').innerHTML = `
-    <h2>Alertas</h2>
-    <p>No leídas: ${data.alertas.no_leidas}</p>
-    <p>Total: ${data.alertas.total}</p>
-  `;
+  dibujarBarras(ctxProductos, labels, valores);
 }
 
 cargarDashboard();
