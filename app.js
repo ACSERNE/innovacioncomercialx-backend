@@ -55,3 +55,4 @@ app.get('*', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 app.use('/api/auth', require('./routes/auth.routes'));
+app.use('/api/productos', require('./routes/producto.routes'));

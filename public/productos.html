@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Productos</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+  <h1>Productos</h1>
+
+  <button onclick="mostrarCrear()">Nuevo Producto</button>
+
+  <section id="lista"></section>
+
+  <div id="formulario" style="display:none;">
+    <h2 id="titulo-form"></h2>
+    <input id="nombre" placeholder="Nombre">
+    <input id="descripcion" placeholder="Descripción">
+    <input id="precio" type="number" placeholder="Precio">
+    <input id="stock" type="number" placeholder="Stock">
+    <button onclick="guardar()">Guardar</button>
+    <button onclick="cancelar()">Cancelar</button>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/productos.js"></script>
+</body>
+</html>

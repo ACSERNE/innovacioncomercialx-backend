@@ -1,16 +1,30 @@
 const express = require('express');
 const router = express.Router();
-const productoController = require('../controllers/producto.controller');
+const auth = require('../middleware/auth');
+const productoService = require('../services/producto.service');
 
-// CRUD
-router.post('/', productoController.crear);
-router.get('/', productoController.obtenerTodos);
-router.get('/:id', productoController.obtenerPorId);
-router.put('/:id', productoController.actualizar);
-router.delete('/:id', productoController.eliminar);
+router.get('/', auth, async (req, res) => {
+  res.json(await productoService.listar());
+});
 
-// Especiales
-router.get('/reportes/stock-bajo', productoController.stockBajo);
-router.get('/reportes/mas-vendidos', productoController.masVendidos);
+router.get('/critico', auth, async (req, res) => {
+  res.json(await productoService.stockCritico());
+});
+
+router.get('/:id', auth, async (req, res) => {
+  res.json(await productoService.obtener(req.params.id));
+});
+
+router.post('/', auth, async (req, res) => {
+  res.json(await productoService.crear(req.body));
+});
+
+router.put('/:id', auth, async (req, res) => {
+  res.json(await productoService.actualizar(req.params.id, req.body));
+});
+
+router.delete('/:id', auth, async (req, res) => {
+  res.json(await productoService.eliminar(req.params.id));
+});
 
 module.exports = router;
