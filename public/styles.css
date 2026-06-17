@@ -40,3 +40,27 @@ h1, h2 {
 button {
   transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
 }
+
+/* ===========================
+   ANIMACIONES SUAVES
+   =========================== */
+
+.fade {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.fade.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.kpi-animate {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.kpi-animate.updated {
+  color: var(--accent);
+  transform: scale(1.08);
+}
