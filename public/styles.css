@@ -1,17 +1,42 @@
-body {
-  background: #111;
-  color: #fff;
-  font-family: Arial;
-  padding: 20px;
+:root {
+  --bg: #ffffff;
+  --fg: #000000;
+  --card: #f5f5f5;
+  --accent: #0ff;
+  --border: #ccc;
 }
 
-h1, h2 {
-  color: #00eaff;
+.dark {
+  --bg: #0a0a0a;
+  --fg: #e0e0e0;
+  --card: #111;
+  --accent: #0ff;
+  --border: #333;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 section {
-  margin-bottom: 30px;
+  background: var(--card);
   padding: 15px;
-  background: #1a1a1a;
-  border-radius: 8px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  transition: background 0.3s ease, border 0.3s ease;
+}
+
+h1, h2 {
+  color: var(--accent);
+  margin-top: 0;
+}
+
+button {
+  transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
 }

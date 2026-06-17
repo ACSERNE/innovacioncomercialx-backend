@@ -40,6 +40,7 @@ const Sounds = {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
+  const themeBtn = document.getElementById("toggleTheme"); if(themeBtn){ themeBtn.onclick = () => Theme.toggle(); }
   Sounds.updateButton();
   const btn = document.getElementById("toggleSound");
   if (btn) btn.onclick = () => Sounds.toggle();
