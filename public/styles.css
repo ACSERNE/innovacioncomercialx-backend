@@ -60,7 +60,7 @@ button {
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.kpi-animate.updated {
+.updated {
   color: var(--accent);
   transform: scale(1.08);
 }
@@ -76,3 +76,31 @@ canvas.show {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Destello suave cuando un KPI cambia */
+.kpi-flash {
+  animation: flash 0.6s ease;
+}
+
+@keyframes flash {
+  0% { background: rgba(0,255,255,0.35); }
+  100% { background: transparent; }
+}
+
+/* Botones cockpit */
+#toggleSound, #toggleTheme {
+  position: fixed;
+  right: 10px;
+  z-index: 9999;
+  padding: 8px 14px;
+  border-radius: 25px;
+  background: #111;
+  color: #0ff;
+  border: 1px solid #0ff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#toggleSound { top: 10px; }
+#toggleTheme { top: 60px; }
+

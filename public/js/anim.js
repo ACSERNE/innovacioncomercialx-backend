@@ -25,3 +25,11 @@ const Anim = {
     setTimeout(() => el.classList.remove("updated"), 300);
   }
 };
+
+// Destello suave cuando un KPI cambia
+function flashKPI(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.add("kpi-flash");
+  setTimeout(() => el.classList.remove("kpi-flash"), 600);
+}

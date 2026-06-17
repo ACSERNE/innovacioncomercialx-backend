@@ -39,11 +39,18 @@ async function cargarDashboard() {
     <p id="kpiTicketDia">Ticket promedio: \$${data.dia.ticket_promedio.toFixed(2)}</p>
   `;
 
-  // Animación de KPIs
+  // Animación de KPIs + destello suave
   Anim.animateKPI("kpiVentasDia", data.dia.ventas);
+  flashKPI("kpiVentasDia");
+
   Anim.animateKPI("kpiTransaccionesDia", data.dia.transacciones);
+  flashKPI("kpiTransaccionesDia");
+
   Anim.animateKPI("kpiProductosDia", data.dia.productos_vendidos);
+  flashKPI("kpiProductosDia");
+
   Anim.animateKPI("kpiTicketDia", data.dia.ticket_promedio);
+  flashKPI("kpiTicketDia");
 
   // ============================
   // 3. ANIMACIÓN DE SECCIONES

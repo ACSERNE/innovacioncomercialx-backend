@@ -47,3 +47,44 @@ function animarCanvas(id) {
   if (!el) return;
   setTimeout(() => el.classList.add("show"), 50);
 }
+
+// Inicializador seguro de gráficos cockpit
+function initOrUpdateChart(ref, ctx, type, labels, data, label) {
+document.getElementById("graficoVentas").classList.add("show"); 
+document.getElementById("graficoProductos").classList.add("show");
+  if (ref && ref.data) {
+    // Actualizar datos sin recrear gráfico
+    ref.data.labels = labels;
+    ref.data.datasets[0].data = data;
+    ref.update();
+    return ref;
+  }
+
+  // Crear gráfico por primera vez
+  const chart = new Chart(ctx, {
+    type: type,
+    data: {
+      labels: labels,
+      datasets: [{
+        label: label,
+        data: data,
+        borderColor: "#0ff",
+        backgroundColor: "rgba(0,255,255,0.15)",
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      animation: { duration: 600 },
+      scales: {
+        x: { ticks: { color: "#0ff" } },
+        y: { ticks: { color: "#0ff" } }
+      }
+    }
+  });
+
+  // Activar fade-in cockpit
+  ctx.canvas.classList.add("show");
+
+  return chart;
+}
