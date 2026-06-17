@@ -48,3 +48,9 @@ app.use('/api/dashboard', require('./routes/dashboard.routes'));
 app.use('/api/tv', require('./routes/tv.routes'));
 // Seguridad global
 require('./security')(app);
+// Servir carpeta pública
+app.use(express.static('public'));
+// Fallback para rutas del frontend
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
+});
