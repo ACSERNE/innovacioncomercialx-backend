@@ -45,3 +45,4 @@ app.use('/api/detalles/reportes', require('./routes/detalleReportes.routes'));
 app.use('/api/flujo/reportes', require('./routes/flujoReportes.routes'));
 app.use('/api/alertas', require('./routes/alertas.routes'));
 app.use('/api/dashboard', require('./routes/dashboard.routes'));
+app.use('/api/tv', require('./routes/tv.routes'));
