@@ -1,5 +1,38 @@
+let ultimoTotalVentas = 0;
+let ultimoStockCritico = 0;
+let ultimoRanking = 0;
+let ultimoAlertas = 0;
+
 async function cargarTV() {
   const data = await API.getTV();
+
+  // --- SONIDOS ---
+
+  // Venta nueva
+  if (data.ventas_dia.transacciones > ultimoTotalVentas) {
+    Sounds.playSuccess();
+  }
+  ultimoTotalVentas = data.ventas_dia.transacciones;
+
+  // Stock crítico
+  if (data.stock_critico.length > ultimoStockCritico) {
+    Sounds.playWarning();
+  }
+  ultimoStockCritico = data.stock_critico.length;
+
+  // Ranking cambia (nuevo producto top)
+  if (data.ranking_productos.length > ultimoRanking) {
+    Sounds.playSuccess();
+  }
+  ultimoRanking = data.ranking_productos.length;
+
+  // Alertas nuevas
+  if (data.alertas.length > ultimoAlertas) {
+    Sounds.playAlert();
+  }
+  ultimoAlertas = data.alertas.length;
+
+  // --- RENDER TV MODE ---
 
   document.getElementById('ventas').innerHTML = `
     <h2>Ventas del Día</h2>
