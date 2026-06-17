@@ -1,7 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const flujoCajaController = require('../controllers/flujoCaja.controller');
+const flujoController = require('../controllers/flujoCaja.controller');
 
-router.get('/diario', flujoCajaController.getDiario);
+// Registrar movimientos
+router.post('/ingreso', flujoController.registrarIngreso);
+router.post('/egreso', flujoController.registrarEgreso);
+
+// Obtener movimientos
+router.get('/', flujoController.obtenerTodos);
+
+// Reportes
+router.get('/balance/dia', flujoController.balanceDiario);
+router.get('/balance/mes', flujoController.balanceMensual);
 
 module.exports = router;

@@ -1,49 +1,69 @@
 const productoService = require('../services/producto.service');
 
-exports.getAll = async (req, res) => {
-  try {
-    const productos = await productoService.getAll();
-    res.json(productos);
-  } catch (err) {
-    res.status(500).json({ error: 'Error interno' });
-  }
-};
+module.exports = {
+  async crear(req, res) {
+    try {
+      const producto = await productoService.crearProducto(req.body);
+      res.status(201).json(producto);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Error creando producto' });
+    }
+  },
 
-exports.getById = async (req, res) => {
-  try {
-    const producto = await productoService.getById(req.params.id);
-    if (!producto) return res.status(404).json({ error: 'Producto no encontrado' });
-    res.json(producto);
-  } catch (err) {
-    res.status(500).json({ error: 'Error interno' });
-  }
-};
+  async obtenerTodos(req, res) {
+    try {
+      const productos = await productoService.obtenerProductos();
+      res.json(productos);
+    } catch (err) {
+      res.status(500).json({ error: 'Error obteniendo productos' });
+    }
+  },
 
-exports.create = async (req, res) => {
-  try {
-    const producto = await productoService.create(req.body);
-    res.status(201).json(producto);
-  } catch (err) {
-    res.status(500).json({ error: 'Error interno' });
-  }
-};
+  async obtenerPorId(req, res) {
+    try {
+      const producto = await productoService.obtenerProductoPorId(req.params.id);
+      if (!producto) return res.status(404).json({ error: 'Producto no encontrado' });
+      res.json(producto);
+    } catch (err) {
+      res.status(500).json({ error: 'Error obteniendo producto' });
+    }
+  },
 
-exports.update = async (req, res) => {
-  try {
-    const producto = await productoService.update(req.params.id, req.body);
-    if (!producto) return res.status(404).json({ error: 'Producto no encontrado' });
-    res.json(producto);
-  } catch (err) {
-    res.status(500).json({ error: 'Error interno' });
-  }
-};
+  async actualizar(req, res) {
+    try {
+      await productoService.actualizarProducto(req.params.id, req.body);
+      res.json({ mensaje: 'Producto actualizado' });
+    } catch (err) {
+      res.status(500).json({ error: 'Error actualizando producto' });
+    }
+  },
 
-exports.remove = async (req, res) => {
-  try {
-    const ok = await productoService.remove(req.params.id);
-    if (!ok) return res.status(404).json({ error: 'Producto no encontrado' });
-    res.json({ ok: true });
-  } catch (err) {
-    res.status(500).json({ error: 'Error interno' });
+  async eliminar(req, res) {
+    try {
+      await productoService.eliminarProducto(req.params.id);
+      res.json({ mensaje: 'Producto eliminado' });
+    } catch (err) {
+      res.status(500).json({ error: 'Error eliminando producto' });
+    }
+  },
+
+  async stockBajo(req, res) {
+    try {
+      const threshold = req.query.threshold ? Number(req.query.threshold) : 5;
+      const productos = await productoService.productosStockBajo(threshold);
+      res.json(productos);
+    } catch (err) {
+      res.status(500).json({ error: 'Error obteniendo productos con stock bajo' });
+    }
+  },
+
+  async masVendidos(req, res) {
+    try {
+      const productos = await productoService.productosMasVendidos();
+      res.json(productos);
+    } catch (err) {
+      res.status(500).json({ error: 'Error obteniendo productos más vendidos' });
+    }
   }
 };

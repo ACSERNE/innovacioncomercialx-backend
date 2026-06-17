@@ -1,8 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/alerta.controller');
-const { authenticate } = require('../middleware/authMiddleware');
+const alertaController = require('../controllers/alerta.controller');
 
-router.get('/', authenticate, controller.getAll);
+// CRUD
+router.post('/', alertaController.crear);
+router.get('/', alertaController.obtener);
+router.get('/activas', alertaController.obtenerActivas);
+router.put('/:id/leida', alertaController.marcarLeida);
+
+// Generadores automáticos
+router.post('/generar/stock', alertaController.generarStock);
+router.post('/generar/vencimiento', alertaController.generarVencimiento);
+router.post('/generar/ventas-dia', alertaController.generarVentasDia);
 
 module.exports = router;

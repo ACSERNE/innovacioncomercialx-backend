@@ -1,30 +1,63 @@
-const { Transaccion } = require('../models');
-const { DateTime } = require('luxon');
+const db = require('../models');
 const { Op } = require('sequelize');
 
-exports.getDiario = async (fechaStr) => {
-  const fecha = fechaStr || DateTime.now().toISODate();
+module.exports = {
+  async registrarIngreso(monto, descripcion = '') {
+    return db.FlujoCaja.create({
+      tipo: 'ingreso',
+      monto,
+      descripcion
+    });
+  },
 
-  const transacciones = await Transaccion.findAll({
-    where: {
-      createdAt: {
-        [Op.gte]: fecha
-      }
-    }
-  });
+  async registrarEgreso(monto, descripcion = '') {
+    return db.FlujoCaja.create({
+      tipo: 'egreso',
+      monto,
+      descripcion
+    });
+  },
 
-  const totalVentas = transacciones
-    .filter(t => t.tipo === 'venta')
-    .reduce((acc, t) => acc + t.total, 0);
+  async obtenerTodos() {
+    return db.FlujoCaja.findAll();
+  },
 
-  const totalCompras = transacciones
-    .filter(t => t.tipo === 'compra')
-    .reduce((acc, t) => acc + t.total, 0);
+  async balanceDiario() {
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
 
-  return {
-    fecha,
-    totalVentas,
-    totalCompras,
-    balance: totalVentas - totalCompras
-  };
+    const movimientos = await db.FlujoCaja.findAll({
+      where: { createdAt: { [Op.gte]: hoy } }
+    });
+
+    let ingresos = 0;
+    let egresos = 0;
+
+    movimientos.forEach(m => {
+      if (m.tipo === 'ingreso') ingresos += m.monto;
+      else egresos += m.monto;
+    });
+
+    return { ingresos, egresos, balance: ingresos - egresos };
+  },
+
+  async balanceMensual() {
+    const inicioMes = new Date();
+    inicioMes.setDate(1);
+    inicioMes.setHours(0, 0, 0, 0);
+
+    const movimientos = await db.FlujoCaja.findAll({
+      where: { createdAt: { [Op.gte]: inicioMes } }
+    });
+
+    let ingresos = 0;
+    let egresos = 0;
+
+    movimientos.forEach(m => {
+      if (m.tipo === 'ingreso') ingresos += m.monto;
+      else egresos += m.monto;
+    });
+
+    return { ingresos, egresos, balance: ingresos - egresos };
+  }
 };

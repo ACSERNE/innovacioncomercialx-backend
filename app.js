@@ -1,121 +1,46 @@
-// app.js
 const express = require('express');
 const cors = require('cors');
-const compression = require('compression');
-const morgan = require('morgan');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-require('dotenv').config();
-
-const db = require('./models');
-const { User } = require('./models');
-
-// Importación de rutas
-const userRoutes = require('./routes/user.routes');
-const productoRoutes = require('./routes/producto.routes');
-const categoriaRoutes = require('./routes/categoria.routes');
-const flujoCajaRoutes = require('./routes/flujoCaja.routes');
-const alertaRoutes = require('./routes/alerta.routes');
-const reporteRoutes = require('./routes/reporte.routes');
-const transaccionRoutes = require('./routes/transaccion.routes');
-const authRoutes = require('./routes/auth.routes');
-const dashboardRoutes = require('./routes/dashboard.routes');
-
-// Middleware de autenticación
-const { authenticate } = require('./middleware/authMiddleware');
-
 const app = express();
-const PORT_START = process.env.PORT ? Number(process.env.PORT) : 5002;
 
-// =====================================
-// ✔ SEGURIDAD (Helmet)
-// =====================================
-app.use(helmet());
-
-// =====================================
-// ✔ RATE LIMITING (Anti fuerza bruta)
-// =====================================
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutos
-  max: 200, // Máximo 200 requests por IP
-});
-app.use(limiter);
-
-// =====================================
-// ✔ CORS CONFIGURADO
-// =====================================
-app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://innovacioncomercialx-frontend.onrender.com'
-  ],
-  methods: 'GET,POST,PUT,DELETE',
-  credentials: true
-}));
-
-// Middlewares globales
+app.use(cors());
 app.use(express.json());
-app.use(compression());
-app.use(morgan('dev'));
 
-// =====================================
-// ✔ SERVIR ARCHIVOS ESTÁTICOS
-// =====================================
-app.use(express.static('public'));
+// Conexión BD
+const db = require('./models');
 
-// =====================================
-// ✔ RUTAS PÚBLICAS
-// =====================================
-app.use('/api/auth', authRoutes);
+db.sequelize.authenticate()
+  .then(() => console.log('📦 Conectado a PostgreSQL'))
+  .catch(err => console.error('❌ Error conectando a PostgreSQL:', err));
 
-// =====================================
-// ✔ RUTAS PRIVADAS
-// =====================================
-app.use('/api/user', authenticate, userRoutes);
-app.use('/api/producto', authenticate, productoRoutes);
-app.use('/api/categoria', authenticate, categoriaRoutes);
-app.use('/api/flujo-caja', authenticate, flujoCajaRoutes);
-app.use('/api/alerta', authenticate, alertaRoutes);
-app.use('/api/reporte', authenticate, reporteRoutes);
-app.use('/api/dashboard', authenticate, dashboardRoutes);
+db.sequelize.sync({ alter: true })
+  .then(() => console.log('🗄️ Modelos sincronizados'))
+  .catch(err => console.error('❌ Error sincronizando modelos:', err));
 
-// =====================================
-// ✔ RUTAS PROTEGIDAS ESPECIALES
-// =====================================
-app.use('/api/transaccion', authenticate, transaccionRoutes);
+// 🔥 Activar CRONJOBS
+require('./cron');
 
-// =====================================
-// ✔ RUTA RAÍZ
-// =====================================
+// Rutas
+app.use('/api/reporte', require('./routes/reporte.routes'));
+app.use('/api/usuarios', require('./routes/usuario.routes'));
+app.use('/api/productos', require('./routes/producto.routes'));
+app.use('/api/productos/reportes-avanzados', require('./routes/productoReportes.routes'));
+app.use('/api/categorias', require('./routes/categoria.routes'));
+app.use('/api/transacciones', require('./routes/transaccion.routes'));
+app.use('/api/detalles', require('./routes/transaccionDetalle.routes'));
+app.use('/api/flujo', require('./routes/flujoCaja.routes'));
+app.use('/api/alertas', require('./routes/alerta.routes'));
+app.use('/api/seller', require('./routes/sellerProduct.routes'));
+app.use('/api/detalles/reportes', require('./routes/detalleReportes.routes'));
+
 app.get('/', (req, res) => {
-  res.send('Servidor funcionando ✅');
+  res.json({ mensaje: 'Backend funcionando correctamente' });
 });
 
-// =====================================
-// ✔ INICIO DEL SERVIDOR (CODESPACES & RENDER READY)
-// =====================================
-function startServer(port) {
-  db.sequelize.sync()
-    .then(() => {
-      const server = app.listen(port, "0.0.0.0", () => {
-        console.log(`🚀 Servidor backend corriendo en http://0.0.0.0:${port}`);
-      });
+const PORT = process.env.PORT || 5002;
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor backend corriendo en http://0.0.0.0:${PORT}`);
+});
 
-      server.on('error', (err) => {
-        if (err.code === 'EADDRINUSE') {
-          console.warn(`⚠️ Puerto ${port} ocupado, intentando con el siguiente...`);
-          startServer(port + 1);
-        } else {
-          console.error('Error al iniciar el servidor:', err);
-        }
-      });
-    })
-    .catch((err) => {
-      console.error('Error conectando a la base de datos:', err);
-    });
-}
-
-startServer(PORT_START);
-
-module.exports = app;
-
+app.use('/api/detalles/reportes', require('./routes/detalleReportes.routes'));
+app.use('/api/flujo/reportes', require('./routes/flujoReportes.routes'));
+app.use('/api/alertas', require('./routes/alertas.routes'));

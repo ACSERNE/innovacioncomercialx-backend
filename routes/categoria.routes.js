@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const { authenticate } = require('../middleware/authMiddleware');
-const controller = require('../controllers/categoria.controller');
+const categoriaController = require('../controllers/categoria.controller');
 
-router.get('/', authenticate, controller.getAll);
-router.post('/', authenticate, controller.create);
-router.put('/:id', authenticate, controller.update);
-router.delete('/:id', authenticate, controller.remove);
+// CRUD
+router.post('/', categoriaController.crear);
+router.get('/', categoriaController.obtenerTodos);
+router.get('/:id', categoriaController.obtenerPorId);
+router.put('/:id', categoriaController.actualizar);
+router.delete('/:id', categoriaController.eliminar);
+
+// Especiales
+router.post('/asignar-producto', categoriaController.asignarProducto);
+router.get('/:id/productos', categoriaController.productosPorCategoria);
 
 module.exports = router;
-

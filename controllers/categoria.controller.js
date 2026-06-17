@@ -1,47 +1,69 @@
-const { Categoria } = require('../models');
+const categoriaService = require('../services/categoria.service');
 
-exports.getAll = async (req, res) => {
-  try {
-    const categorias = await Categoria.findAll();
-    res.json(categorias);
-  } catch (error) {
-    console.error("Error getAll categorias:", error);
-    res.status(500).json({ error: "Error interno" });
-  }
-};
+module.exports = {
+  async crear(req, res) {
+    try {
+      const categoria = await categoriaService.crearCategoria(req.body);
+      res.status(201).json(categoria);
+    } catch (err) {
+      res.status(500).json({ error: 'Error creando categoría' });
+    }
+  },
 
-exports.create = async (req, res) => {
-  try {
-    const categoria = await Categoria.create(req.body);
-    res.json(categoria);
-  } catch (error) {
-    console.error("Error create categoria:", error);
-    res.status(500).json({ error: "Error interno" });
-  }
-};
+  async obtenerTodos(req, res) {
+    try {
+      const categorias = await categoriaService.obtenerCategorias();
+      res.json(categorias);
+    } catch (err) {
+      res.status(500).json({ error: 'Error obteniendo categorías' });
+    }
+  },
 
-exports.update = async (req, res) => {
-  try {
-    const categoria = await Categoria.findByPk(req.params.id);
-    if (!categoria) return res.status(404).json({ error: "Categoría no encontrada" });
+  async obtenerPorId(req, res) {
+    try {
+      const categoria = await categoriaService.obtenerCategoriaPorId(req.params.id);
+      if (!categoria) return res.status(404).json({ error: 'Categoría no encontrada' });
+      res.json(categoria);
+    } catch (err) {
+      res.status(500).json({ error: 'Error obteniendo categoría' });
+    }
+  },
 
-    await categoria.update(req.body);
-    res.json(categoria);
-  } catch (error) {
-    console.error("Error update categoria:", error);
-    res.status(500).json({ error: "Error interno" });
-  }
-};
+  async actualizar(req, res) {
+    try {
+      await categoriaService.actualizarCategoria(req.params.id, req.body);
+      res.json({ mensaje: 'Categoría actualizada' });
+    } catch (err) {
+      res.status(500).json({ error: 'Error actualizando categoría' });
+    }
+  },
 
-exports.remove = async (req, res) => {
-  try {
-    const categoria = await Categoria.findByPk(req.params.id);
-    if (!categoria) return res.status(404).json({ error: "Categoría no encontrada" });
+  async eliminar(req, res) {
+    try {
+      await categoriaService.eliminarCategoria(req.params.id);
+      res.json({ mensaje: 'Categoría eliminada' });
+    } catch (err) {
+      res.status(500).json({ error: 'Error eliminando categoría' });
+    }
+  },
 
-    await categoria.destroy();
-    res.json({ message: "Categoría eliminada" });
-  } catch (error) {
-    console.error("Error remove categoria:", error);
-    res.status(500).json({ error: "Error interno" });
+  async asignarProducto(req, res) {
+    try {
+      const { categoriaId, productoId } = req.body;
+      const resultado = await categoriaService.asignarProducto(categoriaId, productoId);
+      if (!resultado) return res.status(404).json({ error: 'Categoría o producto no encontrado' });
+      res.json(resultado);
+    } catch (err) {
+      res.status(500).json({ error: 'Error asignando producto a categoría' });
+    }
+  },
+
+  async productosPorCategoria(req, res) {
+    try {
+      const productos = await categoriaService.productosPorCategoria(req.params.id);
+      res.json(productos);
+    } catch (err) {
+      res.status(500).json({ error: 'Error obteniendo productos por categoría' });
+    }
   }
 };

@@ -1,9 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/sellerProduct.controller');
-const { authenticate } = require('../middleware/authMiddleware');
+const sellerController = require('../controllers/sellerProduct.controller');
 
-router.get('/', authenticate, controller.getAll);
-router.post('/', authenticate, controller.create);
+// Asignar producto a vendedor
+router.post('/asignar', sellerController.asignar);
+
+// Obtener productos de un vendedor
+router.get('/vendedor/:id', sellerController.productosDeVendedor);
+
+// Obtener vendedores de un producto
+router.get('/producto/:id', sellerController.vendedoresDeProducto);
+
+// Eliminar asignación
+router.delete('/', sellerController.eliminar);
 
 module.exports = router;
