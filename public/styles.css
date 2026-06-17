@@ -1,0 +1,17 @@
+body {
+  background: #111;
+  color: #fff;
+  font-family: Arial;
+  padding: 20px;
+}
+
+h1, h2 {
+  color: #00eaff;
+}
+
+section {
+  margin-bottom: 30px;
+  padding: 15px;
+  background: #1a1a1a;
+  border-radius: 8px;
+}
