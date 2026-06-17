@@ -15,18 +15,32 @@ const Sounds = {
   playSuccess() { this.play(this.success); },
   playWarning() { this.play(this.warning); },
 
+  updateButton() {
+    const btn = document.getElementById("toggleSound");
+    if (!btn) return;
+
+    if (this.enabled) {
+      btn.innerText = "Sonido: ON";
+      btn.style.background = "#0a0";
+      btn.style.color = "#fff";
+      btn.style.border = "2px solid #0f0";
+    } else {
+      btn.innerText = "Sonido: OFF";
+      btn.style.background = "#600";
+      btn.style.color = "#fff";
+      btn.style.border = "2px solid #f00";
+    }
+  },
+
   toggle() {
     this.enabled = !this.enabled;
     localStorage.setItem("soundEnabled", this.enabled);
-    document.getElementById("toggleSound").innerText =
-      "Sonido: " + (this.enabled ? "ON" : "OFF");
+    this.updateButton();
   }
 };
 
 window.addEventListener("DOMContentLoaded", () => {
+  Sounds.updateButton();
   const btn = document.getElementById("toggleSound");
-  if (btn) {
-    btn.innerText = "Sonido: " + (Sounds.enabled ? "ON" : "OFF");
-    btn.onclick = () => Sounds.toggle();
-  }
+  if (btn) btn.onclick = () => Sounds.toggle();
 });
