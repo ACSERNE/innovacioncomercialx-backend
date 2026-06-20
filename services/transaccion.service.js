@@ -1,32 +1,58 @@
-const db = require('../models');
+const { Producto, Transaccion, TransaccionDetalle, Usuario } = require('../models');
 
 module.exports = {
-  async registrarVenta({ productos, UsuarioId }) {
+  registrarVenta: async (usuarioId, productos) => {
 
-    if (!Array.isArray(productos)) {
+    // Validación correcta del array
+    if (!Array.isArray(productos) || productos.length === 0) {
       throw new Error("El campo 'productos' debe ser un array");
+    }
+
+    // Validar usuario
+    const usuario = await Usuario.findByPk(usuarioId);
+    if (!usuario) {
+      throw new Error("Usuario no encontrado");
     }
 
     let total = 0;
 
-    for (const p of productos) {
-      const producto = await db.Producto.findByPk(p.ProductoId);
-      if (!producto) throw new Error("Producto no encontrado");
+    // Validar productos y calcular total
+    for (const item of productos) {
+      const producto = await Producto.findByPk(item.id);
 
-      total += producto.precio * p.cantidad;
+      if (!producto) {
+        throw new Error("Producto no encontrado");
+      }
 
-      await db.TransaccionDetalle.create({
-        ProductoId: p.ProductoId,
-        CategoriaId: producto.CategoriaId,
-        cantidad: p.cantidad,
-        precio: producto.precio
-      });
+      if (producto.stock < item.cantidad) {
+        throw new Error(`Stock insuficiente para ${producto.nombre}`);
+      }
+
+      total += producto.precio * item.cantidad;
     }
 
-    const transaccion = await db.Transaccion.create({
-      UsuarioId,
+    // Crear transacción
+    const transaccion = await Transaccion.create({
+      UsuarioId: usuarioId,
       total
     });
+
+    // Crear detalles y actualizar stock
+    for (const item of productos) {
+      const producto = await Producto.findByPk(item.id);
+
+      await TransaccionDetalle.create({
+        TransaccionId: transaccion.id,
+        ProductoId: producto.id,
+        cantidad: item.cantidad,
+        precio_unitario: producto.precio,
+        subtotal: producto.precio * item.cantidad
+      });
+
+      // Actualizar stock
+      producto.stock -= item.cantidad;
+      await producto.save();
+    }
 
     return transaccion;
   }

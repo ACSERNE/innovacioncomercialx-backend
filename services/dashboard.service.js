@@ -8,22 +8,26 @@ module.exports = {
     const hoy = new Date();
     const inicioDia = new Date(hoy.setHours(0, 0, 0, 0));
 
+    // 1) Transacciones del día
     const transaccionesDia = await db.Transaccion.findAll({
       where: { createdAt: { [Op.gte]: inicioDia } },
       attributes: ['id', 'total']
     });
 
     const cantidadTransaccionesDia = transaccionesDia.length;
+
     const totalVentasDia = transaccionesDia.reduce(
       (acc, t) => acc + Number(t.total || 0),
       0
     );
 
+    // Ticket promedio corregido
     const ticketPromedioDia =
       cantidadTransaccionesDia > 0
-        ? totalVentasDia / cantidadTransaccionesDia
+        ? Number((totalVentasDia / cantidadTransaccionesDia).toFixed(2))
         : 0;
 
+    // 2) Productos vendidos del día
     const idsTransaccionesDia = transaccionesDia.map(t => t.id);
 
     const productosVendidosDia = idsTransaccionesDia.length
@@ -32,6 +36,7 @@ module.exports = {
         })
       : 0;
 
+    // 3) Top productos del día
     const topProductosDia = idsTransaccionesDia.length
       ? await db.TransaccionDetalle.findAll({
           where: { TransaccionId: idsTransaccionesDia },
@@ -48,6 +53,7 @@ module.exports = {
         })
       : [];
 
+    // 4) Top categorías del día
     const topCategoriasDia = idsTransaccionesDia.length
       ? await db.TransaccionDetalle.findAll({
           where: { TransaccionId: idsTransaccionesDia },
@@ -66,8 +72,8 @@ module.exports = {
 
     return {
       productosVendidosDia: Number(productosVendidosDia || 0),
-      totalVentasDia,
-      ticketPromedioDia,
+      totalVentasDia: Number(totalVentasDia || 0),
+      ticketPromedioDia: Number(ticketPromedioDia || 0),
       cantidadTransaccionesDia,
       topProductosDia,
       topCategoriasDia

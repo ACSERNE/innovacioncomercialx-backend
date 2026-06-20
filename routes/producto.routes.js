@@ -1,30 +1,48 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/auth');
-const productoService = require('../services/producto.service');
+const { Producto, Categoria } = require('../models');
 
-router.get('/', auth, async (req, res) => {
-  res.json(await productoService.listar());
+// ===============================
+// GET /api/productos
+// ===============================
+router.get('/', async (req, res) => {
+  try {
+    const productos = await Producto.findAll({
+      include: [
+        {
+          model: Categoria,
+          as: 'Categoria'   // ← ALIAS CORRECTO (OBLIGATORIO)
+        }
+      ]
+    });
+
+    res.json(productos);
+  } catch (error) {
+    console.error('ERROR EN GET /api/productos:', error);
+    res.status(500).json({ error: 'Error al obtener productos' });
+  }
 });
 
-router.get('/critico', auth, async (req, res) => {
-  res.json(await productoService.stockCritico());
-});
+// ===============================
+// POST /api/productos
+// ===============================
+router.post('/', async (req, res) => {
+  try {
+    const { nombre, descripcion, precio, stock, CategoriaId } = req.body;
 
-router.get('/:id', auth, async (req, res) => {
-  res.json(await productoService.obtener(req.params.id));
-});
+    const nuevoProducto = await Producto.create({
+      nombre,
+      descripcion,
+      precio,
+      stock,
+      CategoriaId
+    });
 
-router.post('/', auth, async (req, res) => {
-  res.json(await productoService.crear(req.body));
-});
-
-router.put('/:id', auth, async (req, res) => {
-  res.json(await productoService.actualizar(req.params.id, req.body));
-});
-
-router.delete('/:id', auth, async (req, res) => {
-  res.json(await productoService.eliminar(req.params.id));
+    res.json(nuevoProducto);
+  } catch (error) {
+    console.error('ERROR EN POST /api/productos:', error);
+    res.status(500).json({ error: 'Error al crear producto' });
+  }
 });
 
 module.exports = router;

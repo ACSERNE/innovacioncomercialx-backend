@@ -1,42 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Dashboard ComercialX</title>
-  <link rel="stylesheet" href="/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      background: #0d0d0d;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #00eaff;
+      text-shadow: 0 0 10px #00eaff;
+    }
+
+    .box {
+      background: #111;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      border: 1px solid #00eaff55;
+    }
+  </style>
 </head>
 
 <body>
+  <h1>Dashboard ComercialX</h1>
 
-<button id="toggleSound" >
-  Sonido: OFF
-</button>
-
-<button id="toggleTheme" >
-  Modo Oscuro
-</button>
-
-<h1>Dashboard</h1>
-
-<section id="kpis-dia"></section>
-<section id="kpis-mes"></section>
-<section id="ranking"></section>
-<section id="flujo"></section>
-<section id="alertas"></section>
-
-<h2>Gráfico: Ventas del Mes</h2>
-<canvas id="graficoVentas" width="600" height="200"></canvas>
-
-<h2>Gráfico: Productos más vendidos</h2>
-<canvas id="graficoProductos" width="600" height="200"></canvas>
-
-<script src="/js/api.js"></script>
-<script src="/js/graficos.js"></script>
-<script src="/js/sounds.js"></script>
-<script src="/js/theme.js"></script>
-<script src="/js/anim.js"></script>
-<script src="/js/dashboard.js"></script>
-
+  <div class="box">
+    <p>Dashboard cargado correctamente.</p>
+    <p>Ahora puedes integrar widgets, KPIs, gráficas y todo tu cockpit.</p>
+  </div>
 </body>
 </html>
-

@@ -44,13 +44,20 @@
 
 <script>
 async function cargarTV() {
-  const res = await fetch('/api/tv');
+  const res = await fetch('/api/dashboard');
   const data = await res.json();
 
-  document.getElementById('totalVentasDia').textContent = '$' + data.ventas_dia.total;
-  document.getElementById('productosVendidosDia').textContent = data.ventas_dia.productos_vendidos;
-  document.getElementById('ticketPromedioDia').textContent = '$' + data.ventas_dia.ticket_promedio;
-  document.getElementById('cantidadTransaccionesDia').textContent = data.ventas_dia.transacciones;
+  document.getElementById('totalVentasDia').textContent =
+    '$' + Number(data.totalVentasDia || 0).toLocaleString();
+
+  document.getElementById('productosVendidosDia').textContent =
+    Number(data.productosVendidosDia || 0);
+
+  document.getElementById('ticketPromedioDia').textContent =
+    '$' + Number(data.ticketPromedioDia || 0).toLocaleString();
+
+  document.getElementById('cantidadTransaccionesDia').textContent =
+    Number(data.cantidadTransaccionesDia || 0);
 }
 
 setInterval(cargarTV, 5000);

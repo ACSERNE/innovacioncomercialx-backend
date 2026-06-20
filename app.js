@@ -2,14 +2,19 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
-// Middlewares
+// ===============================
+// MIDDLEWARES
+// ===============================
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Servir carpeta pública (TV Mode, frontend, etc.)
 app.use(express.static('public'));
 
-// Conexión BD
+// ===============================
+// CONEXIÓN BD
+// ===============================
 const db = require('./models');
 
 db.sequelize.authenticate()
@@ -20,10 +25,14 @@ db.sequelize.sync({ alter: true })
   .then(() => console.log('🗄️ Modelos sincronizados'))
   .catch(err => console.error('❌ Error sincronizando modelos:', err));
 
-// 🔥 Activar CRONJOBS
+// ===============================
+// CRONJOBS
+// ===============================
 require('./cron');
 
-// Rutas API
+// ===============================
+// RUTAS API (SIN DUPLICADOS)
+// ===============================
 app.use('/api/reporte', require('./routes/reporte.routes'));
 app.use('/api/usuarios', require('./routes/usuario.routes'));
 app.use('/api/productos', require('./routes/producto.routes'));
@@ -36,24 +45,36 @@ app.use('/api/alertas', require('./routes/alerta.routes'));
 app.use('/api/seller', require('./routes/sellerProduct.routes'));
 app.use('/api/detalles/reportes', require('./routes/detalleReportes.routes'));
 app.use('/api/flujo/reportes', require('./routes/flujoReportes.routes'));
-app.use('/api/alertas', require('./routes/alertas.routes'));
 app.use('/api/dashboard', require('./routes/dashboard.routes'));
 app.use('/api/tv', require('./routes/tv.routes'));
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/ventas', require('./routes/venta.routes'));
 
-// Ruta raíz
+// ===============================
+// RUTA DASHBOARD REAL
+// ===============================
+app.get('/dashboard', (req, res) => {
+  res.sendFile(__dirname + '/public/dashboard.html');
+});
+
+// ===============================
+// RUTA RAÍZ
+// ===============================
 app.get('/', (req, res) => {
   res.json({ mensaje: 'Backend funcionando correctamente' });
 });
 
-// Fallback para frontend SPA
+// ===============================
+// FALLBACK SPA (AL FINAL SIEMPRE)
+// ===============================
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
-// Iniciar servidor
+// ===============================
+// INICIAR SERVIDOR
+// ===============================
 const PORT = process.env.PORT || 5002;
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Servidor backend corriendo en http://0.0.0.0:${PORT}`);
 });
