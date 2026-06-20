@@ -1,0 +1,1 @@
+require('./alertas.cron.js');

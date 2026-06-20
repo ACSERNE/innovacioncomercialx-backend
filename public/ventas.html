@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ventas</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+  <h1>Ventas</h1>
+
+  <button onclick="mostrarCrear()">Nueva Venta</button>
+
+  <section id="lista"></section>
+
+  <div id="formulario" style="display:none;">
+    <h2>Nueva Venta</h2>
+
+    <div id="items"></div>
+
+    <button onclick="agregarItem()">Agregar Producto</button>
+    <button onclick="guardar()">Guardar Venta</button>
+    <button onclick="cancelar()">Cancelar</button>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ventas.js"></script>
+</body>
+</html>
