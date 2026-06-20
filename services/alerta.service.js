@@ -47,5 +47,27 @@ module.exports = {
     });
 
     console.log('⏰ CRON: Alerta de ventas del día generada');
+  },
+
+  async limpiarAlertas() {
+    const limite = new Date();
+    limite.setDate(limite.getDate() - 30);
+
+    await db.Alerta.destroy({
+      where: {
+        createdAt: { [Op.lt]: limite }
+      }
+    });
+
+    const alertas = await db.Alerta.findAll({
+      order: [['createdAt', 'DESC']]
+    });
+
+    if (alertas.length > 50) {
+      const idsAEliminar = alertas.slice(50).map(a => a.id);
+      await db.Alerta.destroy({ where: { id: idsAEliminar } });
+    }
+
+    console.log('🧹 Limpieza automática de alertas ejecutada');
   }
 };

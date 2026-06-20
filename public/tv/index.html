@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>TV Mode - ComercialX Cockpit</title>
+<style>
+  body {
+    background: #000;
+    color: #00ffcc;
+    font-family: monospace;
+    font-size: 32px;
+    padding: 40px;
+  }
+  .kpi {
+    margin-bottom: 40px;
+  }
+  .label {
+    color: #888;
+    font-size: 24px;
+  }
+</style>
+</head>
+<body>
+
+<div class="kpi">
+  <div class="label">Ventas del día:</div>
+  <div id="totalVentasDia">--</div>
+</div>
+
+<div class="kpi">
+  <div class="label">Productos vendidos:</div>
+  <div id="productosVendidosDia">--</div>
+</div>
+
+<div class="kpi">
+  <div class="label">Ticket promedio:</div>
+  <div id="ticketPromedioDia">--</div>
+</div>
+
+<div class="kpi">
+  <div class="label">Transacciones:</div>
+  <div id="cantidadTransaccionesDia">--</div>
+</div>
+
+<script>
+async function cargarTV() {
+  const res = await fetch('/api/tv');
+  const data = await res.json();
+
+  document.getElementById('totalVentasDia').textContent = '$' + data.ventas_dia.total;
+  document.getElementById('productosVendidosDia').textContent = data.ventas_dia.productos_vendidos;
+  document.getElementById('ticketPromedioDia').textContent = '$' + data.ventas_dia.ticket_promedio;
+  document.getElementById('cantidadTransaccionesDia').textContent = data.ventas_dia.transacciones;
+}
+
+setInterval(cargarTV, 5000);
+cargarTV();
+</script>
+
+</body>
+</html>

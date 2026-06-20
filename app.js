@@ -2,8 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
+// Middlewares
 app.use(cors());
 app.use(express.json());
+
+// Servir carpeta pública (TV Mode, frontend, etc.)
+app.use(express.static('public'));
 
 // Conexión BD
 const db = require('./models');
@@ -19,7 +23,7 @@ db.sequelize.sync({ alter: true })
 // 🔥 Activar CRONJOBS
 require('./cron');
 
-// Rutas
+// Rutas API
 app.use('/api/reporte', require('./routes/reporte.routes'));
 app.use('/api/usuarios', require('./routes/usuario.routes'));
 app.use('/api/productos', require('./routes/producto.routes'));
@@ -31,29 +35,25 @@ app.use('/api/flujo', require('./routes/flujoCaja.routes'));
 app.use('/api/alertas', require('./routes/alerta.routes'));
 app.use('/api/seller', require('./routes/sellerProduct.routes'));
 app.use('/api/detalles/reportes', require('./routes/detalleReportes.routes'));
-
-app.get('/', (req, res) => {
-  res.json({ mensaje: 'Backend funcionando correctamente' });
-});
-
-const PORT = process.env.PORT || 5002;
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor backend corriendo en http://0.0.0.0:${PORT}`);
-});
-
-app.use('/api/detalles/reportes', require('./routes/detalleReportes.routes'));
 app.use('/api/flujo/reportes', require('./routes/flujoReportes.routes'));
 app.use('/api/alertas', require('./routes/alertas.routes'));
 app.use('/api/dashboard', require('./routes/dashboard.routes'));
 app.use('/api/tv', require('./routes/tv.routes'));
-// Seguridad global
-require('./security')(app);
-// Servir carpeta pública
-app.use(express.static('public'));
-// Fallback para rutas del frontend
+app.use('/api/auth', require('./routes/auth.routes'));
+app.use('/api/ventas', require('./routes/venta.routes'));
+
+// Ruta raíz
+app.get('/', (req, res) => {
+  res.json({ mensaje: 'Backend funcionando correctamente' });
+});
+
+// Fallback para frontend SPA
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
-app.use('/api/auth', require('./routes/auth.routes'));
-app.use('/api/productos', require('./routes/producto.routes'));
-app.use('/api/ventas', require('./routes/venta.routes'));
+
+// Iniciar servidor
+const PORT = process.env.PORT || 5002;
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor backend corriendo en http://0.0.0.0:${PORT}`);
+});

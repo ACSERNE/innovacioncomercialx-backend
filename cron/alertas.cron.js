@@ -17,3 +17,10 @@ cron.schedule('59 23 * * *', () => {
 });
 
 console.log('⏰ CRON: Alertas programadas');
+
+// Cada día a las 03:00: limpieza automática de alertas
+cron.schedule('0 3 * * *', () => {
+  alertaService.limpiarAlertas();
+  console.log('🧹 CRON: Limpieza automática de alertas ejecutada');
+});
+

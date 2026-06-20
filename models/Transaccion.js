@@ -4,8 +4,14 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Transaccion.associate = (models) => {
-    Transaccion.belongsTo(models.Usuario);
-    Transaccion.hasMany(models.TransaccionDetalle);
+    Transaccion.belongsTo(models.Usuario, {
+      foreignKey: 'UsuarioId'
+    });
+
+    Transaccion.hasMany(models.TransaccionDetalle, {
+      foreignKey: 'TransaccionId',
+      as: 'detalles'
+    });
   };
 
   return Transaccion;

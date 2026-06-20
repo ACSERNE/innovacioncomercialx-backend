@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const tv = require('../services/tv.service');
+const tvController = require('../controllers/tv.controller');
 
-router.get('/', async (req, res) => {
-  res.json(await tv.obtenerTV());
-});
+router.get('/', tvController.obtenerTV);
 
 module.exports = router;

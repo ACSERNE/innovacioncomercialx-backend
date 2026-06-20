@@ -104,3 +104,82 @@ canvas.show {
 #toggleSound { top: 10px; }
 #toggleTheme { top: 60px; }
 
+
+/* Ranking cockpit */
+.ranking-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ranking-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.ranking-item:hover {
+  transform: scale(1.02);
+  background: rgba(0,255,255,0.05);
+}
+
+.pos {
+  font-weight: bold;
+  color: var(--accent);
+}
+
+.nombre {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.cantidad {
+  font-weight: bold;
+}
+
+
+/* Alertas cockpit */
+.alerta-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alerta-item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all 0.25s ease;
+}
+
+.alerta-item.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.alerta-item .icono {
+  font-size: 18px;
+  margin-right: 6px;
+}
+
+.alerta-item .mensaje {
+  font-weight: bold;
+}
+
+.alerta-item .fecha {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+

@@ -8,7 +8,15 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Producto.associate = (models) => {
-    Producto.belongsTo(models.Categoria);
+    Producto.belongsTo(models.Categoria, {
+      foreignKey: 'CategoriaId',
+      as: 'Categoria'
+    });
+
+    Producto.hasMany(models.TransaccionDetalle, {
+      foreignKey: 'ProductoId',
+      as: 'detalles'
+    });
   };
 
   return Producto;
