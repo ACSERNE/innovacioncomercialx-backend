@@ -1,10 +1,21 @@
 const db = require('../models');
-const { Op } = require('sequelize');
 
 module.exports = {
   listar() {
     return db.Transaccion.findAll({
-      include: [db.Usuario],
+      include: [
+        db.Usuario,
+        {
+          model: db.TransaccionDetalle,
+          as: 'detalles',
+          include: [
+            {
+              model: db.Producto,
+              as: 'Producto'
+            }
+          ]
+        }
+      ],
       order: [['createdAt', 'DESC']]
     });
   },
@@ -15,7 +26,13 @@ module.exports = {
         db.Usuario,
         {
           model: db.TransaccionDetalle,
-          include: [db.Producto]
+          as: 'detalles',
+          include: [
+            {
+              model: db.Producto,
+              as: 'Producto'
+            }
+          ]
         }
       ]
     });
@@ -29,6 +46,8 @@ module.exports = {
     // Calcular total
     for (const item of items) {
       const producto = await db.Producto.findByPk(item.productoId);
+      if (!producto) throw new Error("Producto no encontrado");
+
       total += producto.precio * item.cantidad;
     }
 
@@ -46,7 +65,7 @@ module.exports = {
         TransaccionId: venta.id,
         ProductoId: producto.id,
         cantidad: item.cantidad,
-        precio_unitario: producto.precio
+        precio: producto.precio
       });
 
       await producto.update({

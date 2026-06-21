@@ -7,13 +7,23 @@ module.exports = {
 
   async obtenerCategorias() {
     return db.Categoria.findAll({
-      include: [{ model: db.Producto }]
+      include: [
+        {
+          model: db.Producto,
+          as: 'productos'
+        }
+      ]
     });
   },
 
   async obtenerCategoriaPorId(id) {
     return db.Categoria.findByPk(id, {
-      include: [{ model: db.Producto }]
+      include: [
+        {
+          model: db.Producto,
+          as: 'productos'
+        }
+      ]
     });
   },
 
@@ -31,16 +41,14 @@ module.exports = {
 
     if (!categoria || !producto) return null;
 
-    await categoria.addProducto(producto);
+    await producto.update({ CategoriaId: categoriaId });
+
     return { mensaje: 'Producto asignado a categoría' };
   },
 
   async productosPorCategoria(id) {
     return db.Producto.findAll({
-      include: [{
-        model: db.Categoria,
-        where: { id }
-      }]
+      where: { CategoriaId: id }
     });
   }
 };

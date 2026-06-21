@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Servir carpeta pública (TV Mode, frontend, etc.)
+// Servir carpeta pública
 app.use(express.static('public'));
 
 // ===============================
@@ -51,28 +51,36 @@ app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/ventas', require('./routes/venta.routes'));
 
 // ===============================
-// RUTAS NUEVAS (REGISTRO + VERIFICACIÓN + IDENTIDAD)
+// RUTAS DE VERIFICACIÓN
 // ===============================
-app.use('/api', require('./routes/registro'));   // /api/registro, /api/verificar-correo, etc.
+app.use('/api/verificacion', require('./routes/verificacionCorreo'));
+app.use('/api/verificacion', require('./routes/validarCodigo'));
 
 // ===============================
-// RUTA DASHBOARD REAL
+// RUTAS NUEVAS (REGISTRO + LOGIN + PROTEGIDO)
 // ===============================
-app.get('/dashboard', (req, res) => {
+app.use('/api/registro', require('./routes/registro'));
+app.use('/api/login', require('./routes/login'));
+app.use('/api/protegido', require('./routes/protegido'));
+
+// ===============================
+// RUTA DASHBOARD
+// ===============================
+app.get('/dashboard', function(req, res) {
   res.sendFile(__dirname + '/public/dashboard.html');
 });
 
 // ===============================
 // RUTA RAÍZ
 // ===============================
-app.get('/', (req, res) => {
+app.get('/', function(req, res) {
   res.json({ mensaje: 'Backend funcionando correctamente' });
 });
 
 // ===============================
-// FALLBACK SPA (AL FINAL SIEMPRE)
+// FALLBACK SPA
 // ===============================
-app.get('*', (req, res) => {
+app.get('*', function(req, res) {
   res.sendFile(__dirname + '/public/index.html');
 });
 
@@ -80,7 +88,6 @@ app.get('*', (req, res) => {
 // INICIAR SERVIDOR
 // ===============================
 const PORT = process.env.PORT || 5002;
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`🚀 Servidor backend corriendo en http://0.0.0.0:${PORT}`);
+app.listen(PORT, "0.0.0.0", function() {
+  console.log("🚀 Servidor backend corriendo en http://0.0.0.0:" + PORT);
 });
-

@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     tipo: {
       type: DataTypes.ENUM("proveedor", "comprador"),
       allowNull: false,
@@ -38,4 +42,3 @@ module.exports = (sequelize, DataTypes) => {
 
   return Usuario;
 };
-

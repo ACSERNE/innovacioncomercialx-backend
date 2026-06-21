@@ -10,11 +10,6 @@ module.exports = (sequelize, DataTypes) => {
       as: 'Producto'
     });
 
-    TransaccionDetalle.belongsTo(models.Categoria, {
-      foreignKey: 'CategoriaId',
-      as: 'Categoria'
-    });
-
     TransaccionDetalle.belongsTo(models.Transaccion, {
       foreignKey: 'TransaccionId',
       as: 'transaccion'

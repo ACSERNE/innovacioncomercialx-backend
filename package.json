@@ -27,6 +27,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.821.0",
     "aws-sdk": "^2.1692.0",
+    "axios": "^1.18.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^2.4.3",
     "clipboardy": "^4.0.0",
@@ -43,6 +44,7 @@
     "mongoose": "^8.15.1",
     "morgan": "^1.10.0",
     "node-cron": "^4.2.1",
+    "nodemailer": "^9.0.1",
     "pdfkit": "^0.17.1",
     "pg": "^8.16.0",
     "pg-hstore": "^2.3.4",

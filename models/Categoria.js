@@ -8,11 +8,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'CategoriaId',
       as: 'productos'
     });
-
-    Categoria.hasMany(models.TransaccionDetalle, {
-      foreignKey: 'CategoriaId',
-      as: 'detalles'
-    });
   };
 
   return Categoria;
