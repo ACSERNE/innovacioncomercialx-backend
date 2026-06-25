@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const tvController = require('../controllers/tv.controller');
+const controller = require('../controllers/tvController');
 
-router.get('/', tvController.obtenerTV);
+router.get('/', controller.estado);
 
 module.exports = router;

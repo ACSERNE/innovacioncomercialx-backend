@@ -1,17 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const sellerController = require('../controllers/sellerProduct.controller');
+const controller = require('../controllers/sellerProductController');
 
-// Asignar producto a vendedor
-router.post('/asignar', sellerController.asignar);
-
-// Obtener productos de un vendedor
-router.get('/vendedor/:id', sellerController.productosDeVendedor);
-
-// Obtener vendedores de un producto
-router.get('/producto/:id', sellerController.vendedoresDeProducto);
-
-// Eliminar asignación
-router.delete('/', sellerController.eliminar);
+router.post('/', controller.crear);
+router.get('/', controller.listar);
+router.get('/:id', controller.obtener);
+router.put('/:id', controller.actualizar);
+router.delete('/:id', controller.eliminar);
 
 module.exports = router;

@@ -56,3 +56,8 @@ app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Backend simple corriendo en puerto ${PORT}`);
 });
 
+
+// Inicializar Socket.IO
+const socketServer = require('./socket/socketServer');
+socketServer.init(server);
+

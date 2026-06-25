@@ -1,16 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const flujoController = require('../controllers/flujoCaja.controller');
+const controller = require('../controllers/flujoCajaController');
+const { validarMovimientoCaja } = require('../middleware/validators/flujoCajaValidator');
+const { validationResult } = require('express-validator');
 
-// Registrar movimientos
-router.post('/ingreso', flujoController.registrarIngreso);
-router.post('/egreso', flujoController.registrarEgreso);
+router.post('/', validarMovimientoCaja, (req, res, next) => {
+  const errores = validationResult(req);
+  if (!errores.isEmpty()) return res.status(400).json({ errores: errores.array() });
+  next();
+}, controller.crear);
 
-// Obtener movimientos
-router.get('/', flujoController.obtenerTodos);
-
-// Reportes
-router.get('/balance/dia', flujoController.balanceDiario);
-router.get('/balance/mes', flujoController.balanceMensual);
+router.get('/', controller.listar);
+router.get('/resumen', controller.resumen);
+router.get('/:id', controller.obtener);
+router.put('/:id', controller.actualizar);
+router.delete('/:id', controller.eliminar);
 
 module.exports = router;

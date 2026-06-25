@@ -1,8 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const controller = require('../controllers/reporteController');
 
-const reporteController = require('../controllers/reporte.controller');
+// Reporte de ventas
+router.get('/ventas/excel', controller.ventasExcel);
+router.get('/ventas/pdf', controller.ventasPDF);
 
-router.get('/diario', reporteController.reporteDiario);
+// Reporte de flujo de caja
+router.get('/flujo-caja/excel', controller.flujoCajaExcel);
+
+// Reporte de productos
+router.get('/productos/excel', controller.productosExcel);
 
 module.exports = router;

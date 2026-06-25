@@ -1,28 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../models');
+const alertaService = require('../services/alerta.service');
 
 router.get('/', async (req, res) => {
-  res.json(await db.Alerta.findAll({ include: db.Producto }));
-});
-
-router.get('/no-leidas', async (req, res) => {
-  res.json(await db.Alerta.findAll({ where: { leida: false } }));
-});
-
-router.put('/:id/leida', async (req, res) => {
-  const alerta = await db.Alerta.findByPk(req.params.id);
-  if (!alerta) return res.status(404).json({ error: 'No encontrada' });
-
-  alerta.leida = true;
-  await alerta.save();
-
-  res.json({ mensaje: 'Alerta marcada como leída' });
+  const alertas = await alertaService.obtenerAlertas();
+  res.json(alertas);
 });
 
 router.delete('/:id', async (req, res) => {
-  await db.Alerta.destroy({ where: { id: req.params.id } });
+  const ok = await alertaService.eliminarAlerta(req.params.id);
+  if (!ok) return res.status(404).json({ error: 'Alerta no encontrada' });
   res.json({ mensaje: 'Alerta eliminada' });
+});
+
+router.delete('/', async (req, res) => {
+  await alertaService.eliminarTodas();
+  res.json({ mensaje: 'Todas las alertas eliminadas' });
 });
 
 module.exports = router;

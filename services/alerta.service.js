@@ -1,73 +1,62 @@
-const db = require('../models');
+const { Alerta, Producto } = require('../models');
 const { Op } = require('sequelize');
 
-module.exports = {
-  async generarAlertasStockBajo() {
-    const productos = await db.Producto.findAll({
-      where: { stock: { [Op.lte]: 5 } }
-    });
+class AlertaService {
+  async crearAlerta(tipo, mensaje, ProductoId = null) {
+    return await Alerta.create({ tipo, mensaje, ProductoId });
+  }
 
-    for (const p of productos) {
-      await db.Alerta.create({
-        tipo: 'stock_bajo',
-        mensaje: `Stock bajo: ${p.nombre} (${p.stock})`,
-        ProductoId: p.id
-      });
-    }
-
-    console.log('⏰ CRON: Alertas de stock bajo generadas');
-  },
-
-  async generarAlertasVencimiento() {
-    const hoy = new Date();
-    const limite = new Date();
-    limite.setDate(hoy.getDate() + 7);
-
-    const productos = await db.Producto.findAll({
+  async existeAlertaActiva(tipo, ProductoId) {
+    return await Alerta.findOne({
       where: {
-        fechaVencimiento: { [Op.between]: [hoy, limite] }
+        tipo,
+        ProductoId,
+        createdAt: {
+          [Op.gte]: new Date(Date.now() - 24 * 60 * 60 * 1000)
+        }
       }
     });
+  }
 
-    for (const p of productos) {
-      await db.Alerta.create({
-        tipo: 'vencimiento',
-        mensaje: `Producto por vencer: ${p.nombre}`,
-        ProductoId: p.id
-      });
-    }
-
-    console.log('⏰ CRON: Alertas de vencimiento generadas');
-  },
-
-  async generarAlertasVentasDia() {
-    await db.Alerta.create({
-      tipo: 'ventas_dia',
-      mensaje: 'Resumen de ventas del día generado automáticamente'
-    });
-
-    console.log('⏰ CRON: Alerta de ventas del día generada');
-  },
-
-  async limpiarAlertas() {
-    const limite = new Date();
-    limite.setDate(limite.getDate() - 30);
-
-    await db.Alerta.destroy({
+  async limpiarAlertasViejas() {
+    return await Alerta.destroy({
       where: {
-        createdAt: { [Op.lt]: limite }
+        createdAt: {
+          [Op.lt]: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+        }
       }
     });
+  }
 
-    const alertas = await db.Alerta.findAll({
+  async obtenerAlertas() {
+    return await Alerta.findAll({
+      include: [{ model: Producto, as: 'producto' }],
       order: [['createdAt', 'DESC']]
     });
-
-    if (alertas.length > 50) {
-      const idsAEliminar = alertas.slice(50).map(a => a.id);
-      await db.Alerta.destroy({ where: { id: idsAEliminar } });
-    }
-
-    console.log('🧹 Limpieza automática de alertas ejecutada');
   }
-};
+
+  async eliminarAlerta(id) {
+    const alerta = await Alerta.findByPk(id);
+    if (!alerta) return null;
+    await alerta.destroy();
+    return true;
+  }
+
+  async eliminarTodas() {
+    return await Alerta.destroy({ where: {} });
+  }
+}
+
+module.exports = new AlertaService();
+
+// Emitir alerta en vivo
+const emitter = require('../socket/emitter');
+emitter.emitirAlerta(nuevaAlerta);
+
+
+// Enviar alerta crítica por correo
+const emailService = require('./emailService');
+if (nuevaAlerta.tipo === 'critica') {
+  emailService.enviarAlertaCritica(nuevaAlerta);
+}
+

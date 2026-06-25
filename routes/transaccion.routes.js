@@ -1,31 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const transaccionService = require('../services/transaccion.service');
+const controller = require('../controllers/transaccionController');
+const { validarCrearTransaccion } = require('../middleware/validators/transaccionValidator');
+const { validationResult } = require('express-validator');
 
-// ===============================
-// POST /api/transacciones
-// ===============================
-router.post('/', async (req, res) => {
-  try {
-    const { usuarioId, productos } = req.body;
+router.post('/', validarCrearTransaccion, (req, res, next) => {
+  const errores = validationResult(req);
+  if (!errores.isEmpty()) return res.status(400).json({ errores: errores.array() });
+  next();
+}, controller.crear);
 
-    // Validación inicial
-    if (!usuarioId) {
-      return res.status(400).json({ error: "usuarioId es obligatorio" });
-    }
-
-    if (!Array.isArray(productos)) {
-      return res.status(400).json({ error: "El campo 'productos' debe ser un array" });
-    }
-
-    const transaccion = await transaccionService.registrarVenta(usuarioId, productos);
-
-    res.json(transaccion);
-
-  } catch (error) {
-    console.error("ERROR EN POST /api/transacciones:", error);
-    res.status(400).json({ error: error.message });
-  }
-});
+router.get('/', controller.listar);
+router.get('/:id', controller.obtener);
+router.put('/:id', controller.actualizar);
+router.delete('/:id', controller.eliminar);
 
 module.exports = router;

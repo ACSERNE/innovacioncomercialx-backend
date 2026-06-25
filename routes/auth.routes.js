@@ -1,17 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const authService = require('../services/auth.service');
+const controller = require('../controllers/authController');
+const auth = require('../middleware/auth');
+const roles = require('../middleware/roles');
 
-router.post('/login', async (req, res) => {
-  const { correo, password } = req.body;
+// Login
+router.post('/login', controller.login);
 
-  const result = await authService.login(correo, password);
-
-  if (result.error) {
-    return res.status(400).json({ error: result.error });
-  }
-
-  res.json(result);
-});
+// Asignar rol (solo admin)
+router.post('/asignar-rol', auth, roles(['admin']), controller.asignarRol);
 
 module.exports = router;
