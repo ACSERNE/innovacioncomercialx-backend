@@ -1,0 +1,38 @@
+name: Generate Expo App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Create Expo project
+        run: |
+          pnpm create expo-app innovacion-mobile --template blank
+
+      - name: Install dependencies
+        run: |
+          cd innovacion-mobile
+          pnpm install
+          pnpm add axios socket.io-client
+
+      - name: Commit generated app
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add innovacion-mobile
+          git commit -m "Generated Expo app automatically"
+          git push
