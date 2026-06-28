@@ -1,58 +1,58 @@
-const service = require('../services/transaccionService');
+const { Transaccion, TransaccionDetalle, Producto } = require("../models");
+const ventaEmitter = require("../utils/ventaEmitter");
 
-class TransaccionController {
-  async crear(req, res) {
-    try {
-      const transaccion = await service.crearTransaccion(req.body);
-      res.status(201).json(transaccion);
-    } catch (error) {
-      res.status(500).json({ error: 'Error al crear transacción', detalle: error.message });
+// Crear transacción
+exports.crear = async (req, res) => {
+  try {
+    const { tipo, detalles } = req.body;
+
+    const transaccion = await Transaccion.create({
+      tipo,
+      total: 0
+    });
+
+    let total = 0;
+
+    for (const d of detalles) {
+      const producto = await Producto.findByPk(d.productoId);
+      if (!producto) continue;
+
+      const subtotal = producto.precio * d.cantidad;
+      total += subtotal;
+
+      await TransaccionDetalle.create({
+        transaccionId: transaccion.id,
+        productoId: producto.id,
+        cantidad: d.cantidad,
+        precioUnitario: producto.precio,
+        subtotal
+      });
     }
+
+    transaccion.total = total;
+    await transaccion.save();
+
+    // Emitir venta
+    ventaEmitter.emitirVenta(transaccion);
+
+    res.status(201).json(transaccion);
+  } catch (error) {
+    console.error("❌ Error creando transacción:", error);
+    res.status(500).json({ error: "Error creando transacción" });
   }
+};
 
-  async listar(req, res) {
-    try {
-      const transacciones = await service.obtenerTransacciones();
-      res.json(transacciones);
-    } catch (error) {
-      res.status(500).json({ error: 'Error al obtener transacciones' });
-    }
+// Listar transacciones
+exports.listar = async (req, res) => {
+  try {
+    const transacciones = await Transaccion.findAll({
+      order: [["createdAt", "DESC"]],
+      include: [TransaccionDetalle]
+    });
+
+    res.json(transacciones);
+  } catch (error) {
+    console.error("❌ Error obteniendo transacciones:", error);
+    res.status(500).json({ error: "Error obteniendo transacciones" });
   }
-
-  async obtener(req, res) {
-    try {
-      const transaccion = await service.obtenerTransaccionPorId(req.params.id);
-      if (!transaccion) return res.status(404).json({ error: 'Transacción no encontrada' });
-      res.json(transaccion);
-    } catch (error) {
-      res.status(500).json({ error: 'Error al obtener transacción' });
-    }
-  }
-
-  async actualizar(req, res) {
-    try {
-      const transaccion = await service.actualizarTransaccion(req.params.id, req.body);
-      if (!transaccion) return res.status(404).json({ error: 'Transacción no encontrada' });
-      res.json(transaccion);
-    } catch (error) {
-      res.status(500).json({ error: 'Error al actualizar transacción' });
-    }
-  }
-
-  async eliminar(req, res) {
-    try {
-      const ok = await service.eliminarTransaccion(req.params.id);
-      if (!ok) return res.status(404).json({ error: 'Transacción no encontrada' });
-      res.json({ mensaje: 'Transacción eliminada' });
-    } catch (error) {
-      res.status(500).json({ error: 'Error al eliminar transacción' });
-    }
-  }
-}
-
-module.exports = new TransaccionController();
-
-// Emitir venta en vivo
-const emitter = require('../socket/emitter');
-emitter.emitirVenta(nuevaTransaccion);
-
+};

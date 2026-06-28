@@ -1,0 +1,36 @@
+### 1. Cotizar envío
+POST http://localhost:5002/api/shipping/quote
+Content-Type: application/json
+
+{
+  "origen": "13101",
+  "destino": "5601",
+  "peso": 1,
+  "alto": 10,
+  "ancho": 10,
+  "largo": 10
+}
+
+### 2. Crear orden de despacho
+POST http://localhost:5002/api/shipping/create
+Content-Type: application/json
+
+{
+  "remitente": {
+    "rut": "12345678-9",
+    "comuna": "13101"
+  },
+  "destinatario": {
+    "comuna": "5601",
+    "direccion": "Calle Falsa 123"
+  },
+  "paquete": {
+    "peso": 1,
+    "alto": 10,
+    "ancho": 10,
+    "largo": 10
+  }
+}
+
+### 3. Seguimiento
+GET http://localhost:5002/api/shipping/track/123456789

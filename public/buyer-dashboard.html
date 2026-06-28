@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mis Compras</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f4f4f4; }
+    .card { background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+
+<h1>Mis Compras</h1>
+
+<div id="orders"></div>
+
+<script>
+async function cargar() {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch("/api/buyer/orders", {
+    headers: { "Authorization": "Bearer " + token }
+  });
+
+  const data = await res.json();
+
+  document.getElementById("orders").innerHTML =
+    data.orders.map(o => `
+      <div class="card">
+        <h2>Pedido #${o.id}</h2>
+        <p>Producto: ${o.Product.nombre}</p>
+        <p>Total: $${o.total}</p>
+        <p>Estado: ${o.estado}</p>
+        <p>Tracking: ${o.tracking || "No asignado"}</p>
+      </div>
+    `).join("");
+}
+
+cargar();
+</script>
+
+</body>
+</html>

@@ -31,14 +31,12 @@ services:
 
   backend:
     build:
-      context: .
+      context: ./innovacioncomercialx-backend
     container_name: backend-innovacion
     ports:
       - "5002:5002"
-
     env_file:
-      - .env
-
+      - ./innovacioncomercialx-backend/.env
     environment:
       - PORT=5002
       - DB_HOST=postgres
@@ -46,18 +44,22 @@ services:
       - DB_PASSWORD=valdez98/224
       - DB_NAME=innovacion_db
       - JWT_SECRET=supersecreto
-
     depends_on:
       - postgres
-
     working_dir: /app
-
-    # 🔥 AHORA SÍ: MONTAMOS TU PROYECTO REAL
     volumes:
-      - ./:/app
-
+      - ./innovacioncomercialx-backend:/app
     command: ["node", "app.js"]
     restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./innovacioncomercialx-frontend
+      dockerfile: Dockerfile
+    container_name: frontend-innovacion
+    ports:
+      - "8081:80"
+    restart: always
 
 volumes:
   pgdata:

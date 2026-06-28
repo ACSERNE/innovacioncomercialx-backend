@@ -1,0 +1,17 @@
+### Ver carrito
+GET http://localhost:5002/api/cart
+x-session-id: 12345
+
+### Agregar producto
+POST http://localhost:5002/api/cart/add
+Content-Type: application/json
+x-session-id: 12345
+
+{
+  "product_id": 1,
+  "cantidad": 2
+}
+
+### Checkout
+POST http://localhost:5002/api/cart/checkout
+x-session-id: 12345

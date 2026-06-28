@@ -1,12 +1,18 @@
-const cron = require('node-cron');
-const dashboardService = require('../services/dashboardService');
-const emailService = require('../services/emailService');
+const cron = require("node-cron");
+const dashboardService = require("../services/dashboardService");
 
-cron.schedule('0 7 * * *', async () => {
-  console.log("📨 Enviando reporte diario...");
+/**
+ * CRON: Generar reporte diario del dashboard
+ * (Ejemplo: cada día a las 23:59)
+ */
+cron.schedule("59 23 * * *", async () => {
+  try {
+    console.log("⏰ Ejecutando reporte diario del dashboard...");
 
-  const resumen = await dashboardService.obtenerDashboard();
-  await emailService.enviarReporteDiario(resumen);
+    const data = await dashboardService.obtenerDashboard();
 
-  console.log("📨 Reporte diario enviado.");
+    console.log("📊 Reporte diario generado:", data);
+  } catch (error) {
+    console.error("❌ Error en reporte diario:", error);
+  }
 });

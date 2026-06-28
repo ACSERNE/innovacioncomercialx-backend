@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard Proveedor</title>
+  <style>
+    body { font-family: Arial; background: #f4f4f4; padding: 20px; }
+    .kpi { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+    .kpi h2 { margin: 0; }
+  </style>
+</head>
+<body>
+
+<h1>Dashboard del Proveedor</h1>
+
+<div id="kpis"></div>
+
+<script>
+async function cargarDashboard() {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch("/api/providers/dashboard", {
+    headers: { "Authorization": "Bearer " + token }
+  });
+
+  const data = await res.json();
+
+  document.getElementById("kpis").innerHTML = `
+    <div class="kpi"><h2>Tiendas: ${data.data.totalTiendas}</h2></div>
+    <div class="kpi"><h2>Productos: ${data.data.totalProductos}</h2></div>
+    <div class="kpi"><h2>Stock total: ${data.data.stockTotal}</h2></div>
+    <div class="kpi"><h2>Sin stock: ${data.data.sinStock}</h2></div>
+  `;
+}
+
+cargarDashboard();
+</script>
+
+</body>
+</html>

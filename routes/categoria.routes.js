@@ -1,18 +1,93 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const categoriaController = require('../controllers/categoria.controller');
-const { verificarToken } = require('../middleware/auth');
-const requiereCorreoVerificado = require('../middleware/requiereCorreoVerificado');
+const { Categoria } = require("../models");
 
-// CRUD protegido
-router.post('/', verificarToken, requiereCorreoVerificado, categoriaController.crear);
-router.get('/', verificarToken, requiereCorreoVerificado, categoriaController.obtenerTodos);
-router.get('/:id', verificarToken, requiereCorreoVerificado, categoriaController.obtenerPorId);
-router.put('/:id', verificarToken, requiereCorreoVerificado, categoriaController.actualizar);
-router.delete('/:id', verificarToken, requiereCorreoVerificado, categoriaController.eliminar);
+// Crear categoría
+router.post("/", async (req, res) => {
+  try {
+    const { nombre, descripcion } = req.body;
 
-// Especiales
-router.post('/asignar-producto', verificarToken, requiereCorreoVerificado, categoriaController.asignarProducto);
-router.get('/:id/productos', verificarToken, requiereCorreoVerificado, categoriaController.productosPorCategoria);
+    const categoria = await Categoria.create({
+      nombre,
+      descripcion
+    });
+
+    res.status(201).json(categoria);
+  } catch (error) {
+    console.error("❌ Error creando categoría:", error);
+    res.status(500).json({ error: "Error creando categoría" });
+  }
+});
+
+// Listar categorías
+router.get("/", async (req, res) => {
+  try {
+    const categorias = await Categoria.findAll({
+      order: [["createdAt", "DESC"]]
+    });
+
+    res.json(categorias);
+  } catch (error) {
+    console.error("❌ Error obteniendo categorías:", error);
+    res.status(500).json({ error: "Error obteniendo categorías" });
+  }
+});
+
+// Obtener una categoría por ID
+router.get("/:id", async (req, res) => {
+  try {
+    const categoria = await Categoria.findByPk(req.params.id);
+
+    if (!categoria) {
+      return res.status(404).json({ error: "Categoría no encontrada" });
+    }
+
+    res.json(categoria);
+  } catch (error) {
+    console.error("❌ Error obteniendo categoría:", error);
+    res.status(500).json({ error: "Error obteniendo categoría" });
+  }
+});
+
+// Actualizar categoría
+router.put("/:id", async (req, res) => {
+  try {
+    const categoria = await Categoria.findByPk(req.params.id);
+
+    if (!categoria) {
+      return res.status(404).json({ error: "Categoría no encontrada" });
+    }
+
+    const { nombre, descripcion } = req.body;
+
+    categoria.nombre = nombre ?? categoria.nombre;
+    categoria.descripcion = descripcion ?? categoria.descripcion;
+
+    await categoria.save();
+
+    res.json(categoria);
+  } catch (error) {
+    console.error("❌ Error actualizando categoría:", error);
+    res.status(500).json({ error: "Error actualizando categoría" });
+  }
+});
+
+// Eliminar categoría
+router.delete("/:id", async (req, res) => {
+  try {
+    const categoria = await Categoria.findByPk(req.params.id);
+
+    if (!categoria) {
+      return res.status(404).json({ error: "Categoría no encontrada" });
+    }
+
+    await categoria.destroy();
+
+    res.json({ mensaje: "Categoría eliminada correctamente" });
+  } catch (error) {
+    console.error("❌ Error eliminando categoría:", error);
+    res.status(500).json({ error: "Error eliminando categoría" });
+  }
+});
 
 module.exports = router;

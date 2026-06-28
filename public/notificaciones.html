@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Notificaciones</title>
+</head>
+<body>
+
+<h1>Mis Notificaciones</h1>
+<ul id="lista"></ul>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script>
+const user_id = localStorage.getItem("user_id");
+const socket = io();
+
+socket.on("notif_" + user_id, data => {
+  const li = document.createElement("li");
+  li.innerText = data.titulo + ": " + data.mensaje;
+  document.getElementById("lista").appendChild(li);
+});
+</script>
+
+</body>
+</html>

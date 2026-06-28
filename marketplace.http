@@ -1,0 +1,100 @@
+### 1) Registrar proveedor
+POST http://localhost:5002/api/providers/register
+Content-Type: application/json
+
+{
+  "nombre": "Proveedor Valdez",
+  "pais": "CL",
+  "email": "proveedor@correo.com",
+  "telefono": "987654321"
+}
+
+### 2) Login proveedor
+POST http://localhost:5002/api/providers/login
+Content-Type: application/json
+
+{
+  "email": "proveedor@correo.com"
+}
+
+### Guarda el token aquí:
+@token = PON_AQUI_EL_TOKEN
+
+### 3) Crear tienda
+POST http://localhost:5002/api/stores
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Valdez Store",
+  "pais": "CL",
+  "idioma": "es",
+  "moneda": "CLP",
+  "descripcion": "Tienda oficial de Valdez"
+}
+
+### 4) Crear producto
+POST http://localhost:5002/api/products
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "store_id": 1,
+  "nombre": "Aceite Premium 5W30",
+  "descripcion": "Aceite sintético de alta calidad",
+  "precio": 19990,
+  "stock": 50,
+  "sku": "ACE-5W30-VALDEZ",
+  "imagenes": [
+    "https://cdn.com/aceite1.jpg",
+    "https://cdn.com/aceite2.jpg"
+  ]
+}
+
+### 5) Ver productos de la tienda
+GET http://localhost:5002/api/products/store/1
+
+### 6) Ver producto completo
+GET http://localhost:5002/api/products/1
+
+### 7) Agregar stock
+POST http://localhost:5002/api/products/1/add-stock
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "cantidad": 20,
+  "motivo": "Reposición de inventario"
+}
+
+### 8) Quitar stock
+POST http://localhost:5002/api/products/1/remove-stock
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "cantidad": 5,
+  "motivo": "Venta presencial"
+}
+
+### 9) Actualizar producto
+PUT http://localhost:5002/api/products/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "precio": 17990,
+  "descripcion": "Aceite sintético premium"
+}
+
+### 10) Eliminar producto
+DELETE http://localhost:5002/api/products/1
+Authorization: Bearer {{token}}
+
+### 11) Ver tiendas del proveedor
+GET http://localhost:5002/api/stores/provider/all
+Authorization: Bearer {{token}}
+
+### 12) Ver perfil del proveedor
+GET http://localhost:5002/api/providers/me
+Authorization: Bearer {{token}}

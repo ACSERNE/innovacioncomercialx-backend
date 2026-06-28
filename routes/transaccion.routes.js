@@ -1,18 +1,11 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const controller = require('../controllers/transaccionController');
-const { validarCrearTransaccion } = require('../middleware/validators/transaccionValidator');
-const { validationResult } = require('express-validator');
+const transaccionController = require("../controllers/transaccionController");
 
-router.post('/', validarCrearTransaccion, (req, res, next) => {
-  const errores = validationResult(req);
-  if (!errores.isEmpty()) return res.status(400).json({ errores: errores.array() });
-  next();
-}, controller.crear);
+// Crear transacción
+router.post("/", transaccionController.crear);
 
-router.get('/', controller.listar);
-router.get('/:id', controller.obtener);
-router.put('/:id', controller.actualizar);
-router.delete('/:id', controller.eliminar);
+// Listar transacciones
+router.get("/", transaccionController.listar);
 
 module.exports = router;

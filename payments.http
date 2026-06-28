@@ -1,0 +1,8 @@
+### Crear sesión de pago
+POST http://localhost:5002/api/payments/create-checkout
+Content-Type: application/json
+
+{
+  "product_id": 1,
+  "cantidad": 2
+}
